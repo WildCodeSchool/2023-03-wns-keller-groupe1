@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import { Field, ObjectType } from "type-graphql";
+import { CarbonData } from "./CarbonData";
 
 @ObjectType()
 @Entity()
@@ -27,14 +28,21 @@ export class User {
   @Column()
   totalCo2: number;
 
+  @Field()
   @Column({
     nullable: true,
   })
   isVerified: boolean;
 
+  @Field(() => [CarbonData])
+  @OneToMany(() => CarbonData, (carbonData) => carbonData.user)
+  carbonData: CarbonData[];
+
+  @Field()
   @Column()
   modifiedAt: Date;
 
+  @Field()
   @Column()
   createdAt: Date;
 }
