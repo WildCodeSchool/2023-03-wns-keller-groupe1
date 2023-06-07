@@ -14,4 +14,27 @@ export class User {
 
   @Column()
   hashedPassword: string;
+
+  @Field()
+  @Column()
+  firstname: string;
+
+  @Field()
+  @Column()
+  lastname: string;
+
+  @Field()
+  @Column()
+  totalCo2: number;
+
+  @Column({
+    nullable: true,
+  })
+  isVerified: boolean;
+
+  @Column()
+  modifiedAt: Date;
+
+  @Column()
+  createdAt: Date;
 }
