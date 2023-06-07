@@ -12,13 +12,11 @@ class UserResolver {
   async createUser(
     @Arg("email") email: string,
     @Arg("password") password: string,
-    @Arg("username") username: string,
     @Arg("firstname") firstname: string,
     @Arg("lastname") lastname: string,
   ): Promise<String> {
     const user = new User();
     user.email = email;
-    user.username = username;
     user.firstname = firstname;
     user.lastname = lastname;
     user.totalCo2 = 0;
