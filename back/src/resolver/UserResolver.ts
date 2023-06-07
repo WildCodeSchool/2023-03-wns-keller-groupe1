@@ -30,7 +30,6 @@ class UserResolver {
     } catch (error) {
       return "An error occured";
     }
-
   }
 
   @Query(() => String)
@@ -41,7 +40,6 @@ class UserResolver {
     const user = await dataSource
       .getRepository(User)
       .findOneByOrFail({ email });
-
     try {
       if (await argon2.verify(user.hashedPassword, password)) {
         const token = jwt.sign({ email }, JWT_SECRET);
@@ -100,7 +98,6 @@ class UserResolver {
     } catch (error) {
       return "An error occured";
     }
-
   }
 }
 

@@ -5,6 +5,8 @@ import dataSource from "./utils";
 import { buildSchema } from "type-graphql";
 import { ApolloServer } from "apollo-server";
 import UserResolver from "./resolver/UserResolver";
+import CategoryResolver from "./resolver/CategoryResolver";
+import CarbonDataResolver from "./resolver/CarbonDataResolver";
 
 dotenv.config();
 
@@ -17,7 +19,7 @@ if (JWT_SECRET === undefined) {
 const start = async (): Promise<void> => {
   await dataSource.initialize();
   const typeGraphQLgeneratedSchema = await buildSchema({
-    resolvers: [UserResolver],
+    resolvers: [UserResolver, CategoryResolver, CarbonDataResolver],
     authChecker: ({ context }) => {
       if (context.email !== undefined) {
         return true;
