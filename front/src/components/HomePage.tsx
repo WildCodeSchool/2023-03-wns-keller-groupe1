@@ -5,10 +5,8 @@ const HomePage = () => {
       <p style={{ color: Palette.green[4], fontFamily: "Noto Sans JP" }}>
         Home Page 3
       </p>
-      
     </div>
   );
 };
 
 export default HomePage;
-
