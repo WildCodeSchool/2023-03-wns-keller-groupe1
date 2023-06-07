@@ -11,10 +11,20 @@ class UserResolver {
   @Mutation(() => String)
   async createUser(
     @Arg("email") email: string,
-    @Arg("password") password: string
+    @Arg("password") password: string,
+    @Arg("username") username: string,
+    @Arg("firstname") firstname: string,
+    @Arg("lastname") lastname: string,
   ): Promise<String> {
     const user = new User();
     user.email = email;
+    user.username = username;
+    user.firstname = firstname;
+    user.lastname = lastname;
+    user.totalCo2 = 0;
+    user.isVerified = true;
+    user.modifiedAt = new Date();
+    user.createdAt = new Date();
     user.hashedPassword = await argon2.hash(password);
     await dataSource.getRepository(User).save(user);
     return "user created";
