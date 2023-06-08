@@ -2,6 +2,19 @@ import React, { FC, ChangeEvent, useState } from "react";
 import checkRegister from "../../assets/icons/checkRegister.svg";
 import styles from "./LoginRegisterForm.module.css";
 import { LoginRegisterFormProps } from "../../interface/LoginRegisterFormProps";
+import { gql, useMutation, useLazyQuery  } from "@apollo/client";
+
+const CREATE_USER = gql `
+  mutation CreateUser($lastname: String!, $firstname: String!, $password: String!, $email: String!) {
+    createUser(lastname: $lastname, firstname: $firstname, password: $password, email: $email)
+  }
+`;
+
+const LOGIN = gql `
+  query Login($password: String!, $email: String!) {
+    login(password: $password, email: $email)
+  }
+`;
 
 const LoginRegisterForm = ({
   isRegister,
@@ -33,6 +46,14 @@ const LoginRegisterForm = ({
       setStateFunc(event.target.value);
     };
 
+  const [createNewUser, { data, loading, error }] = useMutation(
+    CREATE_USER,
+  );
+
+  const [login, loginData] = useLazyQuery(LOGIN, {
+    variables: { email, password },
+  });
+
   return (
     <div className={styles.containerLogin2}>
       <div className={styles.titleContainerLogin}>
@@ -41,7 +62,7 @@ const LoginRegisterForm = ({
         </h1>
       </div>
       <div className={styles.formContainerLogin}>
-        <form className={styles.formLogin}>
+        <div className={styles.formLogin}>
           {isRegister && (
             <>
               <div className={styles.formGroupLogin}>
@@ -132,7 +153,41 @@ const LoginRegisterForm = ({
             </div>
           )}
           <div className={styles.formGroupConnection}>
-            <button className={styles.connectionButton} type="submit">
+            <button
+              className={styles.connectionButton}
+              onClick={async () => {
+                if (isRegister) {
+                  try {
+                    await createNewUser({
+                      variables: {
+                        lastname: lastName,
+                        firstname: firstName,
+                        password: password,
+                        email: email,
+                      },
+                    });
+                    console.log("data after mutation", data);
+                    setIsRegister(!isRegister);
+                  } catch (err) {
+                    console.log(err);
+                  }
+                }
+                if (!isRegister) {
+                  try {
+                    login();
+                    if (data) {
+                      console.log("data from query", data.login);
+                      localStorage.setItem("token", data.login);
+                    }
+                    if (error) {
+                      throw new Error("Error");
+                    }         
+                  } catch (err) {
+                    console.log(err);
+                  }
+                }
+              }}
+            >
               {isRegister ? "S'inscrire" : "Se connecter"}
             </button>
           </div>
@@ -145,7 +200,7 @@ const LoginRegisterForm = ({
               {isRegister ? "Retour" : "S’inscrire"}
             </button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );
