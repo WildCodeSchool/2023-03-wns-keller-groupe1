@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, ManyToMany} from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne} from "typeorm";
 import { Field, ObjectType } from "type-graphql";
 import { User } from "./User";
 
@@ -7,24 +7,20 @@ import { User } from "./User";
 export class UserGroupe {
     @Field()
     @PrimaryGeneratedColumn()
-        Id: number;
+    Id: number;
 
     @Field()
     @Column()
-        title: string;
+    title: string;
 
     @Field()
     @Column()
-         modifiedAt: Date;
+    modifiedAt: Date;
 
     @Field()
     @Column()
-        createdAt: Date;
+    createdAt: Date;
 
-         
-    @Field(() => User)
-    @ManyToMany(() => User , (members) => members.groupe)
-    members : User;
 
     @Field(() => User)
     @ManyToOne(() => User, (user) => user.chefGroupe)
