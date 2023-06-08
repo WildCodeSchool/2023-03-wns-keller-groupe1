@@ -12,7 +12,7 @@ const dataSource = new DataSource({
   password: process.env.POSTGRES_PASSWORD,
   database: "postgres",
   synchronize: true,
-  entities: [User, Category, CarbonData , Donation],
+  entities: [User, Category, CarbonData, Donation],
 });
 
 export default dataSource;

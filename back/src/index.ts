@@ -20,7 +20,7 @@ if (JWT_SECRET === undefined) {
 const start = async (): Promise<void> => {
   await dataSource.initialize();
   const typeGraphQLgeneratedSchema = await buildSchema({
-    resolvers: [UserResolver, CategoryResolver, CarbonDataResolver , DonationResolver],
+    resolvers: [UserResolver, CategoryResolver, CarbonDataResolver, DonationResolver],
     authChecker: ({ context }) => {
       if (context.email !== undefined) {
         return true;

@@ -1,5 +1,5 @@
 
-import { Arg, ID, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Mutation, Query, Resolver } from "type-graphql";
 import dataSource from "../utils";
 import { Donation } from "../entity/Donation";
 import { User } from "../entity/User";
@@ -64,7 +64,7 @@ class DonationResolver{
         }
     }
     
-    @Query(() => Donation)
+    @Query(() => [Donation])
     async getAllDonation() : Promise<Donation[] | String> {
         try {
             const donation = await dataSource.getRepository(Donation).find()
