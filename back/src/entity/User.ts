@@ -1,6 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToMany } from "typeorm";
 import { Field, ObjectType } from "type-graphql";
 import { CarbonData } from "./CarbonData";
+import { UserFriends } from "./UserFriends";
 
 @ObjectType()
 @Entity()
@@ -38,6 +39,12 @@ export class User {
   @OneToMany(() => CarbonData, (carbonData) => carbonData.user)
   carbonData: CarbonData[];
 
+  @OneToMany(() => UserFriends, (userFriend) => userFriend.userFriend)
+  userFriend: UserFriends[];
+
+  @OneToMany(() => UserFriends, (userFriend) => userFriend.userSender)
+  userSender: UserFriends[];
+
   @Field()
   @Column()
   modifiedAt: Date;
@@ -45,4 +52,5 @@ export class User {
   @Field()
   @Column()
   createdAt: Date;
+
 }
