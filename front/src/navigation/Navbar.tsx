@@ -7,9 +7,12 @@ import { ReactComponent as ChartIcon } from "../assets/icons/chart.svg";
 import { ReactComponent as SocialIcon } from "../assets/icons/social.svg";
 import { ReactComponent as PuzzleIcon } from "../assets/icons/puzzle.svg";
 import { ReactComponent as ProfilIcon } from "../assets/icons/profil.svg";
+import { useGlobalState } from "../GlobalStateContext";
 
 const Navbar = () => {
   const [selectedIcon, setSelectedIcon] = useState<string | null>("dashboard");
+  const [globalState, setGlobalState] = useGlobalState();
+
   const navigate = useNavigate();
 
   const handleIconClick = (iconName: string) => {
@@ -57,7 +60,8 @@ const Navbar = () => {
             width: "30%",
             height: "50%",
             margin: "auto",
-            cursor: "pointer",          }}
+            cursor: "pointer",
+          }}
           onClick={() => handleIconClick("dashboard")}
         />
 
@@ -125,8 +129,11 @@ const Navbar = () => {
             height: "50%",
             cursor: "pointer",
           }}
-          onClick={() => console.log("ok")}
-        />
+          onClick={() => (
+            localStorage.removeItem("token"),
+            setGlobalState({ isLogged: false })
+          )}
+        />                                          
       </div>
     </div>
   );
