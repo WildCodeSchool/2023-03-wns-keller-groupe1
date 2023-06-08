@@ -1,6 +1,6 @@
 import React, { FC, ChangeEvent, useState } from "react";
 import checkRegister from "../../assets/icons/checkRegister.svg";
-import styles from "./LoginRegisterForm.module.css";
+import styles from "./__LoginRegisterForm.scss";
 
 interface LoginRegisterFormProps {
   isRegister: boolean;
