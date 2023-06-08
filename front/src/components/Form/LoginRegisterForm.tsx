@@ -140,7 +140,13 @@ const LoginRegisterForm = ({
             <button
               className={styles.registerButton}
               type="button"
-              onClick={() => setIsRegister(!isRegister)}
+              onClick={() => (
+                setFirstName(""),
+                setLastName(""),
+                setEmail(""),
+                setPassword(""),
+                setIsRegister(!isRegister)
+              )}
             >
               {isRegister ? "Retour" : "S’inscrire"}
             </button>

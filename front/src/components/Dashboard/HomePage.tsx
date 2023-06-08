@@ -1,4 +1,4 @@
-import Palette from "../styles/Palette";
+import Palette from "../../styles/Palette";
 const HomePage = () => {
   return (
     <div>

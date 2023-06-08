@@ -7,7 +7,7 @@ import {
   useNavigate,
   Navigate,
 } from "react-router-dom";
-import HomePage from "../components/HomePage";
+import HomePage from "../components/Dashboard/HomePage";
 import Login from "../screens/UserConnexion/Login";
 import { useGlobalState } from "../GlobalStateContext";
 
