@@ -3,6 +3,7 @@ import checkRegister from "../../assets/icons/checkRegister.svg";
 import styles from "./LoginRegisterForm.module.css";
 import { LoginRegisterFormProps } from "../../interface/LoginRegisterFormProps";
 import { gql, useMutation, useLazyQuery  } from "@apollo/client";
+import { useNavigate } from "react-router-dom";
 
 const CREATE_USER = gql `
   mutation CreateUser($lastname: String!, $firstname: String!, $password: String!, $email: String!) {
@@ -27,6 +28,7 @@ const LoginRegisterForm = ({
   setFirstName,
   lastName,
   setLastName,
+  handleFormSubmit,
 }: LoginRegisterFormProps) => {
   const isValidEmail = (email: string): boolean => {
     const re: RegExp =
@@ -175,8 +177,8 @@ const LoginRegisterForm = ({
                 if (!isRegister) {
                   try {
                     login();
-                    if (data) {
-                      console.log("data from query", data.login);
+                    if (loginData.data) {
+                      console.log("data from query", loginData.data);
                       localStorage.setItem("token", data.login);
                     }
                     if (error) {
@@ -195,7 +197,13 @@ const LoginRegisterForm = ({
             <button
               className={styles.registerButton}
               type="button"
-              onClick={() => setIsRegister(!isRegister)}
+              onClick={() => (
+                setFirstName(""),
+                setLastName(""),
+                setEmail(""),
+                setPassword(""),
+                setIsRegister(!isRegister)
+              )}
             >
               {isRegister ? "Retour" : "S’inscrire"}
             </button>
