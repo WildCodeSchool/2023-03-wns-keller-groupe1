@@ -28,7 +28,7 @@ const LoginRegisterForm = ({
   setFirstName,
   lastName,
   setLastName,
-  handleFormSubmit,
+  // handleFormSubmit,
 }: LoginRegisterFormProps) => {
   const isValidEmail = (email: string): boolean => {
     const re: RegExp =

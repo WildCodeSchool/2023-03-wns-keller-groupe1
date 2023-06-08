@@ -19,13 +19,13 @@ const Login = () => {
     setGlobalState({ ...globalState, isLogged: false });
   }, []);
 
-  const handleFormSubmit = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): void => {
-    event.preventDefault();
-    setGlobalState({ ...globalState, isLogged: true });
-    navigate("/dashboard");
-  };
+  // const handleFormSubmit = (
+  //   event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  // ): void => {
+  //   event.preventDefault();
+  //   setGlobalState({ ...globalState, isLogged: true });
+  //   navigate("/dashboard");
+  // };
 
   return (
     <div className={styles.Containerlogin}>
@@ -42,7 +42,7 @@ const Login = () => {
             setFirstName={setFirstName}
             lastName={lastName}
             setLastName={setLastName}
-            handleFormSubmit={handleFormSubmit}
+            // handleFormSubmit={handleFormSubmit}
           />
         </div>
       </div>
