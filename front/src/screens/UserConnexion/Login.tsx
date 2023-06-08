@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import LogoWhiteRbg from "../../assets/images/LogoWhiteRbg.png";
 import LoginRegisterForm from "../../components/Form/LoginRegisterForm";
-import styles from "./__Login.scss"
+import styles from "./Login.module.css";
 
 const Login = () => {
   const [isRegister, setIsRegister] = useState<boolean>(false);

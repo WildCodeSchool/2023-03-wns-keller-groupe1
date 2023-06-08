@@ -1,19 +1,7 @@
 import React, { FC, ChangeEvent, useState } from "react";
 import checkRegister from "../../assets/icons/checkRegister.svg";
-import styles from "./__LoginRegisterForm.scss";
-
-interface LoginRegisterFormProps {
-  isRegister: boolean;
-  setIsRegister: React.Dispatch<React.SetStateAction<boolean>>;
-  email: string;
-  setEmail: React.Dispatch<React.SetStateAction<string>>;
-  password: string;
-  setPassword: React.Dispatch<React.SetStateAction<string>>;
-  firstName: string;
-  setFirstName: React.Dispatch<React.SetStateAction<string>>;
-  lastName: string;
-  setLastName: React.Dispatch<React.SetStateAction<string>>;
-}
+import styles from "./LoginRegisterForm.module.css";
+import { LoginRegisterFormProps } from "../../interface/LoginRegisterFormProps";
 
 const LoginRegisterForm = ({
   isRegister,
