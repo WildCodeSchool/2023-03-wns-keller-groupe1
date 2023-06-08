@@ -16,6 +16,9 @@ class UserResolver {
     @Arg("lastname") lastname: string,
   ): Promise<String> {
     try {
+      if (email === "" || password === "" || firstname === "" || lastname === "") {
+        throw new Error;
+      }
       const user = new User();
       user.email = email;
       user.firstname = firstname;
