@@ -16,8 +16,7 @@ const dataSource = new DataSource({
   password: process.env.POSTGRES_PASSWORD,
   database: "postgres",
   synchronize: true,
-  entities: [User, Category, CarbonData, UserFriends],
-  entities: [User, Category, CarbonData, UserGroupe, Donation],
+  entities: [User, Category, CarbonData, UserGroupe, Donation, UserFriends],
 });
 
 export default dataSource;
