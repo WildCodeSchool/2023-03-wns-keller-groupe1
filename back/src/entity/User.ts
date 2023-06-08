@@ -2,6 +2,7 @@ import { Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTabl
 import { Field, ObjectType } from "type-graphql";
 import { CarbonData } from "./CarbonData";
 import { UserGroupe } from "./UserGroupe";
+import { Donation } from "./Donation";
 
 @ObjectType()
 @Entity()
@@ -47,6 +48,10 @@ export class User {
   @ManyToMany(() => UserGroupe)
   @JoinTable()
   members: UserGroupe[];
+
+  @Field(() => [Donation])
+  @OneToMany(() => Donation, (donation) => donation.user)
+  donation : Donation[];
 
   @Field()
   @Column()
