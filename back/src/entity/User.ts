@@ -1,6 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import { Field, ObjectType } from "type-graphql";
 import { CarbonData } from "./CarbonData";
+import { Donation } from "./Donation";
 
 @ObjectType()
 @Entity()
@@ -37,6 +38,12 @@ export class User {
   @Field(() => [CarbonData])
   @OneToMany(() => CarbonData, (carbonData) => carbonData.user)
   carbonData: CarbonData[];
+
+
+  @Field(() => [Donation])
+  @OneToMany(() => Donation, (donation) => donation.user)
+  donation : Donation[];
+
 
   @Field()
   @Column()
