@@ -11,13 +11,13 @@ class UserGroupeResolver{
 async createUserGroupe(
     @Arg('userId') userId: number,
     @Arg('title')  title: string,
-    @Arg('userFriendId') userFriendId: number,
+    @Arg('members') members: number,
     
 ):Promise<any>{
     try {
         const userGroupe = new UserGroupe;
         userGroupe.title = title;
-        // userGroupe.friend = await dataSource.getRepository(User).findOneByOrFail({userFriendId});
+        userGroupe.members = await dataSource.getRepository(User).findOneByOrFail({userId : members});
         userGroupe.modifiedAt = new Date();
         userGroupe.createdAt = new Date();
         userGroupe.user = await dataSource.getRepository(User).findOneByOrFail({ userId });
@@ -53,6 +53,29 @@ async deleteUserGroupe(
         return 'groupe is deleted'
     } catch (error) {
         return "groupe is not deleted"
+    }
+}
+
+@Query(() => UserGroupe)
+async getUserGroupe(
+    @Arg("Id") Id:number,
+): Promise<UserGroupe|string>{
+    try {
+        const userGroupe = await dataSource.getRepository(UserGroupe).findOneByOrFail({Id});
+        return userGroupe;
+    } catch (error) {
+        return "Error UserGroupe"
+    }
+}
+@Query(() => [UserGroupe])
+async getAllUserGroupe(
+    @Arg("Id") Id:number,
+): Promise<UserGroupe[]|string>{
+    try {
+        const allUserGroupe = await dataSource.getRepository(UserGroupe).find();
+        return allUserGroupe;
+    } catch (error) {
+        return "Error UserGroupe"
     }
 }
 }

@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne} from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, ManyToMany} from "typeorm";
 import { Field, ObjectType } from "type-graphql";
 import { User } from "./User";
 
@@ -20,13 +20,14 @@ export class UserGroupe {
     @Field()
     @Column()
         createdAt: Date;
+
          
     @Field(() => User)
-    @ManyToOne(() => User , (friend) => friend.userGroupe)
-    friend : User;
+    @ManyToMany(() => User , (members) => members.groupe)
+    members : User;
 
     @Field(() => User)
-    @ManyToOne(() => User, (user) => user.userGroupe)
+    @ManyToOne(() => User, (user) => user.chefGroupe)
     user: User;
 
     
