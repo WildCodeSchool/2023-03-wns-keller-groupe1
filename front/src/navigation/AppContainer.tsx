@@ -9,8 +9,12 @@ import {
 } from "react-router-dom";
 import HomePage from "../components/HomePage";
 import Login from "../screens/UserConnexion/Login";
+import { useGlobalState } from "../GlobalStateContext";
 
 function App() {
+  const [globalState, setGlobalState] = useGlobalState();
+
+  console.log(globalState.isLogged);
   return (
     <BrowserRouter>
       <Routes>
