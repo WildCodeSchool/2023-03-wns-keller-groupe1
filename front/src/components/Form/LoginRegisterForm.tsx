@@ -2,7 +2,7 @@ import React, { FC, ChangeEvent, useState } from "react";
 import checkRegister from "../../assets/icons/checkRegister.svg";
 import styles from "./LoginRegisterForm.module.css";
 import { LoginRegisterFormProps } from "../../interface/LoginRegisterFormProps";
-import { gql, useMutation, useLazyQuery  } from "@apollo/client";
+import { gql, useMutation, useLazyQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 
 const CREATE_USER = gql `
@@ -176,10 +176,10 @@ const LoginRegisterForm = ({
                 }
                 if (!isRegister) {
                   try {
-                    login();
+                    await login();
                     if (loginData.data) {
                       console.log("data from query", loginData.data);
-                      localStorage.setItem("token", data.login);
+                      localStorage.setItem("token", loginData.data.login);
                     }
                     if (error) {
                       throw new Error("Error");
