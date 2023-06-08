@@ -9,14 +9,18 @@ import {
 } from "react-router-dom";
 import HomePage from "../components/HomePage";
 import Login from "../screens/UserConnexion/Login";
+import { useGlobalState } from "../GlobalStateContext";
 
 function App() {
+  const [globalState, setGlobalState] = useGlobalState();
+
+  console.log(globalState.isLogged);
   return (
     <BrowserRouter>
       <Routes>
-      <Route path="*" element={<Navigate to="/login" />} />
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<Navigate to="/login" />} />
+        <Route path="/dashboard" element={<HomePage />} />
+        <Route path="/" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );
