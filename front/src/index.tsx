@@ -1,8 +1,10 @@
-import ReactDOM from "react-dom/client";
-
+import ReactDOM from "react-dom";
 import App from "./navigation/AppContainer";
+import { GlobalStateProvider } from './GlobalStateContext';
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+ReactDOM.render(
+  <GlobalStateProvider>
+    <App />
+  </GlobalStateProvider>,
+  document.getElementById("root")
 );
-root.render(<App />);

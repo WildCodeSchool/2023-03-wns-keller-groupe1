@@ -2,7 +2,11 @@ import { DataSource } from "typeorm";
 import { User } from "./entity/User";
 import { Category } from "./entity/Category";
 import { CarbonData } from "./entity/CarbonData";
+
 import { UserFriends } from "./entity/UserFriends";
+import { UserGroupe } from "./entity/UserGroupe";
+import { Donation } from "./entity/Donation";
+
 
 const dataSource = new DataSource({
   type: "postgres",
@@ -13,6 +17,7 @@ const dataSource = new DataSource({
   database: "postgres",
   synchronize: true,
   entities: [User, Category, CarbonData, UserFriends],
+  entities: [User, Category, CarbonData, UserGroupe, Donation],
 });
 
 export default dataSource;
