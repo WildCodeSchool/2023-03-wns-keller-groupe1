@@ -2,6 +2,7 @@ import React, { FC, ChangeEvent, useState } from "react";
 import checkRegister from "../../assets/icons/checkRegister.svg";
 import styles from "./LoginRegisterForm.module.css";
 import { LoginRegisterFormProps } from "../../interface/LoginRegisterFormProps";
+import { useNavigate } from "react-router-dom";
 
 const LoginRegisterForm = ({
   isRegister,
@@ -14,6 +15,7 @@ const LoginRegisterForm = ({
   setFirstName,
   lastName,
   setLastName,
+  handleFormSubmit,
 }: LoginRegisterFormProps) => {
   const isValidEmail = (email: string): boolean => {
     const re: RegExp =
@@ -132,7 +134,11 @@ const LoginRegisterForm = ({
             </div>
           )}
           <div className={styles.formGroupConnection}>
-            <button className={styles.connectionButton} type="submit">
+            <button
+              className={styles.connectionButton}
+              type="submit"
+              onClick={handleFormSubmit}
+            >
               {isRegister ? "S'inscrire" : "Se connecter"}
             </button>
           </div>
