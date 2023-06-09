@@ -1,29 +1,20 @@
-import React, { useState, useEffect } from "react";
-import LogoWhiteRbg from "../../assets/images/LogoWhiteRbg.png";
+import { MouseEvent, useState } from "react";
 import LoginRegisterForm from "../../components/Form/LoginRegisterForm";
-import styles from "./Login.module.css";
-import { useNavigate } from "react-router-dom";
-import { useGlobalState } from "../../GlobalStateContext";
-import { gql, useMutation, useLazyQuery } from "@apollo/client";
-import { useAuth } from "../../services/auth";
+import { handleError } from "@apollo/client/link/http/parseAndCheckHttpResponse";
+import { log } from "console";
+
 
 const Login = () => {
+
   const [isRegister, setIsRegister] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
-  const [globalState, setGlobalState] = useGlobalState();
-  const navigate = useNavigate();
-  const { handleFormSubmit } = useAuth();
-  useEffect(() => {
-    setGlobalState({ ...globalState, isLogged: false });
-  }, []);
-
   return (
-    <div className={styles.Containerlogin}>
-      <div className={styles.loginBox}>
-        <div className={styles.loginContainer}>
+    <div className="Containerlogin">
+      <div className="loginBox">
+        <div className="loginContainer">
           <LoginRegisterForm
             isRegister={isRegister}
             setIsRegister={setIsRegister}
@@ -34,23 +25,14 @@ const Login = () => {
             firstName={firstName}
             setFirstName={setFirstName}
             lastName={lastName}
-            setLastName={setLastName}
-            handleFormSubmit={(e) =>
-              handleFormSubmit(
-                e,
-                isRegister,
-                email,
-                password,
-                firstName,
-                lastName
-              )
-            }
-          />
+            setLastName={setLastName} handleFormSubmit={function (event: MouseEvent<HTMLButtonElement, MouseEvent>): void {
+              throw new Error("Function not implemented.");
+            } }          />
         </div>
       </div>
 
-      <div className={styles.logoBox}>
-        <img src={LogoWhiteRbg} alt="Logo" className={styles.logoWhiteRbg} />
+      <div className="logoBox">
+        <img src="" alt="Logo" className="logoWhiteRbg"/>
       </div>
     </div>
   );
