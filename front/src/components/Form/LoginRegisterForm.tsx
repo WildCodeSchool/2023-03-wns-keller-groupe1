@@ -2,7 +2,6 @@ import React, { FC, ChangeEvent, useState } from "react";
 import checkRegister from "../../assets/icons/checkRegister.svg";
 import styles from "./LoginRegisterForm.module.css";
 import { LoginRegisterFormProps } from "../../interface/LoginRegisterFormProps";
-
 const LoginRegisterForm = ({
   isRegister,
   setIsRegister,
@@ -14,6 +13,7 @@ const LoginRegisterForm = ({
   setFirstName,
   lastName,
   setLastName,
+  handleFormSubmit,
 }: LoginRegisterFormProps) => {
   const isValidEmail = (email: string): boolean => {
     const re: RegExp =
@@ -41,7 +41,7 @@ const LoginRegisterForm = ({
         </h1>
       </div>
       <div className={styles.formContainerLogin}>
-        <form className={styles.formLogin}>
+        <div className={styles.formLogin}>
           {isRegister && (
             <>
               <div className={styles.formGroupLogin}>
@@ -132,7 +132,10 @@ const LoginRegisterForm = ({
             </div>
           )}
           <div className={styles.formGroupConnection}>
-            <button className={styles.connectionButton} type="submit">
+            <button
+              className={styles.connectionButton}
+              onClick={handleFormSubmit}
+            >
               {isRegister ? "S'inscrire" : "Se connecter"}
             </button>
           </div>
@@ -140,12 +143,18 @@ const LoginRegisterForm = ({
             <button
               className={styles.registerButton}
               type="button"
-              onClick={() => setIsRegister(!isRegister)}
+              onClick={() => (
+                setFirstName(""),
+                setLastName(""),
+                setEmail(""),
+                setPassword(""),
+                setIsRegister(!isRegister)
+              )}
             >
               {isRegister ? "Retour" : "S’inscrire"}
             </button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );
