@@ -56,7 +56,7 @@ class UserGroupeResolver {
     try {
       const userGroupe = await dataSource
         .getRepository(UserGroupe)
-        .findOne({where: {Id}, relations: ['user']});
+        .findOne({where: {Id}, relations: ['user', 'members']});
       if (userGroupe != null) {
         return userGroupe;
       } else {
@@ -70,7 +70,7 @@ class UserGroupeResolver {
   @Query(() => [UserGroupe])
   async getAllUserGroupe(): Promise<UserGroupe[] | string> {
     try {
-      const allUserGroupe = await dataSource.getRepository(UserGroupe).find();
+      const allUserGroupe = await dataSource.getRepository(UserGroupe).find({relations: ['user', 'members']});
       return allUserGroupe;
     } catch (error) {
       return "Error UserGroupe";

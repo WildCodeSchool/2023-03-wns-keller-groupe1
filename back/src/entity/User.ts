@@ -42,6 +42,7 @@ export class User {
   @OneToMany(() => CarbonData, (carbonData) => carbonData.user)
   carbonData: CarbonData[];
 
+  @Field(() => [UserFriends])
   @OneToMany(() => UserFriends, (userFriend) => userFriend.userFriend)
   userFriend: UserFriends[];
 

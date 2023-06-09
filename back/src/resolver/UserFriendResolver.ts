@@ -5,7 +5,6 @@ import { User } from "../entity/User";
 
 @Resolver()
 class UserFriendResolver {
-
   @Mutation(() => String)
   async createUserFriend(
     @Arg("userId") userId: number,
@@ -43,7 +42,9 @@ class UserFriendResolver {
   @Query(() => [UserFriends])
   async getAllUserFriend(): Promise<UserFriends[] | string> {
     try {
-      const userFriends = await dataSource.getRepository(UserFriends).find();
+      const userFriends = await dataSource
+        .getRepository(UserFriends)
+        .find({ relations: ["userFriend", "userSender"] });
       return userFriends;
     } catch (error) {
       return "Error you can't get all userFriends";
@@ -62,12 +63,23 @@ class UserFriendResolver {
 
   @Query(() => [UserFriends])
   async getUserFriendList(
-    @Arg("userId") userId: number,
+    @Arg("userId") userId: number
   ): Promise<UserFriends[] | string> {
     try {
-      const user = await dataSource.getRepository(User).findOneByOrFail({userId});
-      const userFriendList = await dataSource.getRepository(UserFriends).findBy({userSender: user});
-      return userFriendList;
+      const user = await dataSource
+        .getRepository(User)
+        .findOneByOrFail({ userId });
+      const userFriendList = await dataSource
+        .getRepository(UserFriends)
+        .find({
+          where: { userSender: user },
+          relations: ["userFriend", "userSender"],
+        });
+      if (userFriendList != null) {
+        return userFriendList;
+      } else {
+        throw new Error();
+      }
     } catch (error) {
       return "An error occured";
     }
