@@ -52,12 +52,16 @@ class UserGroupeResolver {
   }
 
   @Query(() => UserGroupe)
-  async getUserGroupe(@Arg("Id") Id: number): Promise<UserGroupe | string> {
+  async getUserGroupe(@Arg("Id") Id: number): Promise<UserGroupe | string > {
     try {
       const userGroupe = await dataSource
         .getRepository(UserGroupe)
-        .findOneByOrFail({ Id });
-      return userGroupe;
+        .findOne({where: {Id}, relations: ['user']});
+      if (userGroupe != null) {
+        return userGroupe;
+      } else {
+        throw new Error();
+      }   
     } catch (error) {
       return "Error UserGroupe";
     }
