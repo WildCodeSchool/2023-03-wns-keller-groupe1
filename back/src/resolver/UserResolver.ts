@@ -13,11 +13,16 @@ class UserResolver {
     @Arg("email") email: string,
     @Arg("password") password: string,
     @Arg("firstname") firstname: string,
-    @Arg("lastname") lastname: string,
+    @Arg("lastname") lastname: string
   ): Promise<String> {
     try {
-      if (email === "" || password === "" || firstname === "" || lastname === "") {
-        throw new Error;
+      if (
+        email === "" ||
+        password === "" ||
+        firstname === "" ||
+        lastname === ""
+      ) {
+        throw new Error();
       }
       const user = new User();
       user.email = email;
@@ -59,17 +64,42 @@ class UserResolver {
   @Authorized()
   @Query(() => [User])
   async getAllUsers(): Promise<User[]> {
-    const users = await dataSource.getRepository(User).find();
+    const users = await dataSource
+      .getRepository(User)
+      .find({
+        relations: [
+          "groups",
+          "carbonData",
+          "donation",
+          "userFriend",
+          "userSender",
+          "bankDetails"
+        ],
+      });
     return users;
   }
 
   @Query(() => User)
-  async getUser(
-    @Arg("userId") userId: number,
-  ): Promise<User|string> {
+  async getUser(@Arg("userId") userId: number): Promise<User | string> {
     try {
-      const user = await dataSource.getRepository(User).findOneByOrFail({ userId });
-      return user;
+      const user = await dataSource
+        .getRepository(User)
+        .findOne({
+          where: { userId },
+          relations: [
+            "groups",
+            "carbonData",
+            "donation",
+            "userFriend",
+            "userSender",
+            "bankDetails"
+          ],
+        });
+      if (user != null) {
+        return user;
+      } else {
+        throw new Error();
+      }
     } catch (error) {
       return "An error occured";
     }
@@ -81,10 +111,18 @@ class UserResolver {
     @Arg("email") email: string,
     @Arg("firstname") firstname: string,
     @Arg("lastname") lastname: string,
-    @Arg("totalCo2") totalCo2: number,
+    @Arg("totalCo2") totalCo2: number
   ): Promise<string> {
     try {
-      await dataSource.getRepository(User).update( userId, { email, firstname, lastname, totalCo2, modifiedAt: new Date()} );
+      await dataSource
+        .getRepository(User)
+        .update(userId, {
+          email,
+          firstname,
+          lastname,
+          totalCo2,
+          modifiedAt: new Date(),
+        });
       return `User ${userId} updated`;
     } catch (error) {
       return "An error occured";
@@ -92,9 +130,7 @@ class UserResolver {
   }
 
   @Mutation(() => String)
-  async deleteUser(
-    @Arg("userId") userId: number,
-  ): Promise<string> {
+  async deleteUser(@Arg("userId") userId: number): Promise<string> {
     try {
       await dataSource.getRepository(User).delete({ userId });
       return "User deleted";

@@ -1,9 +1,10 @@
 import { UserFriends } from "./UserFriends";
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable, OneToOne, JoinColumn } from "typeorm";
 import { Field, ObjectType } from "type-graphql";
 import { CarbonData } from "./CarbonData";
 import { UserGroupe } from "./UserGroupe";
 import { Donation } from "./Donation";
+import { BankDetails } from "./BankDetails";
 
 
 @ObjectType()
@@ -42,6 +43,7 @@ export class User {
   @OneToMany(() => CarbonData, (carbonData) => carbonData.user)
   carbonData: CarbonData[];
 
+  @Field(() => [UserFriends])
   @OneToMany(() => UserFriends, (userFriend) => userFriend.userFriend)
   userFriend: UserFriends[];
 
@@ -53,13 +55,18 @@ export class User {
   chefGroupe: UserGroupe[];
 
   @Field(() => [UserGroupe])
-  @ManyToMany(() => UserGroupe)
+  @ManyToMany(() => UserGroupe, (userGroup) => userGroup.members )
   @JoinTable()
-  members: UserGroupe[];
+  groups: UserGroupe[];
 
   @Field(() => [Donation])
   @OneToMany(() => Donation, (donation) => donation.user)
   donation : Donation[];
+
+  @Field(() => BankDetails)
+  @OneToOne(() => BankDetails, (bankDetails) => bankDetails.user)
+  @JoinColumn()
+  bankDetails: BankDetails;
 
   @Field()
   @Column()
