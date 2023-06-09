@@ -4,6 +4,8 @@ import LoginRegisterForm from "../../components/Form/LoginRegisterForm";
 import styles from "./Login.module.css";
 import { useNavigate } from "react-router-dom";
 import { useGlobalState } from "../../GlobalStateContext";
+import { gql, useMutation, useLazyQuery } from "@apollo/client";
+import { useAuth } from "../../services/auth";
 
 const Login = () => {
   const [isRegister, setIsRegister] = useState<boolean>(false);
@@ -12,20 +14,11 @@ const Login = () => {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [globalState, setGlobalState] = useGlobalState();
-
   const navigate = useNavigate();
-
+  const { handleFormSubmit } = useAuth();
   useEffect(() => {
     setGlobalState({ ...globalState, isLogged: false });
   }, []);
-
-  // const handleFormSubmit = (
-  //   event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  // ): void => {
-  //   event.preventDefault();
-  //   setGlobalState({ ...globalState, isLogged: true });
-  //   navigate("/dashboard");
-  // };
 
   return (
     <div className={styles.Containerlogin}>
@@ -42,7 +35,16 @@ const Login = () => {
             setFirstName={setFirstName}
             lastName={lastName}
             setLastName={setLastName}
-            // handleFormSubmit={handleFormSubmit}
+            handleFormSubmit={(e) =>
+              handleFormSubmit(
+                e,
+                isRegister,
+                email,
+                password,
+                firstName,
+                lastName
+              )
+            }
           />
         </div>
       </div>
