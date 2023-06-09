@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import LogoWhiteRbg from "../../assets/images/LogoWhiteRbg.png";
+import { useState } from "react";
 import LoginRegisterForm from "../../components/Form/LoginRegisterForm";
-import styles from "./Login.module.css";
+
 
 const Login = () => {
   const [isRegister, setIsRegister] = useState<boolean>(false);
@@ -10,9 +9,9 @@ const Login = () => {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   return (
-    <div className={styles.Containerlogin}>
-      <div className={styles.loginBox}>
-        <div className={styles.loginContainer}>
+    <div className="Containerlogin">
+      <div className="loginBox">
+        <div className="loginContainer">
           <LoginRegisterForm
             isRegister={isRegister}
             setIsRegister={setIsRegister}
@@ -28,8 +27,8 @@ const Login = () => {
         </div>
       </div>
 
-      <div className={styles.logoBox}>
-        <img src={LogoWhiteRbg} alt="Logo" className={styles.logoWhiteRbg} />
+      <div className="logoBox">
+        <img src="" alt="Logo" className="logoWhiteRbg"/>
       </div>
     </div>
   );

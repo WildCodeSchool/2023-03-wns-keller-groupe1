@@ -1,6 +1,4 @@
 import React, { FC, ChangeEvent, useState } from "react";
-import checkRegister from "../../assets/icons/checkRegister.svg";
-import styles from "./LoginRegisterForm.module.css";
 import { LoginRegisterFormProps } from "../../interface/LoginRegisterFormProps";
 
 const LoginRegisterForm = ({
@@ -34,21 +32,21 @@ const LoginRegisterForm = ({
     };
 
   return (
-    <div className={styles.containerLogin2}>
-      <div className={styles.titleContainerLogin}>
-        <h1 className={styles.titleLogin}>
+    <div className="containerLogin2">
+      <div className="titleContainerLogin">
+        <h1 className="titleLogin">
           {isRegister ? "Inscrivez-vous" : "Connectez vous"}
         </h1>
       </div>
-      <div className={styles.formContainerLogin}>
-        <form className={styles.formLogin}>
+      <div className="formContainerLogin">
+        <form className="formLogin">
           {isRegister && (
             <>
-              <div className={styles.formGroupLogin}>
+              <div className="formGroupLogin">
                 <p>Nom</p>
-                <div className={styles.formGroupLoginInputIcon}>
+                <div className="formGroupLoginInputIcon">
                   <input
-                    className={styles.formInputLogin}
+                    className="formInputLogin"
                     type="text"
                     name="lastName"
                     id="lastName"
@@ -57,18 +55,18 @@ const LoginRegisterForm = ({
                   />
                   {lastName && (
                     <img
-                      src={checkRegister}
+                      src=""
                       alt="checkRegister"
-                      className={styles.checkRegister}
+                      className="checkRegister"
                     />
                   )}
                 </div>
               </div>
-              <div className={styles.formGroupLogin}>
+              <div className="formGroupLogin">
                 <p>Prénom</p>
-                <div className={styles.formGroupLoginInputIcon}>
+                <div className="formGroupLoginInputIcon">
                   <input
-                    className={styles.formInputLogin}
+                    className="formInputLogin}"
                     type="text"
                     name="firstName"
                     id="firstName"
@@ -77,20 +75,20 @@ const LoginRegisterForm = ({
                   />
                   {firstName && (
                     <img
-                      src={checkRegister}
+                      src=""
                       alt="checkRegister"
-                      className={styles.checkRegister}
+                      className="checkRegister"
                     />
                   )}
                 </div>
               </div>
             </>
           )}
-          <div className={styles.formGroupLogin}>
+          <div className="formGroupLogin">
             <p>Email</p>
-            <div className={styles.formGroupLoginInputIcon}>
+            <div className="formGroupLoginInputIcon">
               <input
-                className={styles.formInputLogin}
+                className="formInputLogin"
                 type="email"
                 name="email"
                 id="email"
@@ -99,18 +97,18 @@ const LoginRegisterForm = ({
               />
               {email && isValidEmail(email) && (
                 <img
-                  src={checkRegister}
+                  src=""
                   alt="checkRegister"
-                  className={styles.checkRegister}
+                  className="checkRegister"
                 />
               )}
             </div>
           </div>
-          <div className={styles.formGroupLogin}>
+          <div className="formGroupLogin">
             <p>Mot de passe</p>
-            <div className={styles.formGroupLoginInputIcon}>
+            <div className="formGroupLoginInputIcon">
               <input
-                className={styles.formInputLogin}
+                className="formInputLogin"
                 type="password"
                 name="password"
                 id="password"
@@ -119,26 +117,26 @@ const LoginRegisterForm = ({
               />
               {password && isValidPassword(password) && (
                 <img
-                  src={checkRegister}
+                  src=""
                   alt="checkRegister"
-                  className={styles.checkRegister}
+                  className="checkRegister"
                 />
               )}
             </div>
           </div>
           {!isRegister && (
-            <div className={styles.formGroupLoginPassword}>
+            <div className="formGroupLoginPassword">
               <p>Mot de passe oublié</p>
             </div>
           )}
-          <div className={styles.formGroupConnection}>
-            <button className={styles.connectionButton} type="submit">
+          <div className="formGroupConnection">
+            <button className="connectionButton" type="submit">
               {isRegister ? "S'inscrire" : "Se connecter"}
             </button>
           </div>
-          <div className={styles.formGroupRegister}>
+          <div className="formGroupRegister">
             <button
-              className={styles.registerButton}
+              className="registerButton"
               type="button"
               onClick={() => setIsRegister(!isRegister)}
             >
