@@ -1,0 +1,127 @@
+.titleContainerLogin {
+    margin-bottom: 15%;
+    padding-left: 10%;
+  }
+  
+  .titleLogin {
+    color: $color-green-4;
+    font-family: "Raleway";
+    font-style: normal;
+    font-weight: 900;
+    font-size: 2.3vw;
+    line-height: 38px;
+  }
+  
+  .formGroupLogin {
+    padding: 0 10%;
+  }
+  
+  .formGroupLogin p {
+    font-family: "Noto Sans JP";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.4vw;
+    line-height: 35px;
+    margin: 6% 0 4% 0;
+  }
+  
+  .formGroupLoginInputIcon {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .checkRegister {
+    width: 6%;
+    height: 6%;
+    margin-left: 10%;
+    padding-bottom: 1%;
+  }
+  
+  .formInputLogin {
+    width: 90%;
+    border: none;
+    border-bottom: 1px solid $color-black;
+    outline: none;
+    background-color: transparent;
+    padding-bottom: 1%;
+    font-family: "Noto Sans JP";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1vw;
+    line-height: 22px;
+    color: $color-black;
+  }
+  
+  .formInputLogin:focus {
+    border-bottom-color: $color-green-3;
+  }
+  
+  .formGroupLoginPassword {
+    padding: 0 10%;
+    text-align: end;
+    margin-top: 3%;
+  }
+  
+  .formGroupLoginPassword p {
+    font-family: "Noto Sans JP";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1vw;
+    line-height: 22px;
+    color: $color-black;
+  }
+  
+  .formGroupConnection {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5%;
+    margin-top: 15%;
+  }
+  
+  .connectionButton {
+    background-color: $color-green-2;
+    border-radius: 20px;
+    border: none;
+    color: white;
+    padding: 3% 0;
+    width: 80%;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+    font-family: "Noto Sans JP";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.2vw;
+    line-height: 29px;
+    text-transform: uppercase;
+  }
+  
+  .connectionButton:hover {
+    background-color: $color-green-4;
+    color: $color-bg;
+  }
+  
+  .formGroupRegister {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .registerButton {
+    font-family: "Noto Sans JP";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.2vw;
+    line-height: 29px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    border: none;
+    color: $color-green-4;
+    background-color: transparent;
+    cursor: pointer;
+  }
+  
+  .registerButton:hover {
+    color: $color-green-3;
+  }
+  
