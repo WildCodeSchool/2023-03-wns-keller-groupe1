@@ -1,4 +1,4 @@
-import React, { FC, ChangeEvent, useState } from "react";
+import React, { FC, ChangeEvent, useState, useEffect } from "react";
 import checkRegister from "../../assets/icons/checkRegister.svg";
 import styles from "./LoginRegisterForm.module.css";
 import { LoginRegisterFormProps } from "../../interface/LoginRegisterFormProps";
@@ -14,6 +14,8 @@ const LoginRegisterForm = ({
   lastName,
   setLastName,
   handleFormSubmit,
+  isLoading,
+  setIsLoading,
 }: LoginRegisterFormProps) => {
   const isValidEmail = (email: string): boolean => {
     const re: RegExp =
@@ -32,6 +34,30 @@ const LoginRegisterForm = ({
     (event: ChangeEvent<HTMLInputElement>): void => {
       setStateFunc(event.target.value);
     };
+
+  const [BtnDisabled, setBtnDisabled] = useState(true);
+
+  // useEffect set BtnDisabled to false if all inputs are filled
+
+  useEffect(() => {
+    if (
+      isRegister &&
+      isValidEmail(email) &&
+      isValidPassword(password) &&
+      firstName &&
+      lastName
+    ) {
+      setBtnDisabled(false);
+    } else if (
+      !isRegister &&
+      isValidEmail(email) &&
+      isValidPassword(password)
+    ) {
+      setBtnDisabled(false);
+    } else {
+      setBtnDisabled(true);
+    }
+  }, [email, password, firstName, lastName]);
 
   return (
     <div className={styles.containerLogin2}>
@@ -54,6 +80,7 @@ const LoginRegisterForm = ({
                     id="lastName"
                     placeholder="Votre nom"
                     onChange={handleInputChange(setLastName)}
+                    required
                   />
                   {lastName && (
                     <img
@@ -74,6 +101,7 @@ const LoginRegisterForm = ({
                     id="firstName"
                     placeholder="Votre prénom"
                     onChange={handleInputChange(setFirstName)}
+                    required
                   />
                   {firstName && (
                     <img
@@ -96,6 +124,7 @@ const LoginRegisterForm = ({
                 id="email"
                 placeholder="Wilder@gmail.com"
                 onChange={handleInputChange(setEmail)}
+                required
               />
               {email && isValidEmail(email) && (
                 <img
@@ -116,6 +145,7 @@ const LoginRegisterForm = ({
                 id="password"
                 placeholder="**********"
                 onChange={handleInputChange(setPassword)}
+                required
               />
               {password && isValidPassword(password) && (
                 <img
@@ -126,34 +156,50 @@ const LoginRegisterForm = ({
               )}
             </div>
           </div>
-          {!isRegister && (
-            <div className={styles.formGroupLoginPassword}>
-              <p>Mot de passe oublié</p>
-            </div>
-          )}
-          <div className={styles.formGroupConnection}>
-            <button
-              className={styles.connectionButton}
-              onClick={handleFormSubmit}
-            >
-              {isRegister ? "S'inscrire" : "Se connecter"}
-            </button>
-          </div>
-          <div className={styles.formGroupRegister}>
-            <button
-              className={styles.registerButton}
-              type="button"
-              onClick={() => (
-                setFirstName(""),
-                setLastName(""),
-                setEmail(""),
-                setPassword(""),
-                setIsRegister(!isRegister)
+          {isLoading ? (
+            <div className={styles.spinner}></div>
+          ) : (
+            <>
+              {!isRegister && (
+                <div className={styles.formGroupLoginPassword}>
+                  <p>Mot de passe oublié</p>
+                </div>
               )}
-            >
-              {isRegister ? "Retour" : "S’inscrire"}
-            </button>
-          </div>
+              <div className={styles.formGroupConnection}>
+                <button
+                  className={styles.connectionButton}
+                  onClick={handleFormSubmit}
+                  disabled={
+                    isLoading ||
+                    (!isRegister
+                      ? !isValidEmail(email) || !isValidPassword(password)
+                      : !isValidEmail(email) ||
+                        !isValidPassword(password) ||
+                        !firstName ||
+                        !lastName)
+                  }
+                >
+                  {isRegister ? "S'inscrire" : "Se connecter"}
+                </button>
+              </div>
+
+              <div className={styles.formGroupRegister}>
+                <button
+                  className={styles.registerButton}
+                  type="button"
+                  onClick={() => {
+                    setFirstName("");
+                    setLastName("");
+                    setEmail("");
+                    setPassword("");
+                    setIsRegister(!isRegister);
+                  }}
+                >
+                  {isRegister ? "Retour" : "S’inscrire"}
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

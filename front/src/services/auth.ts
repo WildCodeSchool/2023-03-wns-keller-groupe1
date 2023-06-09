@@ -45,9 +45,11 @@ export const useAuth = () => {
     email: string,
     password: string,
     firstName: string,
-    lastName: string
+    lastName: string,
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
   ): Promise<void> => {
     event.preventDefault();
+    setIsLoading(true);
     if (isRegister) {
       await createNewUser({
         variables: {
@@ -62,11 +64,12 @@ export const useAuth = () => {
       if (loginData.data) {
         localStorage.setItem("token", loginData.data.login);
         setGlobalState({ ...globalState, isLogged: true });
-        toast.success(`Welcome ${firstName} ${lastName}!`);
         navigate("/dashboard");
       }
     }
+    setIsLoading(false); 
   };
+  
 
   return { handleFormSubmit, createNewUser, login };
 };

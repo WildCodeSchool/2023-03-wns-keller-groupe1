@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import LogoWhiteRbg from "../../assets/images/LogoWhiteRbg.png";
 import LoginRegisterForm from "../../components/Form/LoginRegisterForm";
 import styles from "./Login.module.css";
@@ -14,8 +14,9 @@ const Login = () => {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [globalState, setGlobalState] = useGlobalState();
-  const navigate = useNavigate();
   const { handleFormSubmit } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     setGlobalState({ ...globalState, isLogged: false });
   }, []);
@@ -42,9 +43,12 @@ const Login = () => {
                 email,
                 password,
                 firstName,
-                lastName
+                lastName,
+                setIsLoading,
               )
             }
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
           />
         </div>
       </div>
