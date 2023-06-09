@@ -5,13 +5,23 @@ import { LoginRegisterFormProps } from "../../interface/LoginRegisterFormProps";
 import { gql, useMutation, useLazyQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 
-const CREATE_USER = gql `
-  mutation CreateUser($lastname: String!, $firstname: String!, $password: String!, $email: String!) {
-    createUser(lastname: $lastname, firstname: $firstname, password: $password, email: $email)
+const CREATE_USER = gql`
+  mutation CreateUser(
+    $lastname: String!
+    $firstname: String!
+    $password: String!
+    $email: String!
+  ) {
+    createUser(
+      lastname: $lastname
+      firstname: $firstname
+      password: $password
+      email: $email
+    )
   }
 `;
 
-const LOGIN = gql `
+const LOGIN = gql`
   query Login($password: String!, $email: String!) {
     login(password: $password, email: $email)
   }
@@ -28,8 +38,8 @@ const LoginRegisterForm = ({
   setFirstName,
   lastName,
   setLastName,
-  // handleFormSubmit,
-}: LoginRegisterFormProps) => {
+}: // handleFormSubmit,
+LoginRegisterFormProps) => {
   const isValidEmail = (email: string): boolean => {
     const re: RegExp =
       /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -48,9 +58,7 @@ const LoginRegisterForm = ({
       setStateFunc(event.target.value);
     };
 
-  const [createNewUser, { data, loading, error }] = useMutation(
-    CREATE_USER,
-  );
+  const [createNewUser, { data, loading, error }] = useMutation(CREATE_USER);
 
   const [login, loginData] = useLazyQuery(LOGIN, {
     variables: { email, password },
@@ -183,7 +191,7 @@ const LoginRegisterForm = ({
                     }
                     if (error) {
                       throw new Error("Error");
-                    }         
+                    }
                   } catch (err) {
                     console.log(err);
                   }

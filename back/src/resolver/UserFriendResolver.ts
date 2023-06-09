@@ -5,15 +5,19 @@ import { User } from "../entity/User";
 
 @Resolver()
 class UserFriendResolver {
+
   @Mutation(() => String)
   async createUserFriend(
-    @Arg("accepted") accepted: Boolean,
-    @Arg("userId") userId: number
+    @Arg("userId") userId: number,
+    @Arg("friendId") friendId: number
   ): Promise<any> {
     try {
       const userFriend = new UserFriends();
-      userFriend.accepted = true;
-      userFriend.created = new Date();
+      userFriend.accepted = false;
+      userFriend.createdAt = new Date();
+      userFriend.userSender = await dataSource
+        .getRepository(User)
+        .findOneByOrFail({ userId: friendId });
       userFriend.userFriend = await dataSource
         .getRepository(User)
         .findOneByOrFail({ userId });
@@ -27,7 +31,9 @@ class UserFriendResolver {
   @Query(() => UserFriends)
   async getUserFriend(@Arg("id") id: number): Promise<UserFriends | string> {
     try {
-      const userFriend = await dataSource.getRepository(UserFriends).findOneByOrFail({ id });
+      const userFriend = await dataSource
+        .getRepository(UserFriends)
+        .findOneByOrFail({ id });
       return userFriend;
     } catch (error) {
       return "Error you can't get an userFriends";
@@ -43,7 +49,6 @@ class UserFriendResolver {
       return "Error you can't get all userFriends";
     }
   }
-  
 
   @Mutation(() => String)
   async deleteUserFriend(@Arg("id") id: number): Promise<string> {
@@ -52,6 +57,19 @@ class UserFriendResolver {
       return "userFriend deleted";
     } catch (error) {
       return "can't delete userFriend";
+    }
+  }
+
+  @Query(() => [UserFriends])
+  async getUserFriendList(
+    @Arg("userId") userId: number,
+  ): Promise<UserFriends[] | string> {
+    try {
+      const user = await dataSource.getRepository(User).findOneByOrFail({userId});
+      const userFriendList = await dataSource.getRepository(UserFriends).findBy({userSender: user});
+      return userFriendList;
+    } catch (error) {
+      return "An error occured";
     }
   }
 }

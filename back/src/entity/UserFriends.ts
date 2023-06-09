@@ -16,7 +16,7 @@ export class UserFriends {
 
   @Field()
   @Column()
-  created: Date;
+  createdAt: Date;
 
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.userFriend)
