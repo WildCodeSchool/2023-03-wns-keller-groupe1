@@ -6,7 +6,7 @@ import { User } from "../entity/User";
 @Resolver()
 class UserFriendResolver {
   @Mutation(() => String)
-  async createUserFriend(
+  async sendFriendRequest(
     @Arg("userId") userId: number,
     @Arg("friendId") friendId: number
   ): Promise<any> {
@@ -28,7 +28,7 @@ class UserFriendResolver {
   }
 
   @Query(() => UserFriends)
-  async getUserFriend(@Arg("id") id: number): Promise<UserFriends | string> {
+  async getFriendRequest(@Arg("id") id: number): Promise<UserFriends | string> {
     try {
       const userFriend = await dataSource
         .getRepository(UserFriends)
@@ -40,7 +40,7 @@ class UserFriendResolver {
   }
 
   @Query(() => [UserFriends])
-  async getAllUserFriend(): Promise<UserFriends[] | string> {
+  async getAllFriendRequest(): Promise<UserFriends[] | string> {
     try {
       const userFriends = await dataSource
         .getRepository(UserFriends)
@@ -52,7 +52,7 @@ class UserFriendResolver {
   }
 
   @Mutation(() => String)
-  async deleteUserFriend(@Arg("id") id: number): Promise<string> {
+  async deleteFriendRequest(@Arg("id") id: number): Promise<string> {
     try {
       await dataSource.getRepository(UserFriends).delete(id);
       return "userFriend deleted";
@@ -83,6 +83,18 @@ class UserFriendResolver {
     } catch (error) {
       return "An error occured";
     }
+  }
+
+  @Mutation(() => String)
+  async acceptFriendRequest(
+    @Arg("id") id: number
+  ): Promise<any> {
+    try {
+      await dataSource.getRepository(UserFriends).update(id, {accepted: true});
+      return "Friend request accepted";
+    } catch (error) {
+      return "An error occured";
+    } 
   }
 }
 
