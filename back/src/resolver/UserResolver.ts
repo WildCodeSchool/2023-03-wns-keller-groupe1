@@ -73,6 +73,7 @@ class UserResolver {
           "donation",
           "userFriend",
           "userSender",
+          "bankDetails"
         ],
       });
     return users;
@@ -91,6 +92,7 @@ class UserResolver {
             "donation",
             "userFriend",
             "userSender",
+            "bankDetails"
           ],
         });
       if (user != null) {
