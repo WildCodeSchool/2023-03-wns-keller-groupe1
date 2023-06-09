@@ -6,6 +6,7 @@ import { CarbonData } from "./entity/CarbonData";
 import { UserFriends } from "./entity/UserFriends";
 import { UserGroupe } from "./entity/UserGroupe";
 import { Donation } from "./entity/Donation";
+import { BankDetails } from "./entity/BankDetails";
 
 
 const dataSource = new DataSource({
@@ -16,7 +17,7 @@ const dataSource = new DataSource({
   password: process.env.POSTGRES_PASSWORD,
   database: "postgres",
   synchronize: true,
-  entities: [User, Category, CarbonData, UserGroupe, Donation, UserFriends],
+  entities: [User, Category, CarbonData, UserGroupe, Donation, UserFriends, BankDetails],
 });
 
 export default dataSource;
