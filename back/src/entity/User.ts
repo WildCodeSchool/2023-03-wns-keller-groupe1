@@ -42,6 +42,7 @@ export class User {
   @OneToMany(() => CarbonData, (carbonData) => carbonData.user)
   carbonData: CarbonData[];
 
+  @Field(() => [UserFriends])
   @OneToMany(() => UserFriends, (userFriend) => userFriend.userFriend)
   userFriend: UserFriends[];
 
@@ -53,9 +54,9 @@ export class User {
   chefGroupe: UserGroupe[];
 
   @Field(() => [UserGroupe])
-  @ManyToMany(() => UserGroupe)
+  @ManyToMany(() => UserGroupe, (userGroup) => userGroup.members )
   @JoinTable()
-  members: UserGroupe[];
+  groups: UserGroupe[];
 
   @Field(() => [Donation])
   @OneToMany(() => Donation, (donation) => donation.user)
