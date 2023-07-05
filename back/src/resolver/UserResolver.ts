@@ -61,6 +61,22 @@ class UserResolver {
     }
   }
 
+  @Query(() => User)
+  async getUserFromToken(
+    @Arg("token") token: string
+  ): Promise<User|String> {
+    try {
+      const decoded: any = jwt.verify(token, JWT_SECRET);
+      const user = await dataSource
+      .getRepository(User)
+      .findOneByOrFail({ email: decoded.email });
+      return user;
+    } catch (err) {
+      console.log(err);
+      return "An error occured";
+    }
+  }
+
   @Authorized()
   @Query(() => [User])
   async getAllUsers(): Promise<User[]> {
