@@ -4,7 +4,6 @@ import LoginRegisterForm from "../../components/Form/LoginRegisterForm";
 import styles from "./Login.module.css";
 import { useNavigate } from "react-router-dom";
 import { useGlobalState } from "../../GlobalStateContext";
-import { gql, useMutation, useLazyQuery } from "@apollo/client";
 import { useAuth } from "../../services/auth";
 
 const Login = () => {

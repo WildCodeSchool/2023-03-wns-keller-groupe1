@@ -130,8 +130,8 @@ const Navbar = () => {
             cursor: "pointer",
           }}
           onClick={() => (
-            localStorage.removeItem("token"),
-            setGlobalState({ isLogged: false })
+            sessionStorage.removeItem("token"),
+            setGlobalState({...globalState, isLogged: false })
           )}
         />                                          
       </div>

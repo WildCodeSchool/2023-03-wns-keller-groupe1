@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction } from "react";
 
 interface IGlobalState {
   isLogged: boolean;
+  user: any; // any car je sais pas encore ce que je vais mettre dedans
 }
 
 interface IGlobalStateContextProps {
@@ -23,6 +24,7 @@ export const useGlobalState = () => {
 export const GlobalStateProvider = ({ children }: IGlobalStateContextProps) => {
   const [globalState, setGlobalState] = React.useState<IGlobalState>({
     isLogged: false,
+    user: null,
   });
 
   return (
