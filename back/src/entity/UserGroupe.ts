@@ -7,7 +7,7 @@ import { User } from "./User";
 export class UserGroupe {
     @Field()
     @PrimaryGeneratedColumn()
-    Id: number;
+    id: number;
 
     @Field()
     @Column()

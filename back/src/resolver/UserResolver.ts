@@ -6,6 +6,8 @@ import { GraphQLError } from 'graphql';
 import dataSource from "../utils";
 import { User } from "../entity/User";
 import { JWT_SECRET } from "../index";
+import { UserInput } from "../validator/UserValidator";
+import { validate } from "class-validator";
 
 @Resolver()
 class UserResolver {
@@ -17,14 +19,17 @@ class UserResolver {
     @Arg("lastname") lastname: string
   ): Promise<String> {
     try {
-      if (
-        email === "" ||
-        password === "" ||
-        firstname === "" ||
-        lastname === ""
-      ) {
-        throw new Error();
+      const args = new UserInput();
+      args.email = email;
+      args.password = password;
+      args.firstname = firstname;
+      args.lastname = lastname;
+      const validationErrors = await validate(args);
+
+      if (validationErrors.length > 0) {
+        throw new Error("Validation error");
       }
+      
       const user = new User();
       user.email = email;
       user.firstname = firstname;
