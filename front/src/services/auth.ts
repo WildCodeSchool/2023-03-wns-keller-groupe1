@@ -28,9 +28,15 @@ const LOGIN = gql`
 export const useAuth = () => {
   const [globalState, setGlobalState] = useGlobalState();
   const navigate = useNavigate();
-  const [createNewUser, { data, loading, error }] = useMutation(CREATE_USER, {
+  const [createNewUser, { loading, error }] = useMutation(CREATE_USER, {
     onError: (error) => {
       toast.error(`Error creating user: ${error.message}`);
+    },
+    onCompleted: (data) => {
+      console.log(data);
+      toast.success("Votre compte a bien été créé");
+      navigate("/");
+
     },
   });
   const [login, loginData] = useLazyQuery(LOGIN, {
@@ -62,6 +68,7 @@ export const useAuth = () => {
     } else {
       await login({ variables: { password, email }});
       if (loginData.data) {
+        console.log(loginData.data)
         localStorage.setItem("token", loginData.data.login);
         setGlobalState({ ...globalState, isLogged: true });
         navigate("/dashboard");
