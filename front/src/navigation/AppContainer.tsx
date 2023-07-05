@@ -27,7 +27,7 @@ function App() {
           element={<PrivateRoute element={<HomePage />} />}
         />
       </Routes>
-    </BrowserRouter>
+    </BrowserRouter> 
   );
 }
 

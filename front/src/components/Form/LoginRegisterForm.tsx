@@ -38,8 +38,6 @@ const LoginRegisterForm = ({
 
   const [BtnDisabled, setBtnDisabled] = useState(true);
 
-  // useEffect set BtnDisabled to false if all inputs are filled
-
   useEffect(() => {
     if (
       isRegister &&
