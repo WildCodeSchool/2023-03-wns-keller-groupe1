@@ -1,6 +1,6 @@
 import { gql, useMutation, useLazyQuery } from "@apollo/client";
 import { useGlobalState } from "../GlobalStateContext";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const CREATE_USER = gql`
@@ -36,12 +36,17 @@ export const useAuth = () => {
       console.log(data);
       toast.success("Votre compte a bien été créé");
       navigate("/");
-
     },
   });
   const [login, loginData] = useLazyQuery(LOGIN, {
     onError: (error) => {
       toast.error(`Error logging in: ${error.message}`);
+    },
+    onCompleted: (data) => {
+      console.log(data);
+      localStorage.setItem("token", loginData.data.login);
+        setGlobalState({ ...globalState, isLogged: true });
+        navigate("/dashboard");
     },
   });
 
@@ -66,17 +71,10 @@ export const useAuth = () => {
         },
       });
     } else {
-      await login({ variables: { password, email }});
-      if (loginData.data) {
-        console.log(loginData.data)
-        localStorage.setItem("token", loginData.data.login);
-        setGlobalState({ ...globalState, isLogged: true });
-        navigate("/dashboard");
-      }
+      await login({ variables: { password, email } });
     }
-    setIsLoading(false); 
+    setIsLoading(false);
   };
-  
 
   return { handleFormSubmit, createNewUser, login };
 };
