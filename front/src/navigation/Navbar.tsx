@@ -131,7 +131,7 @@ const Navbar = () => {
           }}
           onClick={() => (
             sessionStorage.removeItem("token"),
-            setGlobalState({ isLogged: false })
+            setGlobalState({...globalState, isLogged: false })
           )}
         />                                          
       </div>

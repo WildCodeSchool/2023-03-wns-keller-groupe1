@@ -25,9 +25,20 @@ const LOGIN = gql`
   }
 `;
 
+const GET_USER_FROM_TOKEN = gql`
+  query GetUserFromToken($token: String!) {
+    getUserFromToken(token: $token) {
+      email
+      firstname
+      lastname
+    }
+  }
+`;
+
 export const useAuth = () => {
   const [globalState, setGlobalState] = useGlobalState();
   const navigate = useNavigate();
+
   const [createNewUser, { loading, error }] = useMutation(CREATE_USER, {
     onError: (error) => {
       toast.error(`Error creating user: ${error.message}`);
@@ -38,15 +49,26 @@ export const useAuth = () => {
       navigate("/");
     },
   });
-  const [login, loginData] = useLazyQuery(LOGIN, {
+
+  const [getUserFromToken] = useLazyQuery(GET_USER_FROM_TOKEN, {
+    onError: (error) => {
+      toast.error(`Error getting user data: ${error.message}`);
+    },
+    onCompleted: (data) => {
+      setGlobalState({ isLogged: true, user: data.getUserFromToken });
+      console.log(data);
+      navigate("/dashboard");
+    },
+  });
+
+  const [login] = useLazyQuery(LOGIN, {
     onError: (error) => {
       toast.error(`Error logging in: ${error.message}`);
     },
     onCompleted: (data) => {
       console.log(data);
-      localStorage.setItem("token", loginData.data.login);
-        setGlobalState({ ...globalState, isLogged: true });
-        navigate("/dashboard");
+      localStorage.setItem("token", data.login);
+      getUserFromToken({ variables: { token: data.login } });
     },
   });
 
