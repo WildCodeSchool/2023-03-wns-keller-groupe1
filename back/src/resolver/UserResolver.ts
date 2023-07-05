@@ -2,6 +2,7 @@ import * as argon2 from "argon2";
 import * as jwt from "jsonwebtoken";
 
 import { Arg, Authorized, Mutation, Query, Resolver } from "type-graphql";
+import { GraphQLError } from 'graphql';
 import dataSource from "../utils";
 import { User } from "../entity/User";
 import { JWT_SECRET } from "../index";
@@ -36,7 +37,7 @@ class UserResolver {
       await dataSource.getRepository(User).save(user);
       return "User created";
     } catch (error) {
-      return "An error occured";
+      throw new GraphQLError('An error occured');  
     }
   }
 
@@ -53,11 +54,10 @@ class UserResolver {
         const token = jwt.sign({ email }, JWT_SECRET);
         return token;
       } else {
-        return "An error occured";
+        throw new GraphQLError('An error occured');  
       }
     } catch (err) {
-      console.log(err);
-      return "An error occured";
+      throw new GraphQLError('An error occured');  
     }
   }
 
@@ -72,15 +72,53 @@ class UserResolver {
       .findOneByOrFail({ email: decoded.email });
       return user;
     } catch (err) {
-      console.log(err);
-      return "An error occured";
+      throw new GraphQLError('An error occured');  
+    }
+  }
+
+  @Query(() => String)
+  async refreshToken(
+    @Arg("token") token: string
+  ): Promise<String> {
+    try {
+      const decoded: any = jwt.verify(token, JWT_SECRET);
+      const user = await dataSource
+      .getRepository(User)
+      .findOneByOrFail({ email: decoded.email });
+      delete decoded.iat;
+      delete decoded.exp;
+      delete decoded.nbf;
+      delete decoded.jti; 
+      return jwt.sign({ email: user.email }, JWT_SECRET);
+    } catch (err) {
+      throw new GraphQLError('An error occured');  
+    }
+  }
+
+  @Query(() => String)
+  async verifyToken(
+    @Arg("token") token: string
+  ): Promise<String> {
+    try {
+      const decoded: any = jwt.verify(token, JWT_SECRET);
+      const user = await dataSource
+      .getRepository(User)
+      .findOneByOrFail({ email: decoded.email });
+      if (decoded != null && user != null) {
+        return "User is logged in";
+      } else {
+        throw new GraphQLError('An error occured');  
+      }
+    } catch (err) {
+      throw new GraphQLError('An error occured');  
     }
   }
 
   @Authorized()
   @Query(() => [User])
-  async getAllUsers(): Promise<User[]> {
-    const users = await dataSource
+  async getAllUsers(): Promise<User[]|string> {
+    try {
+      const users = await dataSource
       .getRepository(User)
       .find({
         relations: [
@@ -92,7 +130,10 @@ class UserResolver {
           "bankDetails"
         ],
       });
-    return users;
+      return users;
+    } catch (error) {
+      throw new GraphQLError('An error occured');  
+    }
   }
 
   @Query(() => User)
@@ -117,7 +158,7 @@ class UserResolver {
         throw new Error();
       }
     } catch (error) {
-      return "An error occured";
+      throw new GraphQLError('An error occured');  
     }
   }
 
@@ -141,7 +182,7 @@ class UserResolver {
         });
       return `User ${userId} updated`;
     } catch (error) {
-      return "An error occured";
+      throw new GraphQLError('An error occured');  
     }
   }
 
@@ -151,7 +192,7 @@ class UserResolver {
       await dataSource.getRepository(User).delete({ userId });
       return "User deleted";
     } catch (error) {
-      return "An error occured";
+      throw new GraphQLError('An error occured');  
     }
   }
 }
