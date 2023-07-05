@@ -1,7 +1,8 @@
 import React from "react";
+import { ColorModeContext, useMode } from "../components/theme/darkmode";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import {
   BrowserRouter,
-  Outlet,
   Route,
   Routes,
   useNavigate,
@@ -14,20 +15,25 @@ import Navbar from "../navigation/Navbar";
 
 function App() {
   const [globalState, setGlobalState] = useGlobalState();
-
+  const [theme, colorMode] = useMode();
   console.log(globalState.isLogged);
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
-        <Route path="/login" element={<Login />} />
 
-        <Route
-          path="/dashboard"
-          element={<PrivateRoute element={<HomePage />} />}
-        />
-      </Routes>
-    </BrowserRouter>
+  return (
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={{ theme }}>
+        <CssBaseline />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Navigate to="/login" />} />
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/dashboard"
+              element={<PrivateRoute element={<HomePage />} />}
+            />
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
+    </ColorModeContext.Provider>
   );
 }
 
@@ -42,7 +48,7 @@ function PrivateRoute({ element }: { element: React.ReactNode }) {
   }, [globalState.isLogged, navigate]);
 
   return (
-    <div style={{display:'flex',flexDirection:'row'}}>
+    <div style={{ display: "flex", flexDirection: "row" }}>
       <Navbar />
       {element}
     </div>
