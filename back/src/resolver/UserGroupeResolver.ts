@@ -52,11 +52,11 @@ class UserGroupeResolver {
   }
 
   @Query(() => UserGroupe)
-  async getUserGroupe(@Arg("Id") Id: number): Promise<UserGroupe | string > {
+  async getUserGroupe(@Arg("id") id: number): Promise<UserGroupe | string > {
     try {
       const userGroupe = await dataSource
         .getRepository(UserGroupe)
-        .findOne({where: {Id}, relations: ['user', 'members']});
+        .findOne({where: {id}, relations: ['user', 'members']});
       if (userGroupe != null) {
         return userGroupe;
       } else {
@@ -87,7 +87,7 @@ class UserGroupeResolver {
 				where: { userId },
 				relations: ['groups']
 			});
-			const groupToAdd = await dataSource.getRepository(UserGroupe).findOneByOrFail({Id: groupeId});
+			const groupToAdd = await dataSource.getRepository(UserGroupe).findOneByOrFail({id: groupeId});
 			
 			if (user != null) {
 				const currentUserGroupe = user.groups;
@@ -113,7 +113,7 @@ class UserGroupeResolver {
 
 			if (user != null) {
 				const currentUserGroupe = user.groups;
-				const groupToRemove = await dataSource.getRepository(UserGroupe).findOneByOrFail({Id: groupeId});
+				const groupToRemove = await dataSource.getRepository(UserGroupe).findOneByOrFail({id: groupeId});
 				currentUserGroupe.filter((groups) => groups !== groupToRemove);
 			}
 

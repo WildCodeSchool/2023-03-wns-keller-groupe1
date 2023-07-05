@@ -51,6 +51,15 @@ class UserResolver {
     @Arg("email") email: string,
     @Arg("password") password: string
   ): Promise<String> {
+    const args = new UserInput();
+    args.email = email;
+    args.password = password;
+    const validationErrors = await validate(args);
+
+    if (validationErrors.length > 0) {
+      throw new Error("Validation error");
+    }
+
     const user = await dataSource
       .getRepository(User)
       .findOneByOrFail({ email });
@@ -175,6 +184,18 @@ class UserResolver {
     @Arg("lastname") lastname: string,
     @Arg("totalCo2") totalCo2: number
   ): Promise<string> {
+    const args = new UserInput();
+    args.email = email;
+    args.id = userId;
+    args.totalCo2 = totalCo2;
+    args.firstname = firstname;
+    args.lastname = lastname;
+    const validationErrors = await validate(args);
+
+    if (validationErrors.length > 0) {
+      throw new Error("Validation error");
+    }
+    
     try {
       await dataSource
         .getRepository(User)
