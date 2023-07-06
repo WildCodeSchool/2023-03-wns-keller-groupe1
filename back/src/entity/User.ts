@@ -64,7 +64,9 @@ export class User {
   donation : Donation[];
 
   @Field(() => BankDetails)
-  @OneToOne(() => BankDetails, (bankDetails) => bankDetails.user)
+  @OneToOne(() => BankDetails, (bankDetails) => bankDetails.user, {
+    onDelete: "SET NULL"
+  })
   @JoinColumn()
   bankDetails: BankDetails;
 
