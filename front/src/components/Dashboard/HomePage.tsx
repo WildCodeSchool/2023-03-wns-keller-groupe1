@@ -1,7 +1,8 @@
+import SideBar from "../SideBar/SideBar";
 const HomePage = () => {
   return (
     <div>
-      <p>Home Page 3</p>
+      <SideBar />
     </div>
   );
 };
