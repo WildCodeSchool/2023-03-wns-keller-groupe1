@@ -11,6 +11,7 @@ import HomePage from "../components/Dashboard/HomePage";
 import Login from "../screens/UserConnexion/Login";
 import { useGlobalState } from "../GlobalStateContext";
 import Navbar from "../navigation/Navbar";
+import FriendList from "../components/FriendList";
 
 function App() {
   const [globalState, setGlobalState] = useGlobalState();
@@ -21,6 +22,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/friend-list" element={<FriendList />} />
 
         <Route
           path="/dashboard"
