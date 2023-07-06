@@ -90,7 +90,7 @@ describe('UserResolver', () => {
 
     const resolver = new UserResolver();
     const token: any = await resolver.login(email, password);
-    
+
     const result: any =  await resolver.getUserFromToken(token);
 
     expect(result).toBeInstanceOf(User);
@@ -113,7 +113,7 @@ describe('UserResolver', () => {
   });
 
   it('Update a user', async () => {
-    const id = 0;
+    const id = 1;
     const email = 'test@example.com';
     const firstname = 'John';
     const lastname = 'Doe';
@@ -126,7 +126,7 @@ describe('UserResolver', () => {
   });
 
   it('Delete a user', async () => {
-    const id = 0;
+    const id = 1;
 
     const resolver = new UserResolver();
     const result = await resolver.deleteUser(id);

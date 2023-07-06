@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --forceExit",
     "start": "ts-node-dev src/index.ts",
     "dev": "ts-node-dev src/fixture.ts && ts-node-dev src/index.ts"
   },
