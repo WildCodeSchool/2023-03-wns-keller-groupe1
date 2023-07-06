@@ -1,15 +1,18 @@
-import { Length } from "class-validator";
-import { Field, InputType } from "type-graphql";
+import { MaxLength } from "class-validator";
+import { Field, InputType, Int } from "type-graphql";
 
 @InputType()
 export class UserGroupInput {
-  @Field({ nullable: true })
+  @Field(() => Int, { nullable: true })
   id: number;
 
-  @Field({ nullable: true })
+  @Field(() => Int, { nullable: true })
   userId: number;
 
+  @Field(() => Int, { nullable: true })
+  groupeId: number;
+
   @Field({ nullable: true })
-  @Length(1, 255)
-  title: string;
+  @MaxLength(255)
+  title: string = "";
 }

@@ -2,6 +2,9 @@ import { Arg, Mutation, Query, Resolver } from "type-graphql";
 import dataSource from "../utils";
 import { UserGroupe } from "../entity/UserGroupe";
 import { User } from "../entity/User";
+import { UserGroupInput } from "../validator/UserGroupValidator";
+import { validate } from "class-validator";
+import { GraphQLError } from "graphql";
 
 @Resolver()
 class UserGroupeResolver {
@@ -10,8 +13,17 @@ class UserGroupeResolver {
   async createUserGroupe(
     @Arg("userId") userId: number,
     @Arg("title") title: string
-  ): Promise<any> {
+  ): Promise<string|GraphQLError> {
     try {
+      const args = new UserGroupInput();
+      args.userId = userId;
+      args.title = title;
+      const validationErrors = await validate(args);
+
+      if (validationErrors.length > 0) {
+        return new GraphQLError('Validation error');  
+      }
+
       const userGroupe = new UserGroupe();
       userGroupe.title = title;
       userGroupe.modifiedAt = new Date();
@@ -22,7 +34,7 @@ class UserGroupeResolver {
       await dataSource.getRepository(UserGroupe).save(userGroupe);
       return "Groupe Created";
     } catch (error) {
-      return error;
+      return new GraphQLError('An error occured'); 
     }
   }
 
@@ -31,28 +43,44 @@ class UserGroupeResolver {
   async updateUserGroupe(
     @Arg("title") title: string,
     @Arg("id") id: number
-  ): Promise<string> {
+  ): Promise<string|GraphQLError> {
     try {
+      const args = new UserGroupInput();
+      args.id = id;
+      args.title = title;
+      const validationErrors = await validate(args);
+
+      if (validationErrors.length > 0) {
+        return new GraphQLError('Validation error');  
+      }
+
       await dataSource.getRepository(UserGroupe).update(id, { title });
       return " group update";
     } catch (error) {
-      return "error update groupe";
+      return new GraphQLError('An error occured');  
     }
   }
 
   // DELETE
   @Mutation(() => String)
-  async deleteUserGroupe(@Arg("id") id: number): Promise<string> {
+  async deleteUserGroupe(@Arg("id") id: number): Promise<string|GraphQLError> {
     try {
+      const args = new UserGroupInput();
+      args.id = id;
+      const validationErrors = await validate(args);
+
+      if (validationErrors.length > 0) {
+        return new GraphQLError('Validation error');  
+      }
       await dataSource.getRepository(UserGroupe).delete(id);
       return "groupe is deleted";
     } catch (error) {
-      return "groupe is not deleted";
+      return new GraphQLError('An error occured');  
     }
   }
 
   @Query(() => UserGroupe)
-  async getUserGroupe(@Arg("id") id: number): Promise<UserGroupe | string > {
+  async getUserGroupe(@Arg("id") id: number): Promise<UserGroupe|string|GraphQLError > {
     try {
       const userGroupe = await dataSource
         .getRepository(UserGroupe)
@@ -63,17 +91,17 @@ class UserGroupeResolver {
         throw new Error();
       }   
     } catch (error) {
-      return "Error UserGroupe";
+      return new GraphQLError('An error occured'); 
     }
   }
 
   @Query(() => [UserGroupe])
-  async getAllUserGroupe(): Promise<UserGroupe[] | string> {
+  async getAllUserGroupe(): Promise<UserGroupe[]|string|GraphQLError> {
     try {
       const allUserGroupe = await dataSource.getRepository(UserGroupe).find({relations: ['user', 'members']});
       return allUserGroupe;
     } catch (error) {
-      return "Error UserGroupe";
+      return new GraphQLError('An error occured'); 
     }
   }
 
@@ -81,8 +109,16 @@ class UserGroupeResolver {
 	async addUserToGroup(
 		@Arg("userId") userId: number,
 		@Arg("groupeId") groupeId: number
-	): Promise<any> {
+	): Promise<string|GraphQLError> {
 		try {
+      const args = new UserGroupInput();
+      args.userId = userId;
+      args.groupeId = groupeId;
+      const validationErrors = await validate(args);
+
+      if (validationErrors.length > 0) {
+        return new GraphQLError('Validation error');  
+      }
 			const user = await dataSource.getRepository(User).findOne({ 
 				where: { userId },
 				relations: ['groups']
@@ -96,7 +132,7 @@ class UserGroupeResolver {
 				
 			return "User has been added";
 		} catch (error) {
-			return "Error UserGroupe";
+			return new GraphQLError('An error occured'); 
 		}
 	}
 
@@ -104,8 +140,17 @@ class UserGroupeResolver {
 	async removeUserFromGroup(
 		@Arg("userId") userId: number,
 		@Arg("groupeId") groupeId: number
-	): Promise<string> {
+	): Promise<string|GraphQLError> {
 		try {
+      const args = new UserGroupInput();
+      args.userId = userId;
+      args.groupeId = groupeId;
+      const validationErrors = await validate(args);
+
+      if (validationErrors.length > 0) {
+        return new GraphQLError('Validation error');  
+      }
+
 			const user = await dataSource.getRepository(User).findOne({ 
 				where: { userId },
 				relations: ['groups']
@@ -117,9 +162,9 @@ class UserGroupeResolver {
 				currentUserGroupe.filter((groups) => groups !== groupToRemove);
 			}
 
-			return "Group has been removed";
+			return "User has been removed from group";
 		} catch (error) {
-			return "Error UserGroupe";
+			return new GraphQLError('An error occured'); 
 		}
 	}
 }

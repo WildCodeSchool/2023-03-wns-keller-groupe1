@@ -17,7 +17,7 @@ class UserResolver {
     @Arg("password") password: string,
     @Arg("firstname") firstname: string,
     @Arg("lastname") lastname: string
-  ): Promise<String> {
+  ): Promise<string|GraphQLError> {
     try {
       const args = new UserInput();
       args.email = email;
@@ -27,7 +27,7 @@ class UserResolver {
       const validationErrors = await validate(args);
 
       if (validationErrors.length > 0) {
-        throw new Error("Validation error");
+        return new GraphQLError('Validation error');  
       }
       
       const user = new User();
@@ -42,7 +42,7 @@ class UserResolver {
       await dataSource.getRepository(User).save(user);
       return "User created";
     } catch (error) {
-      throw new GraphQLError('An error occured');  
+      return new GraphQLError('An error occured');  
     }
   }
 
@@ -50,35 +50,26 @@ class UserResolver {
   async login(
     @Arg("email") email: string,
     @Arg("password") password: string
-  ): Promise<String> {
-    const args = new UserInput();
-    args.email = email;
-    args.password = password;
-    const validationErrors = await validate(args);
-
-    if (validationErrors.length > 0) {
-      throw new Error("Validation error");
-    }
-
-    const user = await dataSource
-      .getRepository(User)
-      .findOneByOrFail({ email });
+  ): Promise<String|GraphQLError> {
     try {
+      const user = await dataSource
+        .getRepository(User)
+        .findOneByOrFail({ email });
       if (await argon2.verify(user.hashedPassword, password)) {
         const token = jwt.sign({ email }, JWT_SECRET);
         return token;
       } else {
-        throw new GraphQLError('An error occured');  
+        return new GraphQLError('Password does not match');  
       }
     } catch (err) {
-      throw new GraphQLError('An error occured');  
+      return new GraphQLError('An error occured');  
     }
   }
 
   @Query(() => User)
   async getUserFromToken(
     @Arg("token") token: string
-  ): Promise<User|String> {
+  ): Promise<User|String|GraphQLError> {
     try {
       const decoded: any = jwt.verify(token, JWT_SECRET);
       const user = await dataSource
@@ -86,14 +77,14 @@ class UserResolver {
       .findOneByOrFail({ email: decoded.email });
       return user;
     } catch (err) {
-      throw new GraphQLError('An error occured');  
+      return new GraphQLError('An error occured');  
     }
   }
 
   @Query(() => String)
   async refreshToken(
     @Arg("token") token: string
-  ): Promise<String> {
+  ): Promise<String|GraphQLError> {
     try {
       const decoded: any = jwt.verify(token, JWT_SECRET);
       const user = await dataSource
@@ -105,14 +96,14 @@ class UserResolver {
       delete decoded.jti; 
       return jwt.sign({ email: user.email }, JWT_SECRET);
     } catch (err) {
-      throw new GraphQLError('An error occured');  
+      return new GraphQLError('An error occured');  
     }
   }
 
   @Query(() => String)
   async verifyToken(
     @Arg("token") token: string
-  ): Promise<String> {
+  ): Promise<String|GraphQLError> {
     try {
       const decoded: any = jwt.verify(token, JWT_SECRET);
       const user = await dataSource
@@ -121,16 +112,16 @@ class UserResolver {
       if (decoded != null && user != null) {
         return "User is logged in";
       } else {
-        throw new GraphQLError('An error occured');  
+        return new GraphQLError('User is not logged in');  
       }
     } catch (err) {
-      throw new GraphQLError('An error occured');  
+      return new GraphQLError('An error occured');  
     }
   }
 
   @Authorized()
   @Query(() => [User])
-  async getAllUsers(): Promise<User[]|string> {
+  async getAllUsers(): Promise<User[]|string|GraphQLError> {
     try {
       const users = await dataSource
       .getRepository(User)
@@ -146,12 +137,12 @@ class UserResolver {
       });
       return users;
     } catch (error) {
-      throw new GraphQLError('An error occured');  
+      return new GraphQLError('An error occured');  
     }
   }
 
   @Query(() => User)
-  async getUser(@Arg("userId") userId: number): Promise<User | string> {
+  async getUser(@Arg("userId") userId: number): Promise<User|string|GraphQLError> {
     try {
       const user = await dataSource
         .getRepository(User)
@@ -169,10 +160,10 @@ class UserResolver {
       if (user != null) {
         return user;
       } else {
-        throw new Error();
+        return new GraphQLError('No user found');
       }
     } catch (error) {
-      throw new GraphQLError('An error occured');  
+      return new GraphQLError('An error occured');  
     }
   }
 
@@ -183,20 +174,19 @@ class UserResolver {
     @Arg("firstname") firstname: string,
     @Arg("lastname") lastname: string,
     @Arg("totalCo2") totalCo2: number
-  ): Promise<string> {
-    const args = new UserInput();
-    args.email = email;
-    args.id = userId;
-    args.totalCo2 = totalCo2;
-    args.firstname = firstname;
-    args.lastname = lastname;
-    const validationErrors = await validate(args);
-
-    if (validationErrors.length > 0) {
-      throw new Error("Validation error");
-    }
-    
+  ): Promise<String|GraphQLError> { 
     try {
+      const args = new UserInput();
+      args.email = email;
+      args.totalCo2 = totalCo2;
+      args.firstname = firstname;
+      args.lastname = lastname;
+      const validationErrors = await validate(args);
+  
+      if (validationErrors.length > 0) {
+        return new GraphQLError("Validation error");
+      }
+      
       await dataSource
         .getRepository(User)
         .update(userId, {
@@ -208,17 +198,17 @@ class UserResolver {
         });
       return `User ${userId} updated`;
     } catch (error) {
-      throw new GraphQLError('An error occured');  
+      return new GraphQLError('An error occured');  
     }
   }
 
   @Mutation(() => String)
-  async deleteUser(@Arg("userId") userId: number): Promise<string> {
+  async deleteUser(@Arg("userId") userId: number): Promise<string|GraphQLError> {
     try {
       await dataSource.getRepository(User).delete({ userId });
       return "User deleted";
     } catch (error) {
-      throw new GraphQLError('An error occured');  
+      return new GraphQLError('An error occured');  
     }
   }
 }
