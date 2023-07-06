@@ -10,13 +10,8 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { ICarbonDataArray } from "../../interface/CarbonData";
-
-interface ChartProps {
-  data: ICarbonDataArray;
-  selectedMonth: string;
-  currentMonth: string;
-}
+import { ChartProps } from "../../interface/ChartProps";
+import { frenchMonthToNumber } from "../../helper/helper";
 
 ChartJS.register(
   CategoryScale,
@@ -28,20 +23,6 @@ ChartJS.register(
   Legend
 );
 
-const frenchMonthToNumber = {
-  janvier: 0,
-  février: 1,
-  mars: 2,
-  avril: 3,
-  mai: 4,
-  juin: 5,
-  juillet: 6,
-  août: 7,
-  septembre: 8,
-  octobre: 9,
-  novembre: 10,
-  décembre: 11,
-};
 const Chart: React.FC<ChartProps> = ({ data, selectedMonth, currentMonth }) => {
   const selectedMonthNumber =
     frenchMonthToNumber[selectedMonth as keyof typeof frenchMonthToNumber];
