@@ -10,6 +10,13 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { ICarbonDataArray } from "../../interface/CarbonData";
+
+interface ChartProps {
+  data: ICarbonDataArray;
+  selectedMonth: string;
+  currentMonth: string;
+}
 
 ChartJS.register(
   CategoryScale,
@@ -21,47 +28,72 @@ ChartJS.register(
   Legend
 );
 
-const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "top" as "top",
-    },
-  },
+const frenchMonthToNumber = {
+  janvier: 0,
+  février: 1,
+  mars: 2,
+  avril: 3,
+  mai: 4,
+  juin: 5,
+  juillet: 6,
+  août: 7,
+  septembre: 8,
+  octobre: 9,
+  novembre: 10,
+  décembre: 11,
 };
+const Chart: React.FC<ChartProps> = ({ data, selectedMonth, currentMonth }) => {
+  const selectedMonthNumber =
+    frenchMonthToNumber[selectedMonth as keyof typeof frenchMonthToNumber];
+  const filteredData = data.data.filter(
+    (item) => item.createdAt.getMonth() === selectedMonthNumber
+  );
 
-const labels = ["semaine 1", "semaine 2", "semaine 3", "semaine 4"];
+  const labels = filteredData.map((item) =>
+    item.createdAt.toLocaleString("fr-FR", { day: "2-digit", month: "short" })
+  );
 
-const accordParisValue = 200;
-const francaisMoyenValue = 500;
+  let cumulativeCarbonConsumption = 0;
+  const cumulativeConsumptionData = filteredData.map((item) => {
+    cumulativeCarbonConsumption += item.consumption;
+    return cumulativeCarbonConsumption;
+  });
 
-const data = {
-  labels,
-  datasets: [
-    {
-      label: "Vous",
-      data: [0, 500, 750, 1200],
-      borderColor: "rgb(255, 99, 132)",
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
+  const chartData = {
+    labels,
+    datasets: [
+      {
+        label: "Votre consommation en kg de CO2",
+        data: cumulativeConsumptionData,
+        borderColor: "rgb(37, 165, 95)",
+        backgroundColor: " rgba(37, 165, 95 ,0.5)",
+        pointRadius: 5,
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top" as "top",
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context: any) {
+            const index = context.dataIndex;
+            const title =
+              filteredData[index].title +
+              " - " +
+              filteredData[index].consumption +
+              " kg / co2";
+            return title;
+          },
+        },
+      },
     },
-    {
-      label: "Accord de Paris",
-      data: Array(labels.length).fill(accordParisValue),
-      borderColor: "rgb(53, 162, 235)",
-      backgroundColor: "rgba(53, 162, 235, 0.5)",
-      fill: false,
-    },
-    {
-      label: "Français moyen",
-      data: Array(labels.length).fill(francaisMoyenValue),
-      borderColor: "rgb(53, 78, 5)",
-      backgroundColor: "rgba(53, 162, 5, 0.5)",
-      fill: false,
-    },
-  ],
-};
+  };
 
-const Chart = () => {
   return (
     <div
       style={{
@@ -70,7 +102,7 @@ const Chart = () => {
         display: "flex",
       }}
     >
-      <Line options={options} data={data} />
+      <Line options={options} data={chartData} />
     </div>
   );
 };

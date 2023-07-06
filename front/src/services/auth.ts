@@ -28,6 +28,7 @@ const LOGIN = gql`
 const GET_USER_FROM_TOKEN = gql`
   query GetUserFromToken($token: String!) {
     getUserFromToken(token: $token) {
+      userId
       email
       firstname
       lastname
