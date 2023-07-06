@@ -159,7 +159,7 @@ class UserGroupeResolver {
 			if (user != null) {
 				const currentUserGroupe = user.groups;
 				const groupToRemove = await dataSource.getRepository(UserGroupe).findOneByOrFail({id: groupeId});
-				currentUserGroupe.filter((groups) => groups !== groupToRemove);
+				currentUserGroupe.filter((groups:any) => groups !== groupToRemove);
 			}
 
 			return "User has been removed from group";
