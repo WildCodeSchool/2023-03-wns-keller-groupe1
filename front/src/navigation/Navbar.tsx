@@ -66,15 +66,15 @@ const Navbar = () => {
         />
 
         <ChartIcon
-          className={`icon ${selectedIcon === "chart" ? "selected" : ""}`}
+          className={`icon ${selectedIcon === "statistic" ? "selected" : ""}`}
           style={{
-            fill: selectedIcon === "chart" ? "white" : "#B5C2C9",
+            fill: selectedIcon === "statistic" ? "white" : "#B5C2C9",
             width: "30%",
             height: "50%",
             margin: "auto",
             cursor: "pointer",
           }}
-          onClick={() => handleIconClick("chart")}
+          onClick={() => handleIconClick("statistic")}
         />
 
         <SocialIcon

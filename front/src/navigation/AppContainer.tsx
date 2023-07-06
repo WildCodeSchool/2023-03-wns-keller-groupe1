@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import HomePage from "../components/Dashboard/HomePage";
 import Login from "../screens/UserConnexion/Login";
+import Statistic from "../screens/Statistic/Statistic";
 import { useGlobalState } from "../GlobalStateContext";
 import Navbar from "../navigation/Navbar";
 import FriendList from "../components/FriendList";
@@ -27,6 +28,10 @@ function App() {
         <Route
           path="/dashboard"
           element={<PrivateRoute element={<HomePage />} />}
+        />
+        <Route
+          path="/statistic"
+          element={<PrivateRoute element={<Statistic />} />}
         />
       </Routes>
     </BrowserRouter> 
