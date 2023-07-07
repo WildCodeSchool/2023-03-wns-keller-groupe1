@@ -22,7 +22,6 @@ export const useUserCarbonData = (userId: number) => {
   });
 
   let userCarbonData = data?.getUser?.carbonData;
-console.log(userCarbonData)
 
 if(userCarbonData) {
   userCarbonData = userCarbonData.map((item: ICarbonData) => ({ 

@@ -8,22 +8,21 @@ import BarChart from "../../components/chart/VerticalBarChart";
 
 const Statistic = () => {
   const [globalState, setGlobalState] = useGlobalState();
-  const { loading, error, data } = useUserCarbonData(globalState?.user?.userId);
+  const { error, data } = useUserCarbonData(globalState?.user?.userId);
   const [months, setMonths] = useState<Array<{ month: string; year: string }>>(
     []
   );
   const [currentMonth, setCurrentMonth] = useState<string>("");
   const [selectedMonth, setSelectedMonth] = useState<string>(currentMonth);
-
+  const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
     const currentDate = new Date();
     const month = currentDate.toLocaleString("fr-FR", { month: "long" });
     setCurrentMonth(month);
     setSelectedMonth(month);
   }, []);
-
   useEffect(() => {
-    if (data) {
+    if (data && loading === true) {
       const ticketsByMonthAndYear: { [monthAndYear: string]: ICarbonData[] } =
         {};
 
@@ -47,7 +46,8 @@ const Statistic = () => {
         })
       );
     }
-  }, []);
+    setLoading(false);
+  }, [data]);
 
   return (
     <div className={styles.MainContainer}>
@@ -62,6 +62,7 @@ const Statistic = () => {
           <div className={styles.SelectMonthContainer}>
             <select
               className={styles.SelectMonth}
+              value={selectedMonth}
               onChange={(event) => setSelectedMonth(event.target.value)}
             >
               {months.map(({ month, year }) => (
