@@ -2,6 +2,8 @@ import { useState } from "react";
 import NewCarbonDataForm from "../Form/NewCarbonDataForm";
 import CreateCarbonData from "../../services/crateCarbonData";
 import { useGlobalState } from "../../GlobalStateContext";
+import styles from "./HomePage.module.css";
+import UserSummary from "./UserSummary";
 
 const HomePage = () => {
   const [name, setName] = useState<string|undefined>();
@@ -10,10 +12,17 @@ const HomePage = () => {
   const [co2, setCo2] = useState<number|undefined>();
   const { handleFormSubmit } = CreateCarbonData();
   const [globalState, setGlobalState] = useGlobalState();
-  
+
   return (
-    <div>
-      <p>Home Page 3</p>
+    <>
+      <div className={styles.MainContainer}>
+        <div>
+          <UserSummary/>
+        </div>
+        <div style={{width: "50%"}}>
+          
+        </div>
+      </div>
       <NewCarbonDataForm 
         setName={setName} 
         setCategory={setCategory} 
@@ -26,8 +35,9 @@ const HomePage = () => {
           price,
           category,
           globalState.user.userId
-      )} />
-    </div>
+        )}
+      />
+    </>
   );
 };
 

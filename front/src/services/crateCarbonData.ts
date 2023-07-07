@@ -29,7 +29,9 @@ const CreateCarbonData = () => {
       toast.error(`Error creating carbon data: ${error.message}`);
     },
 		onCompleted: (data) => {
-      		toast.success("Une nouvelle dépense carbone a bien été créé ");
+      toast.success("Une nouvelle dépense carbone a bien été créé ");
+			const modal: any = document.getElementById("new-carbon-modal");
+			modal.style.display = "none";	
     },
 	})
 

@@ -48,10 +48,18 @@ const NewCarbonDataForm = ({
     (event: ChangeEvent<HTMLSelectElement>): void => {
       setStateFunc(Number(event.target.value));
     };
+ 
+  const modal: any = document.getElementById("new-carbon-modal");
+
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  } 
 
   return (
     <>
-      <div className={styles.MainContainer}>
+      <div id="new-carbon-modal" className={styles.MainContainer}>
         <div className={styles.modalContainer}>
           <h1 className={styles.modalTitle}>Ajouter une dépense carbone</h1>
           <div className={styles.formContainer}>
