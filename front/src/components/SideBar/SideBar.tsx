@@ -1,3 +1,4 @@
+import DarkMode from "../theme/DarkMode";
 import "./SideBar.css";
 import { motion } from "framer-motion";
 import {
@@ -129,6 +130,7 @@ function App() {
               animate={{ opacity: open ? 1 : 0, height: open ? "auto" : 0 }}
             ></motion.h3>
             <Item icon={<ContactPhone />} name="Contact" />
+            <DarkMode />
           </div>
         </motion.div>
       </motion.div>
