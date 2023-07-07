@@ -1,12 +1,12 @@
 import React, { useEffect, useState, ChangeEvent } from "react";
 import styles from "./NewCarbonDataForm.module.css";
 import { NewCarbonDataFormProps } from "../../interface/NewCarbonDataFormProps";
-import CreateCarbonData from "../../services/crateCarbonData";
-import { log } from "console";
+import GetAllCategories from "../../services/getAllCategories";
+
 
 const NewCarbonDataForm = ({setName, setCategory, setPrice, setCo2, handleFormSubmit}: NewCarbonDataFormProps) => {
 	const [categories, setCategories] = useState<any>();
-	const { getAllCategories } = CreateCarbonData()
+	const { getAllCategories } = GetAllCategories()
 
   useEffect(() => {
     getAllCategories().then(data => {
@@ -36,7 +36,7 @@ const NewCarbonDataForm = ({setName, setCategory, setPrice, setCo2, handleFormSu
 		<>
 			<div className={styles.MainContainer}>
 				<div className={styles.modalContainer}>
-					<h1 className={styles.modalTitle}>Ajouter une dépense</h1>
+					<h1 className={styles.modalTitle}>Ajouter une dépense carbone</h1>
 					<div className={styles.formContainer}>
 						<div>
 							<p className={styles.formTitle}>Quel est le nom de votre dépense ?</p>
@@ -45,7 +45,7 @@ const NewCarbonDataForm = ({setName, setCategory, setPrice, setCo2, handleFormSu
 								type="text"
 								name="carbonName"
 								id="carbonName"
-								placeholder="Train TGV Nantes - Bordeaux"
+								placeholder="Ex: Train TGV Nantes - Bordeaux"
 								required
 								onChange={handleInputChange(setName)}
 							/>
@@ -76,6 +76,7 @@ const NewCarbonDataForm = ({setName, setCategory, setPrice, setCo2, handleFormSu
 								name="price"
 								id="price"
 								onChange={handleInputNumberChange(setPrice)}
+								placeholder="0"
 								required
 						/>
 						</div>
@@ -87,6 +88,7 @@ const NewCarbonDataForm = ({setName, setCategory, setPrice, setCo2, handleFormSu
 								name="co2"
 								id="co2"
 								onChange={handleInputNumberChange(setCo2)}
+								placeholder="0"
 								required
 							/>
 						</div>
