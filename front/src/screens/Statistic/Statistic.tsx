@@ -3,24 +3,21 @@ import Chart from "../../components/chart/chart";
 import styles from "./Statistic.module.css";
 import { useGlobalState } from "../../GlobalStateContext";
 import { ICarbonData } from "../../interface/CarbonData";
-import { carbonDataArray } from "../../helper/helper";
+import { useUserCarbonData } from "../../services/getUserCarbonData";
 import BarChart from "../../components/chart/VerticalBarChart";
 
 const Statistic = () => {
-  // pour l'instant on utilise des données en dur, mais on pourra utiliser les données de l'utilisateur
   const [globalState, setGlobalState] = useGlobalState();
-  // const { loading, error, data } = useUserCarbonData(globalState?.user?.userId);
+  const { loading, error, data } = useUserCarbonData(globalState?.user?.userId);
   const [months, setMonths] = useState<Array<{ month: string; year: string }>>(
     []
   );
   const [currentMonth, setCurrentMonth] = useState<string>("");
   const [selectedMonth, setSelectedMonth] = useState<string>(currentMonth);
-  const data = carbonDataArray;
 
   useEffect(() => {
     const currentDate = new Date();
     const month = currentDate.toLocaleString("fr-FR", { month: "long" });
-    console.log(month);
     setCurrentMonth(month);
     setSelectedMonth(month);
   }, []);
@@ -31,7 +28,7 @@ const Statistic = () => {
         {};
 
       data.forEach((ticket: ICarbonData) => {
-        const createdAt = new Date(ticket.createdAt);
+        const createdAt = ticket.createdAt;
         const month = createdAt.toLocaleString("fr-FR", { month: "long" });
         const year = createdAt.getFullYear().toString();
         const monthAndYear = `${month} ${year}`;
@@ -76,11 +73,15 @@ const Statistic = () => {
           </div>
         </div>
         <div className={styles.chartContent}>
-          <Chart
-            data={{ data: carbonDataArray }}
-            selectedMonth={selectedMonth}
-            currentMonth={currentMonth}
-          />
+          {data ? (
+            <Chart
+              data={{ data: data as ICarbonData[] }}
+              selectedMonth={selectedMonth}
+            />
+          ) : (
+            //<BarChart data={{ data: data as ICarbonData[] }} />
+            <div>Chargement...</div>
+          )}
         </div>
       </div>
     </div>

@@ -23,23 +23,28 @@ ChartJS.register(
   Legend
 );
 
-const Chart: React.FC<ChartProps> = ({ data, selectedMonth, currentMonth }) => {
+const Chart: React.FC<ChartProps> = ({ data, selectedMonth }) => {
+
+  console.log(data , "data")
   const selectedMonthNumber =
     frenchMonthToNumber[selectedMonth as keyof typeof frenchMonthToNumber];
-  const filteredData = data.data.filter(
-    (item) => item.createdAt.getMonth() === selectedMonthNumber
+  const filteredData = data?.data.filter(
+    (item) => item?.createdAt.getMonth() === selectedMonthNumber
   );
+console.log(filteredData , "filteredData"	)
 
-  const labels = filteredData.map((item) =>
-    item.createdAt.toLocaleString("fr-FR", { day: "2-digit", month: "short" })
-  );
-
+  const labels = filteredData.map((item) => {
+    const date = new Date(item.createdAt);
+    return date.toLocaleString("fr-FR", { day: "2-digit", month: "short" });
+  });
+  
+  console.log(labels , "labels")
   let cumulativeCarbonConsumption = 0;
   const cumulativeConsumptionData = filteredData.map((item) => {
     cumulativeCarbonConsumption += item.consumption;
     return cumulativeCarbonConsumption;
   });
-
+console.log(cumulativeConsumptionData , "cumulativeConsumptionData")
   const chartData = {
     labels,
     datasets: [

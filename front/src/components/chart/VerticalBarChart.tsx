@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { carbonDataStatic } from "../../helper/helper";
-import { carbonDataArray } from "../../helper/helper";
 import { ICarbonData } from "../../interface/CarbonData";
+import { ChartBarProps } from "../../interface/ChartProps";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -28,14 +28,14 @@ import {
     BarController
   );
   
-const BarChart: React.FC = () => {
+const BarChart: React.FC<ChartBarProps> = ({data}) => {
   const [dataByMonth, setDataByMonth] = useState<{ [key: string]: number }>({});
-  let data = carbonDataArray;
+
 
   useEffect(() => {
     const dataByMonthTemp: { [key: string]: number } = {};
 
-    data.forEach((item: ICarbonData) => {
+    data.data.forEach((item: ICarbonData) => {
       const createdAt = new Date(item.createdAt);
       const month = createdAt.toLocaleString("fr-FR", { month: "long" });
       const year = createdAt.getFullYear();
