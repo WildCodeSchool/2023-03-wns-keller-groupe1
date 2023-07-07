@@ -1,4 +1,5 @@
 export interface ICarbonData {
+    id:string;
     title: string;
     consumption: number;
     price: number;

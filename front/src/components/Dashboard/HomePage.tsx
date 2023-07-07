@@ -4,6 +4,9 @@ import CreateCarbonData from "../../services/crateCarbonData";
 import { useGlobalState } from "../../GlobalStateContext";
 import styles from "./HomePage.module.css";
 import UserSummary from "./UserSummary";
+import { useUserCarbonData } from "../../services/getUserCarbonData";
+import StatsSection from "./StatsSection";
+import CommunitySection from "./CommunitySection";
 
 const HomePage = () => {
   const [name, setName] = useState<string|undefined>();
@@ -12,15 +15,21 @@ const HomePage = () => {
   const [co2, setCo2] = useState<number|undefined>();
   const { handleFormSubmit } = CreateCarbonData();
   const [globalState, setGlobalState] = useGlobalState();
+  const { loading, error, data } = useUserCarbonData(globalState?.user?.userId);
 
   return (
     <>
       <div className={styles.MainContainer}>
         <div>
-          <UserSummary/>
+          <UserSummary data={data} />
         </div>
-        <div style={{width: "50%"}}>
-          
+        <div style={{display: "flex", justifyContent: "space-between"}}>
+          <div style={{width: "49%", paddingTop: "30px"}}>
+            <StatsSection data={data} />  
+          </div>
+          <div style={{width: "49%", paddingTop: "30px"}}>
+            <CommunitySection/> 
+          </div>
         </div>
       </div>
       <NewCarbonDataForm 

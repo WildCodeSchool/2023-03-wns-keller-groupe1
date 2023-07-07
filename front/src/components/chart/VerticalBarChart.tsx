@@ -115,7 +115,7 @@ const BarChart: React.FC<ChartBarProps> = ({data}) => {
   };
 
   return (
-    <div style={{ width: "70%", height: "60vh", display: "flex" }}>
+    <div style={{ width: "100%", height: "420px", display: "flex", justifyContent: "center" }}>
       <Bar options={options} data={chartData} />
     </div>
   );

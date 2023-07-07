@@ -1,12 +1,10 @@
-import React, { useState } from "react";
 import styles from "./HomePage.module.css";
-import { useUserCarbonData } from "../../services/getUserCarbonData";
-import { useGlobalState } from "../../GlobalStateContext";
 import { ICarbonData } from "../../interface/CarbonData";
+import trashRed from "../../assets/icons/trash-red.svg";
+import DeleteCarbonData from "../../services/deleteCarbonData";
 
-const UserSummary = () => {
-  const [globalState, setGlobalState] = useGlobalState();
-  const { loading, error, data } = useUserCarbonData(globalState?.user?.userId);
+const UserSummary = ({ data }: any) => {
+  const { handleFormSubmit } = DeleteCarbonData();
 
   const date = new Date();
   const month = date.toLocaleString('default', { month: 'long' });
@@ -19,7 +17,6 @@ const UserSummary = () => {
   const handleModal = () => {
     modal.style.display = "block";
   }
-
 
   return (
     <>
@@ -44,9 +41,17 @@ const UserSummary = () => {
                 return (
                   <tr key={index}>
                     <td className={styles.tableCell}>{data.title}</td>
-                    <td>Category</td>
-                    <td>{data.consumption}</td>
-                    <td>{formattedDate}</td>
+                    <td style={{textAlign: "center"}}>Category</td>
+                    <td style={{textAlign: "center"}}>{data.consumption}</td>
+                    <td style={{textAlign: "center"}}>{formattedDate}</td>
+                    <td style={{textAlign: "center"}}>
+                      <img 
+                        src={trashRed} 
+                        alt="trash can" 
+                        style={{paddingTop: "6px", cursor: "pointer"}}
+                        onClick={(e) => handleFormSubmit(data.id)}
+                      />
+                    </td>
                   </tr>
                 )
               })}         

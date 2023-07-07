@@ -1,9 +1,10 @@
 import React from "react";
-import { gql, useMutation, useLazyQuery } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import { toast } from "react-toastify";
+import { GET_USER } from "./getUserCarbonData";
 // import { useNavigate } from "react-router-dom";
 
-const CREATE_CARBON_DATA = gql`
+export const CREATE_CARBON_DATA = gql`
   mutation CreateCarbonData(
 		$userId: Float!, 
 		$categoryId: Float!, 
@@ -33,6 +34,7 @@ const CreateCarbonData = () => {
 			const modal: any = document.getElementById("new-carbon-modal");
 			modal.style.display = "none";	
     },
+		refetchQueries: [GET_USER]
 	})
 
 	const handleFormSubmit = async (
@@ -54,7 +56,6 @@ const CreateCarbonData = () => {
 			}
 		})
 	}
-
 
 	return { handleFormSubmit };
 }
