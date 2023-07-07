@@ -26,13 +26,15 @@ export default function DarkMode() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <button onClick={handelClick} color="inherit">
-        {theme.palette.mode === "dark" ? (
-          <Brightness7Icon />
-        ) : (
-          <Brightness4Icon />
-        )}
-      </button>
+      <div className="btn-2">
+        <button onClick={handelClick} color="inherit" className="btn-1">
+          {theme.palette.mode === "dark" ? (
+            <Brightness7Icon />
+          ) : (
+            <Brightness4Icon />
+          )}
+        </button>
+      </div>
     </ThemeProvider>
   );
 }
