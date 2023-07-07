@@ -101,6 +101,24 @@
   color: grey;
 }
 
+.loadingButton {
+  background-color: #1c7b47;
+  color: grey;
+  border-radius: 20px;
+  border: none;
+  padding: 3% 0;
+  width: 80%;
+  text-align: center;
+  display: inline-block;
+  cursor: pointer;
+  font-family: "Noto Sans JP";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.2vw;
+  line-height: 29px;
+  text-transform: uppercase;
+}
+
 .formGroupRegister {
   display: flex;
   justify-content: center;
@@ -123,4 +141,46 @@
 
 .registerButton:hover {
   color: #25a55f;
+}
+
+.connectionButton:disabled {
+  background-color: grey;
+  cursor: not-allowed;
+}
+
+.connectionButton:disabled:hover {
+  background-color: grey;
+  color: #fff;
+  cursor: not-allowed;
+}
+
+.spinner {
+  border: 10px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 10px solid #25a55f;
+  width: 100px;
+  height: 100px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+  margin-top: 10%;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

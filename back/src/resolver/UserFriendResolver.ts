@@ -2,15 +2,27 @@ import { Arg, Mutation, Query, Resolver } from "type-graphql";
 import { UserFriends } from "../entity/UserFriends";
 import dataSource from "../utils";
 import { User } from "../entity/User";
+import { UserFriendInput } from "../validator/UserFriendValidator";
+import { validate } from "class-validator";
+import { GraphQLError } from "graphql";
 
 @Resolver()
 class UserFriendResolver {
   @Mutation(() => String)
-  async createUserFriend(
+  async sendFriendRequest(
     @Arg("userId") userId: number,
     @Arg("friendId") friendId: number
-  ): Promise<any> {
+  ): Promise<String|GraphQLError> {
     try {
+      const args = new UserFriendInput();
+      args.userId = userId;
+      args.friendId = friendId;
+      const validationErrors = await validate(args);
+
+      if (validationErrors.length > 0) {
+        return new GraphQLError('Validation error');  
+      }
+      
       const userFriend = new UserFriends();
       userFriend.accepted = false;
       userFriend.createdAt = new Date();
@@ -23,48 +35,55 @@ class UserFriendResolver {
       await dataSource.getRepository(UserFriends).save(userFriend);
       return "userFriend created!!";
     } catch (error) {
-      return "can't create a new userFriend";
+      return new GraphQLError('An error occured'); 
     }
   }
 
   @Query(() => UserFriends)
-  async getUserFriend(@Arg("id") id: number): Promise<UserFriends | string> {
+  async getFriendRequest(@Arg("id") id: number): Promise<UserFriends|GraphQLError> {
     try {
       const userFriend = await dataSource
         .getRepository(UserFriends)
         .findOneByOrFail({ id });
       return userFriend;
     } catch (error) {
-      return "Error you can't get an userFriends";
+      return new GraphQLError('An error occured'); 
     }
   }
 
   @Query(() => [UserFriends])
-  async getAllUserFriend(): Promise<UserFriends[] | string> {
+  async getAllFriendRequest(): Promise<UserFriends[]|GraphQLError> {
     try {
       const userFriends = await dataSource
         .getRepository(UserFriends)
         .find({ relations: ["userFriend", "userSender"] });
       return userFriends;
     } catch (error) {
-      return "Error you can't get all userFriends";
+      return new GraphQLError('An error occured'); 
     }
   }
 
   @Mutation(() => String)
-  async deleteUserFriend(@Arg("id") id: number): Promise<string> {
+  async deleteFriendRequest(@Arg("id") id: number): Promise<string|GraphQLError> {
     try {
+      const args = new UserFriendInput();
+      args.id = id;
+      const validationErrors = await validate(args);
+
+      if (validationErrors.length > 0) {
+        return new GraphQLError('Validation error');  
+      }
       await dataSource.getRepository(UserFriends).delete(id);
       return "userFriend deleted";
     } catch (error) {
-      return "can't delete userFriend";
+      return new GraphQLError('An error occured'); 
     }
   }
 
   @Query(() => [UserFriends])
   async getUserFriendList(
     @Arg("userId") userId: number
-  ): Promise<UserFriends[] | string> {
+  ): Promise<UserFriends[]|GraphQLError> {
     try {
       const user = await dataSource
         .getRepository(User)
@@ -78,11 +97,30 @@ class UserFriendResolver {
       if (userFriendList != null) {
         return userFriendList;
       } else {
-        throw new Error();
+        return new GraphQLError('Not friend found'); 
       }
     } catch (error) {
-      return "An error occured";
+      return new GraphQLError('An error occured'); 
     }
+  }
+
+  @Mutation(() => String)
+  async acceptFriendRequest(
+    @Arg("id") id: number
+  ): Promise<String|GraphQLError> {
+    try {
+      const args = new UserFriendInput();
+      args.id = id;
+      const validationErrors = await validate(args);
+
+      if (validationErrors.length > 0) {
+        return new GraphQLError('Validation error');  
+      }
+      await dataSource.getRepository(UserFriends).update(id, {accepted: true});
+      return "Friend request accepted";
+    } catch (error) {
+      return new GraphQLError('An error occured'); 
+    } 
   }
 }
 

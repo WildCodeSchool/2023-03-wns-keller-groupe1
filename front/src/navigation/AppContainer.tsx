@@ -7,10 +7,12 @@ import {
 } from "react-router-dom";
 import HomePage from "../components/Dashboard/HomePage";
 import Login from "../screens/UserConnexion/Login";
+import Statistic from "../screens/Statistic/Statistic";
 import { useGlobalState } from "../GlobalStateContext";
 import { useEffect } from "react";
 
 import * as React from "react";
+import FriendList from "../components/FriendList";
 
 function App() {
   const [globalState, setGlobalState] = useGlobalState();
@@ -24,6 +26,10 @@ function App() {
         <Route
           path="/dashboard"
           element={<PrivateRoute element={<HomePage />} />}
+        />
+        <Route
+          path="/statistic"
+          element={<PrivateRoute element={<Statistic />} />}
         />
       </Routes>
     </BrowserRouter>
