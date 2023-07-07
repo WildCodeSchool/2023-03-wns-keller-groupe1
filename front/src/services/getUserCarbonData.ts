@@ -11,6 +11,9 @@ export const GET_USER = gql`
         price
         modifiedAt
         createdAt
+        category {
+          title
+        }
       }
     }
   }

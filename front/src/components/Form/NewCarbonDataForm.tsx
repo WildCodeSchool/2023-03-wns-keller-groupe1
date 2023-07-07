@@ -49,13 +49,6 @@ const NewCarbonDataForm = ({
       setStateFunc(Number(event.target.value));
     };
  
-  const modal: any = document.getElementById("new-carbon-modal");
-
-  window.onclick = function(event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
-  } 
 
   return (
     <>
@@ -113,7 +106,7 @@ const NewCarbonDataForm = ({
               />
             </div>
             <div>
-              <p className={styles.formTitle}>Poid carbon en kg Co2 ?</p>
+              <p className={styles.formTitle}>Poid carbone en kg Co2 ?</p>
               <input
                 className={styles.formInputLogin}
                 type="number"

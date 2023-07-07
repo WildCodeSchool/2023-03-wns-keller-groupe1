@@ -10,7 +10,7 @@ const DELETE_CARBON_DATA = gql `
 `;
 
 const DeleteCarbonData = () => {
-  const [deleteCarbonData, carbonData] = useMutation(DELETE_CARBON_DATA, {
+  const [deleteCarbonData] = useMutation(DELETE_CARBON_DATA, {
     onError: (error) => {
       toast.error(`Error deleting carbon data: ${error.message}`);
     },

@@ -4,8 +4,10 @@ const CommunitySection = ({}) => {
   return (
     <>
       <div className={styles.userSummaryContainer}>
-        <h1 className={styles.title}>Communautés</h1>
-          <div style={{marginTop: "10px"}}>
+        <div style={{padding: "10px", backgroundColor: "#f6f6f6"}}>
+          <h1 className={styles.title}>Communautés</h1>
+        </div>
+          <div style={{padding: "10px"}}>
 
           </div>
       </div>

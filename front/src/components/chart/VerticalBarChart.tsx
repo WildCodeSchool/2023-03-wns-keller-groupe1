@@ -55,7 +55,7 @@ const BarChart: React.FC<ChartBarProps> = ({data}) => {
       .reduce((acc, [key, val]) => ({ ...acc, [key]: val }), {});
 
     setDataByMonth(sortedDataByMonth);
-  }, []);
+  }, [data]);
 
   const labels = Object.keys(dataByMonth);
   const userConsumptionData = Object.values(dataByMonth);
@@ -115,7 +115,7 @@ const BarChart: React.FC<ChartBarProps> = ({data}) => {
   };
 
   return (
-    <div style={{ width: "100%", height: "420px", display: "flex", justifyContent: "center" }}>
+    <div style={{ width: "100%", height: "380px", display: "flex", justifyContent: "center" }}>
       <Bar options={options} data={chartData} />
     </div>
   );

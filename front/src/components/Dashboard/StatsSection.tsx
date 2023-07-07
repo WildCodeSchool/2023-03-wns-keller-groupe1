@@ -7,7 +7,9 @@ const StatsSection = ({data}: any) => {
   return (
     <>
       <div className={styles.userSummaryContainer}>
-        <h1 className={styles.title}>Statistiques</h1>
+        <div style={{padding: "10px", backgroundColor: "#f6f6f6"}}>
+          <h1 className={styles.title}>Statistiques</h1>
+        </div>
         {data && 
           <div style={{marginTop: "10px"}}>
             <BarChart data={{ data: data as ICarbonData[] }} />

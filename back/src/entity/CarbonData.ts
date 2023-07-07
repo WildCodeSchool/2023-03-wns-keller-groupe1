@@ -27,7 +27,7 @@ export class CarbonData {
   user: User;
 
   @Field(() => Category)
-  @ManyToOne(() => Category, (category) => category.carbonData)
+  @ManyToOne(() => Category, (category) => category.carbonData, { eager: true })
   category: Category;
 
   @Field()
