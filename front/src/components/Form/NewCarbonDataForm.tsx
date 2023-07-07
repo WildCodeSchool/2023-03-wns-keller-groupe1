@@ -4,33 +4,33 @@ import { NewCarbonDataFormProps } from "../../interface/NewCarbonDataFormProps";
 import GetAllCategories from "../../services/getAllCategories";
 
 
-const NewCarbonDataForm = ({setName, setCategory, setPrice, setCo2, handleFormSubmit}: NewCarbonDataFormProps) => {
+const NewCarbonDataForm = ({ setName, setCategory, setPrice, setCo2, handleFormSubmit }: NewCarbonDataFormProps) => {
 	const [categories, setCategories] = useState<any>();
 	const { getAllCategories } = GetAllCategories()
 
-  useEffect(() => {
-    getAllCategories().then(data => {
-      setCategories(data.data.getAllCategories); 
-    });
-  }, [])
+	useEffect(() => {
+		getAllCategories().then(data => {
+			setCategories(data.data.getAllCategories);
+		});
+	}, [])
 
 	const handleInputChange =
-	(setStateFunc: React.Dispatch<React.SetStateAction<string|undefined>>) =>
-	(event: ChangeEvent<HTMLInputElement>): void => {
-		setStateFunc(event.target.value);	
-	};
+		(setStateFunc: React.Dispatch<React.SetStateAction<string | undefined>>) =>
+			(event: ChangeEvent<HTMLInputElement>): void => {
+				setStateFunc(event.target.value);
+			};
 
 	const handleInputNumberChange =
-	(setStateFunc: React.Dispatch<React.SetStateAction<number|undefined>>) =>
-	(event: ChangeEvent<HTMLInputElement>): void => {
-		setStateFunc(Number(event.target.value));	
-	};
+		(setStateFunc: React.Dispatch<React.SetStateAction<number | undefined>>) =>
+			(event: ChangeEvent<HTMLInputElement>): void => {
+				setStateFunc(Number(event.target.value));
+			};
 
-	const handleSelectChange = 
-	(setStateFunc: React.Dispatch<React.SetStateAction<number|undefined>>) =>
-	(event: ChangeEvent<HTMLSelectElement>): void => {
-		setStateFunc(Number(event.target.value));	
-	};
+	const handleSelectChange =
+		(setStateFunc: React.Dispatch<React.SetStateAction<number | undefined>>) =>
+			(event: ChangeEvent<HTMLSelectElement>): void => {
+				setStateFunc(Number(event.target.value));
+			};
 
 	return (
 		<>
@@ -64,8 +64,8 @@ const NewCarbonDataForm = ({setName, setCategory, setPrice, setCo2, handleFormSu
 								{categories && categories.map((category: any, index: string) => {
 									return (
 										<option key={index} value={category.categoryId}>{category.title}</option>
-									)		
-								})}						
+									)
+								})}
 							</select>
 						</div>
 						<div>
@@ -78,7 +78,7 @@ const NewCarbonDataForm = ({setName, setCategory, setPrice, setCo2, handleFormSu
 								onChange={handleInputNumberChange(setPrice)}
 								placeholder="0"
 								required
-						/>
+							/>
 						</div>
 						<div>
 							<p className={styles.formTitle}>Poid carbon en kg Co2 ?</p>
@@ -98,8 +98,8 @@ const NewCarbonDataForm = ({setName, setCategory, setPrice, setCo2, handleFormSu
 								className={styles.submitButton}
 							>
 								Valider
-              </button>
-            </div>
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>
