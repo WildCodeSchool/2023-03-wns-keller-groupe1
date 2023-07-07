@@ -13,6 +13,12 @@ export const frenchMonthToNumber = {
   décembre: 11,
 };
 
+export const carbonDataStatic = {
+  emissions_CO2_mensuelles_fr : 992,
+  emissions_CO2_accord_paris_mensuelles : 167,
+
+}
+
 export const carbonDataArray = [
   {
     title: "Produit A",

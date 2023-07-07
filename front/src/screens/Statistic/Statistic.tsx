@@ -4,6 +4,7 @@ import styles from "./Statistic.module.css";
 import { useGlobalState } from "../../GlobalStateContext";
 import { ICarbonData } from "../../interface/CarbonData";
 import { carbonDataArray } from "../../helper/helper";
+import BarChart from "../../components/chart/VerticalBarChart";
 
 const Statistic = () => {
   // pour l'instant on utilise des données en dur, mais on pourra utiliser les données de l'utilisateur
