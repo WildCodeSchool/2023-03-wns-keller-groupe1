@@ -22,10 +22,9 @@ const Statistic = () => {
     setSelectedMonth(month);
   }, []);
   useEffect(() => {
-    if (data && loading === true) {
+    if (typeof data != "undefined" && loading === true) {
       const ticketsByMonthAndYear: { [monthAndYear: string]: ICarbonData[] } =
         {};
-
       data.forEach((ticket: ICarbonData) => {
         const createdAt = ticket.createdAt;
         const month = createdAt.toLocaleString("fr-FR", { month: "long" });
@@ -38,15 +37,14 @@ const Statistic = () => {
 
         ticketsByMonthAndYear[monthAndYear].push(ticket);
       });
-
       setMonths(
         Object.entries(ticketsByMonthAndYear).map(([monthAndYear]) => {
           const [month, year] = monthAndYear.split(" ");
           return { month, year };
         })
       );
+      setLoading(false);
     }
-    setLoading(false);
   }, [data]);
 
   return (
