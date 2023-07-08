@@ -1,5 +1,5 @@
 import React, { useEffect, useState, ChangeEvent } from "react";
-import styles from "./NewCarbonDataForm.module.css";
+import styles from "./ModalForm.module.css";
 import { NewCarbonDataFormProps } from "../../interface/NewCarbonDataFormProps";
 import GetAllCategories from "../../services/getAllCategories";
 import CarbonResults from "./CarbonResult";
@@ -106,7 +106,7 @@ const NewCarbonDataForm = ({
                 id="testinput"
                 name="test"
                 onChange={(e) => {setQuery(e.target.value); handleOptionChange(e); handleInputChange(setName)}}
-                placeholder="Ex: Train TGV Nantes - Bordeaux"
+                placeholder="Ex: Salade de riz"
                 required
                 value={query}
                 autoComplete="off"

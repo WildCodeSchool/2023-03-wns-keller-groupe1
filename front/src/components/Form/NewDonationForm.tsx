@@ -1,4 +1,4 @@
-import styles from "./NewCarbonDataForm.module.css";
+import styles from "./ModalForm.module.css";
 import CreateDonation from "../../services/createDonation";
 import { useState, ChangeEvent } from "react";
 import { useGlobalState } from "../../GlobalStateContext";

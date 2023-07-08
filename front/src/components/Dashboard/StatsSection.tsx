@@ -1,5 +1,5 @@
 import { ICarbonData } from "../../interface/CarbonData";
-import BarChart from "../chart/VerticalBarChart";
+import BarChart from "./BarChart";
 import styles from "./HomePage.module.css";
 
 const StatsSection = ({data}: any) => {
