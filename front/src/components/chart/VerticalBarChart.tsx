@@ -4,33 +4,32 @@ import { carbonDataStatic } from "../../helper/helper";
 import { ICarbonData } from "../../interface/CarbonData";
 import { ChartBarProps } from "../../interface/ChartProps";
 import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend,
-    BarController,
-  } from "chart.js";
-  
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend,
-    BarController
-  );
-  
-const BarChart: React.FC<ChartBarProps> = ({data}) => {
-  const [dataByMonth, setDataByMonth] = useState<{ [key: string]: number }>({});
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  BarController,
+} from "chart.js";
 
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  BarController
+);
+
+const BarChart: React.FC<ChartBarProps> = ({ data }) => {
+  const [dataByMonth, setDataByMonth] = useState<{ [key: string]: number }>({});
 
   useEffect(() => {
     const dataByMonthTemp: { [key: string]: number } = {};
@@ -64,13 +63,6 @@ const BarChart: React.FC<ChartBarProps> = ({data}) => {
     labels,
     datasets: [
       {
-        label: "Votre consommation",
-        data: userConsumptionData,
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-        borderColor: "rgb(255, 99, 132)",
-        borderWidth: 1,
-      },
-      {
         label: "Moyenne des Français",
         data: Array(labels.length).fill(
           carbonDataStatic.emissions_CO2_mensuelles_fr
@@ -79,6 +71,14 @@ const BarChart: React.FC<ChartBarProps> = ({data}) => {
         borderColor: "rgb(54, 162, 235)",
         borderWidth: 1,
       },
+      {
+        label: "Votre consommation",
+        data: userConsumptionData,
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        borderColor: "rgb(255, 99, 132)",
+        borderWidth: 1,
+      },
+
       {
         label: "Objectif Accords de Paris",
         data: Array(labels.length).fill(
@@ -100,7 +100,7 @@ const BarChart: React.FC<ChartBarProps> = ({data}) => {
     },
     plugins: {
       legend: {
-        position: 'top' as 'top',
+        position: "top" as "top",
       },
       tooltip: {
         callbacks: {

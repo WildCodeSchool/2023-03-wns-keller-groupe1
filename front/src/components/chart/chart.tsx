@@ -12,6 +12,7 @@ import {
 import { Line } from "react-chartjs-2";
 import { ChartProps } from "../../interface/ChartProps";
 import { frenchMonthToNumber } from "../../helper/helper";
+import { carbonDataStatic } from "../../helper/helper";
 
 ChartJS.register(
   CategoryScale,
@@ -44,15 +45,31 @@ const Chart: React.FC<ChartProps> = ({ data, selectedMonth }) => {
     labels,
     datasets: [
       {
+        label: "Moyenne des Français",
+        data: Array(labels.length).fill(carbonDataStatic.emissions_CO2_mensuelles_fr),
+        borderColor: "rgb(54, 162, 235)",
+        backgroundColor: "rgba(54, 162, 235, 0.5)",
+        fill: false,
+        pointRadius: 0,
+      },
+      {
         label: "Votre consommation en kg de CO2",
         data: cumulativeConsumptionData,
         borderColor: "rgb(37, 165, 95)",
-        backgroundColor: " rgba(37, 165, 95 ,0.5)",
+        backgroundColor: "rgba(37, 165, 95 ,0.5)",
+        fill: false,
         pointRadius: 5,
+      },
+      {
+        label: "Objectif Accords de Paris",
+        data: Array(labels.length).fill(carbonDataStatic.emissions_CO2_accord_paris_mensuelles),
+        borderColor: "rgb(75, 192, 192)",
+        fill: false,
+        pointRadius: 0,  
       },
     ],
   };
-
+  
   const options = {
     responsive: true,
     plugins: {
