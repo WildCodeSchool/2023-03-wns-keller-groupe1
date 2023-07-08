@@ -1,7 +1,7 @@
 .MainContainer {
   padding: 20px;
   width: 90vw;
-  background-color: grey;
+  background-color: #eaecf0;
   overflow-y: scroll;
 }
 
@@ -15,7 +15,7 @@
 }
 
 .title {
-  font-size: 36px;
+  font-size: 30px;
   font-weight: bold;
   color: #1c7b47;
   width: 50%;
@@ -25,7 +25,7 @@
 }
 
 .totalCo2 {
-  font-size: 38px;
+  font-size: 34px;
   color: #1c7b47;
   width: 50%;
   font-weight: normal;
@@ -35,7 +35,7 @@
 
 .subtitle {
   width: 100%;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
   display: flex;
   flex-direction: row;
@@ -45,7 +45,7 @@
 
 .newCarbonData {
   width: 100%;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
   text-align: end;
 }
@@ -64,7 +64,7 @@
 }
 
 .tableHeader {
-  font-size: 22px;
+  font-size: 18px;
 }
 
 .tableHeaderCell {
@@ -75,7 +75,7 @@
 .tableCell {
   padding-top: 12px;
   padding-bottom: 12px;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 
@@ -93,7 +93,7 @@
   font-family: "Noto Sans JP";
   font-style: normal;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 29px;
 }
 
@@ -127,7 +127,7 @@
   font-family: "Noto Sans JP";
   font-style: normal;
   font-weight: 700;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 29px;
 }
 
@@ -138,7 +138,7 @@
 
 .co2Text {
   color: #25a55f;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 550;
 }
 

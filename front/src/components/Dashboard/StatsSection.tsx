@@ -7,11 +7,11 @@ const StatsSection = ({data}: any) => {
   return (
     <>
       <div className={styles.userSummaryContainer}>
-        <div style={{padding: "10px", backgroundColor: "#f6f6f6"}}>
+        <div style={{padding: "20px", backgroundColor: "#f6f6f6"}}>
           <h1 className={styles.title}>Statistiques</h1>
         </div>
         {data && 
-          <div style={{marginTop: "10px"}}>
+          <div style={{padding: "20px"}}>
             <BarChart data={{ data: data as ICarbonData[] }} />
           </div>
         }

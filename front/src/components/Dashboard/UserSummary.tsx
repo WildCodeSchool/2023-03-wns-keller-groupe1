@@ -52,11 +52,11 @@ const UserSummary = ({ data }: any) => {
   return (
     <>
       <div className={styles.userSummaryContainer}>
-        <div style={{display: "flex", justifyContent: "space-between", padding: "15px", backgroundColor: "#f6f6f6"}}>
+        <div style={{display: "flex", justifyContent: "space-between", padding: "20px", backgroundColor: "#f6f6f6"}}>
           <h1 className={styles.title}>Dashboard</h1>
           <h2 className={styles.totalCo2}>{userConsumptionData} Kg Co2</h2>
         </div>
-        <div style={{padding: "15px", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
+        <div style={{padding: "20px", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
           <h4 className={styles.subtitle}>{currentDate}</h4>
           <div className={styles.tableContainer}>
             <table className={styles.table}>
