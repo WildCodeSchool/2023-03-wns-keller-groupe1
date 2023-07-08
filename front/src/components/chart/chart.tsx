@@ -46,9 +46,11 @@ const Chart: React.FC<ChartProps> = ({ data, selectedMonth }) => {
     datasets: [
       {
         label: "Moyenne des Français",
-        data: Array(labels.length).fill(carbonDataStatic.emissions_CO2_mensuelles_fr),
-        borderColor: "rgb(54, 162, 235)",
-        backgroundColor: "rgba(54, 162, 235, 0.5)",
+        data: Array(labels.length).fill(
+          carbonDataStatic.emissions_CO2_mensuelles_fr
+        ),
+        borderColor: "rgb(28, 68, 142)",
+        backgroundColor: "rgba(28, 68, 142,0.5)",
         fill: false,
         pointRadius: 0,
       },
@@ -62,14 +64,17 @@ const Chart: React.FC<ChartProps> = ({ data, selectedMonth }) => {
       },
       {
         label: "Objectif Accords de Paris",
-        data: Array(labels.length).fill(carbonDataStatic.emissions_CO2_accord_paris_mensuelles),
-        borderColor: "rgb(75, 192, 192)",
+        data: Array(labels.length).fill(
+          carbonDataStatic.emissions_CO2_accord_paris_mensuelles
+        ),
+        borderColor: "rgb(175, 27, 63)",
+        backgroundColor: "rgba(175, 27, 63,0.5)",
         fill: false,
-        pointRadius: 0,  
+        pointRadius: 0,
       },
     ],
   };
-  
+
   const options = {
     responsive: true,
     plugins: {

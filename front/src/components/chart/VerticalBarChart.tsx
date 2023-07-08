@@ -67,15 +67,15 @@ const BarChart: React.FC<ChartBarProps> = ({ data }) => {
         data: Array(labels.length).fill(
           carbonDataStatic.emissions_CO2_mensuelles_fr
         ),
-        backgroundColor: "rgba(54, 162, 235, 0.5)",
-        borderColor: "rgb(54, 162, 235)",
+        backgroundColor: "rgb(28, 68, 142)",
+        borderColor: "rgba(54, 162, 235,0.5)",
         borderWidth: 1,
       },
       {
         label: "Votre consommation",
         data: userConsumptionData,
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-        borderColor: "rgb(255, 99, 132)",
+        backgroundColor: "rgb(37, 165, 95)",
+        borderColor: "rgba(37, 165, 95 ,0.5)",
         borderWidth: 1,
       },
 
@@ -84,8 +84,8 @@ const BarChart: React.FC<ChartBarProps> = ({ data }) => {
         data: Array(labels.length).fill(
           carbonDataStatic.emissions_CO2_accord_paris_mensuelles
         ),
-        backgroundColor: "rgba(75, 192, 192, 0.5)",
-        borderColor: "rgb(75, 192, 192)",
+        backgroundColor: "rgb(175, 27, 63)",
+        borderColor: "rgba(175, 27, 63,0.5)",
         borderWidth: 1,
       },
     ],
