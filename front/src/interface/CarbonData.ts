@@ -4,6 +4,7 @@ export interface ICarbonData {
     consumption: number;
     price: number;
     createdAt: Date;
+    categoryString: string;
     category: {
       title: string
     }

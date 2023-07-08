@@ -27,7 +27,6 @@ const UserSummary = ({ data }: any) => {
         const createdAt = new Date(item.createdAt);
         const month = createdAt.toLocaleString("fr-FR", { month: "long" });
         const year = createdAt.getFullYear();
-  
         const key = `${month} ${year}`;
   
         if (dataByMonthTemp[key]) {
@@ -47,14 +46,14 @@ const UserSummary = ({ data }: any) => {
     
   }, [data]);
 
-  const userConsumptionData = Object.values(dataByMonth);
+  const userConsumptionData = Number(Object.values(dataByMonth));
 
   return (
     <>
       <div className={styles.userSummaryContainer}>
         <div style={{display: "flex", justifyContent: "space-between", padding: "20px", backgroundColor: "#f6f6f6"}}>
           <h1 className={styles.title}>Dashboard</h1>
-          <h2 className={styles.totalCo2}>{userConsumptionData} Kg Co2</h2>
+          <h2 className={styles.totalCo2}>{userConsumptionData.toFixed(2)} Kg Co2</h2>
         </div>
         <div style={{padding: "20px", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
           <h4 className={styles.subtitle}>{currentDate}</h4>
@@ -70,13 +69,13 @@ const UserSummary = ({ data }: any) => {
                 </tr>
               </thead>
               <tbody>     
-                {data && data.map((data: ICarbonData, index: string) => {
+                {data && data.toReversed().map((data: ICarbonData, index: string) => {
                   const myDate = new Date(data.createdAt);
                   const formattedDate = myDate.toLocaleDateString();
                   return (
                     <tr key={index} style={{textAlign: "center"}}>
                       <td className={styles.tableCell} style={{textAlign: "start"}}>{data.title}</td>
-                      <td className={styles.tableCell}>{data.category.title}</td>
+                      <td className={styles.tableCell}>{data.categoryString}</td>
                       <td className={styles.co2Text}>{data.consumption.toFixed(2)}</td>
                       <td className={styles.tableCell}>{formattedDate}</td>
                       <td>

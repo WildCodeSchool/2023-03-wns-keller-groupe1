@@ -9,11 +9,9 @@ export const GET_USER = gql`
         title
         consumption
         price
+        categoryString
         modifiedAt
         createdAt
-        category {
-          title
-        }
       }
     }
   }

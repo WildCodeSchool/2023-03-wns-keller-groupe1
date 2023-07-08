@@ -2,7 +2,10 @@
     display: none;
     position: fixed;
     z-index: 1;
-    padding: 5%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    padding-left: 20%;
+    padding-right: 20%;
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,0.6);
@@ -12,7 +15,7 @@
 .modalContainer {
     background-color: white;
     border-radius: 20px;
-    padding: 2%;
+    padding: 20px;
     height: 90%;
     display: flex;
     flex-direction: column;
@@ -41,7 +44,7 @@
   
 
 .modalTitle {
-    font-size: 38px;
+    font-size: 30px;
     font-weight: bold;
     color: #1c7b47;
     width: 100%;
@@ -53,7 +56,8 @@
 .formContainer {
     width: 100%;
     height: 100%;
-    padding: 2% 5% 0% 5%;
+    padding: 10px;
+    padding-top: 30px;
     text-align: center;
     color: #1c7b47;
     font-size: 28px;
@@ -91,7 +95,7 @@
     border: none;
     color: white;
     padding-bottom: 5px;
-    width: 350px;
+    width: 310px;
     height: 60px;
     text-align: center;
     display: inline-block;
@@ -112,5 +116,4 @@
 .formGroupSubmit {
     display: flex;
     justify-content: center;
-    margin: 2%;
 }

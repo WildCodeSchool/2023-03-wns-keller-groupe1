@@ -11,9 +11,10 @@ import NewDonationForm from "../Form/NewDonationForm";
 
 const HomePage = () => {
   const [name, setName] = useState<string|undefined>();
-  const [category, setCategory] = useState<number|undefined>();
-  const [price, setPrice] = useState<number|undefined>();
-  const [co2, setCo2] = useState<number|undefined>();
+  const [category, setCategory] = useState<string|undefined>();
+  const [price, setPrice] = useState<number|undefined>(0);
+  const [co2, setCo2] = useState<number|undefined>(0);
+  const [query, setQuery] = useState("");
   const { handleFormSubmit } = CreateCarbonData();
   const [globalState, setGlobalState] = useGlobalState();
   const { loading, error, data } = useUserCarbonData(globalState?.user?.userId);
@@ -34,7 +35,6 @@ const HomePage = () => {
       donationModal.style.display = "none";
     }  
   } 
-
 
   return (
     <>
@@ -59,14 +59,24 @@ const HomePage = () => {
         setCategory={setCategory} 
         setPrice={setPrice} 
         setCo2={setCo2} 
-        handleFormSubmit={(e) => handleFormSubmit(
+        name={name}
+        category={category}
+        price={price}
+        Co2={co2}
+        handleFormSubmit={(e: any) => handleFormSubmit(
           e,
           name,
           co2,
           price,
           category,
-          globalState.user.userId
+          globalState.user.userId,
+          setQuery,
+          setCo2,
+          setPrice,
+          setCategory
         )}
+        query={query}
+        setQuery={setQuery}
       />
       <NewDonationForm/>
     </>
