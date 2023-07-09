@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { carbonDataStatic } from "../../helper/helper";
 import { ICarbonData } from "../../interface/CarbonData";
-import { ChartBarProps } from "../../interface/ChartProps";
+import { ChartProps } from "../../interface/ChartProps";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -28,64 +28,71 @@ ChartJS.register(
   BarController
 );
 
-const BarChart: React.FC<ChartBarProps> = ({ data }) => {
+const BarChart: React.FC<ChartProps> = ({
+  data,
+  selectedMonth,
+  OptionMonthSelected,
+  selectedYear,
+}) => {
   const [dataByMonth, setDataByMonth] = useState<{ [key: string]: number }>({});
+  const [dataByYear, setDataByYear] = useState<{ [key: string]: number }>({});
 
   useEffect(() => {
-    const dataByMonthTemp: { [key: string]: number } = {};
+    const dataByPeriod: { [key: string]: number } = {};
 
     data.data.forEach((item: ICarbonData) => {
-      const createdAt = new Date(item.createdAt);
-      const month = createdAt.toLocaleString("fr-FR", { month: "long" });
-      const year = createdAt.getFullYear();
+      const createdAt = item.createdAt;
+      const period = OptionMonthSelected
+        ? createdAt.toLocaleString("fr-FR", { month: "long" })
+        : createdAt.getFullYear().toString();
 
-      const key = `${month} ${year}`;
-
-      if (dataByMonthTemp[key]) {
-        dataByMonthTemp[key] += item.consumption;
-      } else {
-        dataByMonthTemp[key] = item.consumption;
+      if (!dataByPeriod[period]) {
+        dataByPeriod[period] = 0;
       }
+      dataByPeriod[period] += item.consumption;
     });
 
-    const sortedDataByMonth = Object.entries(dataByMonthTemp)
-      .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime())
-      .slice(0, 3)
-      .reduce((acc, [key, val]) => ({ ...acc, [key]: val }), {});
+    if (OptionMonthSelected) {
+      setDataByMonth(dataByPeriod);
+    } else {
+      setDataByYear(dataByPeriod);
+    }
+  }, [data, OptionMonthSelected]);
 
-    setDataByMonth(sortedDataByMonth);
-  }, []);
-
-  const labels = Object.keys(dataByMonth);
-  const userConsumptionData = Object.values(dataByMonth);
-
+  const labels = Object.keys(OptionMonthSelected ? dataByMonth : dataByYear);
+  const userConsumptionData = Object.values(
+    OptionMonthSelected ? dataByMonth : dataByYear
+  );
   const chartData = {
     labels,
     datasets: [
       {
         label: "Moyenne des Français",
         data: Array(labels.length).fill(
-          carbonDataStatic.emissions_CO2_mensuelles_fr
+          OptionMonthSelected
+            ? carbonDataStatic.emissions_CO2_mensuelles_fr
+            : carbonDataStatic.emissions_CO2_mensuelles_fr * 12
         ),
-        backgroundColor: "rgba(54, 162, 235, 0.5)",
-        borderColor: "rgb(54, 162, 235)",
+        backgroundColor: "rgb(28, 68, 142)",
+        borderColor: "rgba(54, 162, 235,0.5)",
         borderWidth: 1,
       },
       {
-        label: "Votre consommation",
+        label: "Votre consommation en kg de CO2",
         data: userConsumptionData,
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-        borderColor: "rgb(255, 99, 132)",
+        backgroundColor: "rgb(37, 165, 95)",
+        borderColor: "rgba(37, 165, 95 ,0.5)",
         borderWidth: 1,
       },
-
       {
         label: "Objectif Accords de Paris",
         data: Array(labels.length).fill(
-          carbonDataStatic.emissions_CO2_accord_paris_mensuelles
+          OptionMonthSelected
+            ? carbonDataStatic.emissions_CO2_accord_paris_mensuelles
+            : carbonDataStatic.emissions_CO2_accord_paris_mensuelles * 12
         ),
-        backgroundColor: "rgba(75, 192, 192, 0.5)",
-        borderColor: "rgb(75, 192, 192)",
+        backgroundColor: "rgb(175, 27, 63)",
+        borderColor: "rgba(175, 27, 63,0.5)",
         borderWidth: 1,
       },
     ],
