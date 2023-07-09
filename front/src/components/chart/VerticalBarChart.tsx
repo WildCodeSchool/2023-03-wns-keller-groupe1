@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { carbonDataStatic } from "../../helper/helper";
 import { ICarbonData } from "../../interface/CarbonData";
-import { ChartBarProps } from "../../interface/ChartProps";
+import { ChartProps } from "../../interface/ChartProps";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -28,35 +28,57 @@ ChartJS.register(
   BarController
 );
 
-const BarChart: React.FC<ChartBarProps> = ({ data, selectedMonth }) => {
+const BarChart: React.FC<ChartProps> = ({
+  data,
+  selectedMonth,
+  OptionMonthSelected,
+  selectedYear,
+}) => {
   const [dataByMonth, setDataByMonth] = useState<{ [key: string]: number }>({});
+  const [dataByYear, setDataByYear] = useState<{ [key: string]: number }>({});
 
   useEffect(() => {
-    let totalConsumption = 0;
+    const dataByPeriod: { [key: string]: number } = {};
+
     data.data.forEach((item: ICarbonData) => {
-      totalConsumption += item.consumption;
+      const createdAt = item.createdAt;
+      const period = OptionMonthSelected
+        ? createdAt.toLocaleString("fr-FR", { month: "long" })
+        : createdAt.getFullYear().toString();
+
+      if (!dataByPeriod[period]) {
+        dataByPeriod[period] = 0;
+      }
+      dataByPeriod[period] += item.consumption;
     });
-    setDataByMonth({ [selectedMonth]: totalConsumption });
-  }, [data, selectedMonth]);
 
+    if (OptionMonthSelected) {
+      setDataByMonth(dataByPeriod);
+    } else {
+      setDataByYear(dataByPeriod);
+    }
+  }, [data, OptionMonthSelected]);
 
-  const labels = Object.keys(dataByMonth);
-  const userConsumptionData = Object.values(dataByMonth);
-
+  const labels = Object.keys(OptionMonthSelected ? dataByMonth : dataByYear);
+  const userConsumptionData = Object.values(
+    OptionMonthSelected ? dataByMonth : dataByYear
+  );
   const chartData = {
     labels,
     datasets: [
       {
         label: "Moyenne des Français",
         data: Array(labels.length).fill(
-          carbonDataStatic.emissions_CO2_mensuelles_fr
+          OptionMonthSelected
+            ? carbonDataStatic.emissions_CO2_mensuelles_fr
+            : carbonDataStatic.emissions_CO2_mensuelles_fr * 12
         ),
         backgroundColor: "rgb(28, 68, 142)",
         borderColor: "rgba(54, 162, 235,0.5)",
         borderWidth: 1,
       },
       {
-        label: "Votre consommation",
+        label: "Votre consommation en kg de CO2",
         data: userConsumptionData,
         backgroundColor: "rgb(37, 165, 95)",
         borderColor: "rgba(37, 165, 95 ,0.5)",
@@ -65,7 +87,9 @@ const BarChart: React.FC<ChartBarProps> = ({ data, selectedMonth }) => {
       {
         label: "Objectif Accords de Paris",
         data: Array(labels.length).fill(
-          carbonDataStatic.emissions_CO2_accord_paris_mensuelles
+          OptionMonthSelected
+            ? carbonDataStatic.emissions_CO2_accord_paris_mensuelles
+            : carbonDataStatic.emissions_CO2_accord_paris_mensuelles * 12
         ),
         backgroundColor: "rgb(175, 27, 63)",
         borderColor: "rgba(175, 27, 63,0.5)",

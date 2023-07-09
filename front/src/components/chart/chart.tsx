@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Line } from "react-chartjs-2";
+import { ChartProps } from "../../interface/ChartProps";
+import { carbonDataStatic } from "../../helper/helper";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,10 +12,6 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { Line } from "react-chartjs-2";
-import { ChartProps } from "../../interface/ChartProps";
-import { frenchMonthToNumber } from "../../helper/helper";
-import { carbonDataStatic } from "../../helper/helper";
 
 ChartJS.register(
   CategoryScale,
@@ -24,30 +23,45 @@ ChartJS.register(
   Legend
 );
 
-const Chart: React.FC<ChartProps> = ({ data, selectedMonth }) => {
-  const selectedMonthNumber =
-    frenchMonthToNumber[selectedMonth as keyof typeof frenchMonthToNumber];
-  const filteredData = data?.data.filter(
-    (item) => item?.createdAt.getMonth() === selectedMonthNumber
-  );
+const Chart: React.FC<ChartProps> = ({
+  data,
+  selectedMonth,
+  OptionMonthSelected,
+  selectedYear,
+}) => {
+  const [dataByPeriod, setDataByPeriod] = useState<{ [key: string]: number }>({});
 
-  const labels = filteredData.map((item) => {
-    const date = new Date(item.createdAt);
-    return date.toLocaleString("fr-FR", { day: "2-digit", month: "short" });
-  });
+  useEffect(() => {
+    let totalConsumption = 0;
+    const dataByPeriod: { [key: string]: number } = {};
+    const sortedData = [...data.data].sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
 
-  let cumulativeCarbonConsumption = 0;
-  const cumulativeConsumptionData = filteredData.map((item) => {
-    cumulativeCarbonConsumption += item.consumption;
-    return cumulativeCarbonConsumption;
-  });
+    sortedData.forEach((item) => {
+      const createdAt = item.createdAt;
+      const period = OptionMonthSelected
+        ? createdAt.toLocaleString("fr-FR", { day: "2-digit", month: "long" })
+        : createdAt.toLocaleString("fr-FR", { month: "long" });
+
+      totalConsumption += item.consumption;
+
+      dataByPeriod[period] = totalConsumption;
+    });
+
+    setDataByPeriod(dataByPeriod);
+  }, [data, OptionMonthSelected]);
+
+  const labels = Object.keys(dataByPeriod);
+  const userConsumptionData = Object.values(dataByPeriod);
+
   const chartData = {
     labels,
     datasets: [
       {
         label: "Moyenne des Français",
         data: Array(labels.length).fill(
-          carbonDataStatic.emissions_CO2_mensuelles_fr
+          OptionMonthSelected
+            ? carbonDataStatic.emissions_CO2_mensuelles_fr
+            : carbonDataStatic.emissions_CO2_mensuelles_fr * 12
         ),
         borderColor: "rgb(28, 68, 142)",
         backgroundColor: "rgba(28, 68, 142,0.5)",
@@ -56,7 +70,7 @@ const Chart: React.FC<ChartProps> = ({ data, selectedMonth }) => {
       },
       {
         label: "Votre consommation en kg de CO2",
-        data: cumulativeConsumptionData,
+        data: userConsumptionData,
         borderColor: "rgb(37, 165, 95)",
         backgroundColor: "rgba(37, 165, 95 ,0.5)",
         fill: false,
@@ -65,7 +79,9 @@ const Chart: React.FC<ChartProps> = ({ data, selectedMonth }) => {
       {
         label: "Objectif Accords de Paris",
         data: Array(labels.length).fill(
-          carbonDataStatic.emissions_CO2_accord_paris_mensuelles
+          OptionMonthSelected
+            ? carbonDataStatic.emissions_CO2_accord_paris_mensuelles
+            : carbonDataStatic.emissions_CO2_accord_paris_mensuelles * 12
         ),
         borderColor: "rgb(175, 27, 63)",
         backgroundColor: "rgba(175, 27, 63,0.5)",
@@ -84,13 +100,9 @@ const Chart: React.FC<ChartProps> = ({ data, selectedMonth }) => {
       tooltip: {
         callbacks: {
           label: function (context: any) {
-            const index = context.dataIndex;
-            const title =
-              filteredData[index].title +
-              " - " +
-              filteredData[index].consumption +
-              " kg / co2";
-            return title;
+            const label = context.dataset.label;
+            const value = context.parsed.y;
+            return `${label}: ${value} kg / co2`;
           },
         },
       },
