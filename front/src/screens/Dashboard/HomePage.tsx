@@ -1,5 +1,5 @@
 import { useState } from "react";
-import NewCarbonDataForm from "../Form/NewCarbonDataForm";
+import NewCarbonDataForm from "../../components/Form/NewCarbonDataForm";
 import CreateCarbonData from "../../services/crateCarbonData";
 import { useGlobalState } from "../../GlobalStateContext";
 import styles from "./HomePage.module.css";
@@ -7,7 +7,7 @@ import UserSummary from "./UserSummary";
 import { useUserCarbonData } from "../../services/getUserCarbonData";
 import StatsSection from "./StatsSection";
 import CommunitySection from "./CommunitySection";
-import NewDonationForm from "../Form/NewDonationForm";
+import NewDonationForm from "../../components/Form/NewDonationForm";
 
 const HomePage = () => {
   const [name, setName] = useState<string|undefined>();
