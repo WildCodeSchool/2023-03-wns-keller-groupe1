@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { carbonDataStatic } from "../../helper/helper";
 import { ICarbonData } from "../../interface/CarbonData";
-import { ChartBarProps } from "../../interface/ChartProps";
+import { ChartProps } from "../../interface/ChartProps";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -28,7 +28,7 @@ ChartJS.register(
   BarController
 );
 
-const BarChart: React.FC<ChartBarProps> = ({ data }) => {
+const BarChart: React.FC<any> = ({ data }) => {
   const [dataByMonth, setDataByMonth] = useState<{ [key: string]: number }>({});
 
   useEffect(() => {
