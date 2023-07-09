@@ -28,33 +28,17 @@ ChartJS.register(
   BarController
 );
 
-const BarChart: React.FC<ChartBarProps> = ({ data }) => {
+const BarChart: React.FC<ChartBarProps> = ({ data, selectedMonth }) => {
   const [dataByMonth, setDataByMonth] = useState<{ [key: string]: number }>({});
 
   useEffect(() => {
-    const dataByMonthTemp: { [key: string]: number } = {};
-
+    let totalConsumption = 0;
     data.data.forEach((item: ICarbonData) => {
-      const createdAt = new Date(item.createdAt);
-      const month = createdAt.toLocaleString("fr-FR", { month: "long" });
-      const year = createdAt.getFullYear();
-
-      const key = `${month} ${year}`;
-
-      if (dataByMonthTemp[key]) {
-        dataByMonthTemp[key] += item.consumption;
-      } else {
-        dataByMonthTemp[key] = item.consumption;
-      }
+      totalConsumption += item.consumption;
     });
+    setDataByMonth({ [selectedMonth]: totalConsumption });
+  }, [data, selectedMonth]);
 
-    const sortedDataByMonth = Object.entries(dataByMonthTemp)
-      .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime())
-      .slice(0, 3)
-      .reduce((acc, [key, val]) => ({ ...acc, [key]: val }), {});
-
-    setDataByMonth(sortedDataByMonth);
-  }, []);
 
   const labels = Object.keys(dataByMonth);
   const userConsumptionData = Object.values(dataByMonth);
@@ -78,7 +62,6 @@ const BarChart: React.FC<ChartBarProps> = ({ data }) => {
         borderColor: "rgba(37, 165, 95 ,0.5)",
         borderWidth: 1,
       },
-
       {
         label: "Objectif Accords de Paris",
         data: Array(labels.length).fill(

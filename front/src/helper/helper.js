@@ -14,8 +14,89 @@ export const frenchMonthToNumber = {
 };
 
 export const carbonDataStatic = {
-  emissions_CO2_mensuelles_fr : 992,
-  emissions_CO2_accord_paris_mensuelles : 167,
+  emissions_CO2_mensuelles_fr: 992,
+  emissions_CO2_accord_paris_mensuelles: 167,
+};
 
-}
-
+export const fakeData = [
+    {
+      consumption: 88,
+      createdAt: new Date("2023-07-01T18:52:35.782Z"),
+      modifiedAt: "2023-07-01T16:52:35.782Z",
+      price: 55,
+      title: "Data 1 - Juillet",
+      __typename: "CarbonData",
+    },
+    {
+      consumption: 90,
+      createdAt: new Date("2023-07-15T18:52:35.782Z"),
+      modifiedAt: "2023-07-15T16:52:35.782Z",
+      price: 60,
+      title: "Data 2 - Juillet",
+      __typename: "CarbonData",
+    },
+    {
+      consumption: 85,
+      createdAt: new Date("2023-06-10T18:52:35.782Z"),
+      modifiedAt: "2023-06-10T16:52:35.782Z",
+      price: 50,
+      title: "Data 1 - Juin",
+      __typename: "CarbonData",
+    },
+    {
+      consumption: 80,
+      createdAt: new Date("2023-06-20T18:52:35.782Z"),
+      modifiedAt: "2023-06-20T16:52:35.782Z",
+      price: 45,
+      title: "Data 2 - Juin",
+      __typename: "CarbonData",
+    },
+    {
+      consumption: 70,
+      createdAt: new Date("2023-05-15T18:52:35.782Z"),
+      modifiedAt: "2023-05-15T16:52:35.782Z",
+      price: 40,
+      title: "Data 1 - Mai",
+      __typename: "CarbonData",
+    },
+    {
+      consumption: 75,
+      createdAt: new Date("2023-04-05T18:52:35.782Z"),
+      modifiedAt: "2023-04-05T16:52:35.782Z",
+      price: 65,
+      title: "Data 1 - Avril",
+      __typename: "CarbonData",
+    },
+    {
+      consumption: 80,
+      createdAt: new Date("2023-04-20T18:52:35.782Z"),
+      modifiedAt: "2023-04-20T16:52:35.782Z",
+      price: 70,
+      title: "Data 2 - Avril",
+      __typename: "CarbonData",
+    },
+    {
+      consumption: 85,
+      createdAt: new Date("2023-04-30T18:52:35.782Z"),
+      modifiedAt: "2023-04-30T16:52:35.782Z",
+      price: 75,
+      title: "Data 3 - Avril",
+      __typename: "CarbonData",
+    },
+    {
+      consumption: 70,
+      createdAt: new Date("2023-03-10T18:52:35.782Z"),
+      modifiedAt: "2023-03-10T16:52:35.782Z",
+      price: 60,
+      title: "Data 1 - Mars",
+      __typename: "CarbonData",
+    },
+    {
+      consumption: 75,
+      createdAt: new Date("2023-03-25T18:52:35.782Z"),
+      modifiedAt: "2023-03-25T16:52:35.782Z",
+      price: 65,
+      title: "Data 2 - Mars",
+      __typename: "CarbonData",
+    },
+  ];

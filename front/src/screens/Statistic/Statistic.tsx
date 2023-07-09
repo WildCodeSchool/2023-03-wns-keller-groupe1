@@ -14,13 +14,14 @@ const Statistic = () => {
   const [globalState, setGlobalState] = useGlobalState();
   const [LineChartSelected, setLineChartSelected] = useState<boolean>(false);
   const [OptionDateSelected, setOptionDateSelected] = useState<string>("mois");
-  const { error, data } = useUserCarbonData(globalState?.user?.userId);
+  let { error, data } = useUserCarbonData(globalState?.user?.userId);
   const [months, setMonths] = useState<Array<{ month: string; year: string }>>(
     []
   );
+  const [years, setYears] = useState<Array<{ year: string }>>([]);
   const [currentMonth, setCurrentMonth] = useState<string>("");
   const [selectedMonth, setSelectedMonth] = useState<string>(currentMonth);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [filteredData, setFilteredData] = useState<ICarbonData[]>([]);
   useEffect(() => {
     const currentDate = new Date();
     const month = currentDate.toLocaleString("fr-FR", { month: "long" });
@@ -28,9 +29,10 @@ const Statistic = () => {
     setSelectedMonth(month);
   }, []);
   useEffect(() => {
-    if (typeof data != "undefined" && loading === true) {
+    if (typeof data != "undefined") {
       const ticketsByMonthAndYear: { [monthAndYear: string]: ICarbonData[] } =
         {};
+
       data.forEach((ticket: ICarbonData) => {
         const createdAt = ticket.createdAt;
         const month = createdAt.toLocaleString("fr-FR", { month: "long" });
@@ -43,16 +45,32 @@ const Statistic = () => {
 
         ticketsByMonthAndYear[monthAndYear].push(ticket);
       });
+
       setMonths(
         Object.entries(ticketsByMonthAndYear).map(([monthAndYear]) => {
           const [month, year] = monthAndYear.split(" ");
           return { month, year };
         })
       );
-      setLoading(false);
     }
   }, [data]);
 
+  useEffect(() => {
+    if (typeof data !== "undefined") {
+      let newFilteredData =
+        OptionDateSelected === "mois"
+          ? data.filter((ticket: ICarbonData) => {
+              const month = ticket.createdAt.toLocaleString("fr-FR", {
+                month: "long",
+              });
+              return month === selectedMonth;
+            })
+          : data;
+      setFilteredData(newFilteredData);
+    }
+  }, [data, OptionDateSelected, selectedMonth]);
+
+  console.log(filteredData, "filteredData");
   return (
     <div className={styles.MainContainer}>
       <div className={styles.chartContainer}>
@@ -69,16 +87,6 @@ const Statistic = () => {
             </button>
             <button
               className={
-                OptionDateSelected === "Trimestre"
-                  ? styles.BtnSelected
-                  : styles.Btn
-              }
-              onClick={() => setOptionDateSelected("Trimestre")}
-            >
-              Trimestre
-            </button>
-            <button
-              className={
                 OptionDateSelected === "Année" ? styles.BtnSelected : styles.Btn
               }
               onClick={() => setOptionDateSelected("Année")}
@@ -87,6 +95,17 @@ const Statistic = () => {
             </button>
           </div>
           <div className={styles.OptionListContainer}>
+            <select
+              className={styles.SelectMonth}
+              value={selectedMonth}
+              onChange={(event) => setSelectedMonth(event.target.value)}
+            >
+              {months.map(({ month, year }) => (
+                <option value={month}>
+                  {month} {year}
+                </option>
+              ))}
+            </select>
             <div className={styles.SelectChartDiv}>
               <button
                 className={
@@ -122,28 +141,20 @@ const Statistic = () => {
                 />
               </button>
             </div>
-            <select
-              className={styles.SelectMonth}
-              value={selectedMonth}
-              onChange={(event) => setSelectedMonth(event.target.value)}
-            >
-              {months.map(({ month, year }) => (
-                <option value={month}>
-                  {month} {year}
-                </option>
-              ))}
-            </select>
           </div>
         </div>
         <div className={styles.chartContent}>
           {data ? (
             LineChartSelected ? (
               <Chart
-                data={{ data: data as ICarbonData[] }}
+                data={{ data: filteredData as ICarbonData[] }}
                 selectedMonth={selectedMonth}
               />
             ) : (
-              <BarChart data={{ data: data as ICarbonData[] }} />
+              <BarChart
+                data={{ data: filteredData as ICarbonData[] }}
+                selectedMonth={selectedMonth}
+              />
             )
           ) : (
             <div>Chargement...</div>

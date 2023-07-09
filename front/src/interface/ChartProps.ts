@@ -7,4 +7,6 @@ export interface ChartProps {
   
   export interface ChartBarProps {
     data: ICarbonDataArray;
+    selectedMonth: string ;
+
   }
