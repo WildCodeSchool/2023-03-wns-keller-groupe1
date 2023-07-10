@@ -28,6 +28,7 @@ const LOGIN = gql`
 const GET_USER_FROM_TOKEN = gql`
   query GetUserFromToken($token: String!) {
     getUserFromToken(token: $token) {
+      userId
       email
       firstname
       lastname
@@ -44,7 +45,6 @@ export const useAuth = () => {
       toast.error(`Error creating user: ${error.message}`);
     },
     onCompleted: (data) => {
-      console.log(data);
       toast.success("Votre compte a bien été créé");
       navigate("/");
     },
@@ -56,7 +56,6 @@ export const useAuth = () => {
     },
     onCompleted: (data) => {
       setGlobalState({ isLogged: true, user: data.getUserFromToken });
-      console.log(data);
       navigate("/dashboard");
     },
   });
@@ -66,7 +65,6 @@ export const useAuth = () => {
       toast.error(`Error logging in: ${error.message}`);
     },
     onCompleted: (data) => {
-      console.log(data);
       localStorage.setItem("token", data.login);
       getUserFromToken({ variables: { token: data.login } });
     },

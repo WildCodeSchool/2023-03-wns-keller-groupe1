@@ -1,0 +1,119 @@
+.MainContainer {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    padding-left: 20%;
+    padding-right: 20%;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    animation: fadeIn 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+.modalContainer {
+    background-color: white;
+    border-radius: 20px;
+    padding: 20px;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    animation: scaleUp 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleUp {
+    0% {
+      transform:scale(1) translateY(1000px);
+      opacity:0;
+    }
+    100% {
+      transform:scale(1) translateY(0px);
+      opacity:1;
+    }
+  }
+  
+
+.modalTitle {
+    font-size: 30px;
+    font-weight: bold;
+    color: #1c7b47;
+    width: 100%;
+    height: "10%";
+    display: flex;
+    align-items: center;
+}
+
+.formContainer {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    padding-top: 30px;
+    text-align: center;
+    color: #1c7b47;
+    font-size: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.formTitle {
+    text-shadow: #1c7b47;
+    padding: 1%;
+}
+
+.formInputLogin {
+    width: 300px;
+    border: none;
+    border-bottom: 1px solid #111111;
+    outline: none;
+    background-color: transparent;
+    padding-bottom: 1%;
+    font-family: "Noto Sans JP";
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    color: #111111;
+}
+
+.formInputLogin:focus {
+    border-bottom-color: #25a55f;
+}
+
+.submitButton {
+    background-color: #25a55f;
+    border-radius: 20px;
+    border: none;
+    color: white;
+    padding-bottom: 5px;
+    width: 310px;
+    height: 60px;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+    font-family: "Noto Sans JP";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    text-transform: uppercase;
+}
+  
+.submitButton:hover {
+    background-color: #1c7b47;
+    color: grey;
+}
+
+.formGroupSubmit {
+    display: flex;
+    justify-content: center;
+}
