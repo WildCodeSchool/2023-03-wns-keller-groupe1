@@ -2,20 +2,31 @@ import Navbar from '../navigation/Navbar'
 import styles  from "../styles/social.module.css";
 import { ReactComponent as CrossIcon } from "../assets/icons/cross.svg";
 import { ReactComponent as VectorIcon } from "../assets/icons/Vector.svg";
-// import { useGetUserFriendList } from '../hooks/get-user-friend-list';
-import { useQuery } from '@apollo/client';
-import { GET_USER_FRIEND_LIST } from '../hooks/get-user-friend-list';
+import { useGlobalState } from "../GlobalStateContext";
+import { useGetUserFriendList } from '../hooks/get-user-friend-list';
+import { useEffect, useState } from 'react';
 
 
-
-
+interface IUserFriendsLists {
+  userId: number
+  firstname: string,
+  lastname: string
+}
 
 const Social = () => {
-// const {data, error } = useGetUserFriendList()
-const {data, error } = useQuery()
+  const [globalState, setGlobalState] = useGlobalState();
+const {userFriendsLists, error, loading } = useGetUserFriendList(globalState?.user?.userId)
 
+const [dataList, setDataList] = useState<any>(userFriendsLists)
 
-console.log(data);
+  useEffect(() => {
+    if (userFriendsLists) {
+      setDataList(userFriendsLists)
+    }
+  }, []);
+
+console.log(globalState);
+console.log(userFriendsLists);
 
 
   return (
@@ -23,6 +34,7 @@ console.log(data);
       <section className={styles.all_sections}>
         <Navbar />
         <div className={styles.content}>
+        {loading && <p>Fetching data...</p>}
           <section className={styles.section}>
             <div className={styles.communauty_header}>
               <h2>Communautés</h2>
@@ -51,34 +63,29 @@ console.log(data);
                 Votre liste d'amis :
               </h2>
               <div className={styles.cards}>
-                <div className={styles.card}>
-                  <h2>name</h2>
-                  <h2>firstname</h2>
-                  <div className={styles.friend_stats}>
-                    <p>440 kg Co2</p>
-                  </div>
-                </div>
-                <div className={styles.card}>
-                  <h2>name</h2>
-                  <h2>firstname</h2>
-                  <div className={styles.friend_stats}>
-                    <p>440 kg Co2</p>
-                  </div>
-                </div>
-                <div className={styles.card}>
-                  <h2>name</h2>
-                  <h2>firstname</h2>
-                  <div className={styles.friend_stats}>
-                    <p>440 kg Co2</p>
-                  </div>
-                </div>
-                <div className={styles.card}>
-                  <h2>name</h2>
-                  <h2>firstname</h2>
-                  <div className={styles.friend_stats}>
-                    <p>440 kg Co2</p>
-                  </div>
-                </div>
+                {error && <p>Error fetching data</p>}
+                {/* {dataList?.map((user: any) => ( 
+                    <div key={user.userId} className={styles.card}>
+                        <h2>{user.firstname}</h2>
+                        <h2>{user.lastname}</h2>
+                      <div className={styles.friend_stats}>
+                        <p>440 kg Co2</p>
+                      </div>
+                    </div>
+                ))} */}
+                {dataList.getUserFriendList?.map((user: any) => ( 
+                  user?.map((u: IUserFriendsLists) => (
+                    <div key={user.userId} className={styles.card}>
+                        <h2>{u.firstname}</h2>
+                        <h2>{u.lastname}</h2>
+                      <div className={styles.friend_stats}>
+                        <p>440 kg Co2</p>
+                      </div>
+                    </div>
+
+                  ))
+                ))}
+                
               </div>
             </div>
           </section>

@@ -17,7 +17,6 @@ import Social from "../components/Social";
 function App() {
   const [globalState, setGlobalState] = useGlobalState();
 
-  console.log(globalState.isLogged);
   return (
     <BrowserRouter>
       <Routes>
