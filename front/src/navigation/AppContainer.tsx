@@ -10,9 +10,10 @@ import Login from "../screens/UserConnexion/Login";
 import Statistic from "../screens/Statistic/Statistic";
 import { useGlobalState } from "../GlobalStateContext";
 import { useEffect } from "react";
-
+import SideBar from "../components/SideBar/SideBar";
 import * as React from "react";
 import FriendList from "../components/FriendList";
+import { display } from "@mui/system";
 
 function App() {
   const [globalState, setGlobalState] = useGlobalState();
@@ -47,8 +48,9 @@ function PrivateRoute({ element }: { element: React.ReactNode }) {
   }, [globalState.isLogged, navigate]);
 
   return (
-    <div>
-      <HomePage />
+    <div style={{ display: "flex" }}>
+      <SideBar />
+      {element}
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import DarkMode from "../theme/DarkMode";
+import { useNavigate } from "react-router-dom";
 import "./SideBar.css";
 import { motion } from "framer-motion";
 import {
@@ -6,6 +7,7 @@ import {
   BarChartRounded,
   ContactPhone,
   DashboardRounded,
+  QueryStats,
   Settings,
   SettingsAccessibility,
   TocRounded,
@@ -20,12 +22,14 @@ function App() {
   const handleToggle = () => {
     setOpen(!open);
   };
+  const navigate = useNavigate();
 
   const sideContainerVariants = {
     true: {
       width: "15rem",
     },
     false: {
+      width: "9rem",
       transition: {
         delay: 0.4,
       },
@@ -55,86 +59,127 @@ function App() {
     },
   };
   return (
-    <div className="App">
+    <motion.div
+      data-Open={open}
+      variants={sideContainerVariants}
+      initial={`${open}`}
+      animate={`${open}`}
+      className="sidebar_container"
+    >
+      {/* sidebar div */}
       <motion.div
-        data-Open={open}
-        variants={sideContainerVariants}
+        className="sidebar"
         initial={`${open}`}
         animate={`${open}`}
-        className="sidebar_container"
+        variants={sidebarVariants}
       >
-        {/* sidebar div */}
+        {/* lines_icon */}
         <motion.div
-          className="sidebar"
+          whileHover={{
+            scale: 1.2,
+            rotate: 180,
+            backgroundColor: "rgba(255, 255, 255, 0.3)",
+            backdropFilter: "blur(3.5px)",
+            WebkitBackdropFilter: "blur(3.5px)",
+            border: "1px solid rgba( 255, 255, 255, 0.18 )",
+            transition: {
+              delay: 0.3,
+              duration: 0.3,
+            },
+          }}
+          onClick={handleToggle}
+          className="lines_icon"
+        >
+          <TocRounded />
+        </motion.div>
+        {/* profile */}
+        <motion.div
+          layout
           initial={`${open}`}
           animate={`${open}`}
-          variants={sidebarVariants}
+          variants={profileVariants}
+          className="profile"
+          transition={{ duration: 0.6 }}
+          whileHover={{
+            backgroundColor: "rgba(255, 255, 255, 0.1)",
+            boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
+            backdropFilter: "blur(5.5px)",
+            WebkitBackdropFilter: "blur(5.5px)",
+            cursor: "pointer",
+          }}
         >
-          {/* lines_icon */}
-          <motion.div
-            whileHover={{
-              scale: 1.2,
-              rotate: 180,
-              backgroundColor: "rgba(255, 255, 255, 0.3)",
-              backdropFilter: "blur(3.5px)",
-              WebkitBackdropFilter: "blur(3.5px)",
-              border: "1px solid rgba( 255, 255, 255, 0.18 )",
-              transition: {
-                delay: 0.3,
-                duration: 0.3,
-              },
-            }}
-            onClick={handleToggle}
-            className="lines_icon"
-          >
-            <TocRounded />
-          </motion.div>
-          {/* profile */}
-          <motion.div
-            layout
-            initial={`${open}`}
-            animate={`${open}`}
-            variants={profileVariants}
-            className="profile"
-            transition={{ duration: 0.6 }}
-            whileHover={{
-              backgroundColor: "rgba(255, 255, 255, 0.1)",
-              boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
-              backdropFilter: "blur(5.5px)",
-              WebkitBackdropFilter: "blur(5.5px)",
-              cursor: "pointer",
-            }}
-          >
-            <img src={logo} alt="profile_img" />
-          </motion.div>
-          {/* groups */}
-          <div className="groups">
-            <div className="group">
-              <motion.h3
-                animate={{ opacity: open ? 1 : 0, height: open ? "auto" : 0 }}
-              ></motion.h3>
-              <Item icon={<DashboardRounded />} name="Dashboard" />
-              <Item icon={<BarChartRounded />} name="Community" />
-            </div>
-          </div>
-          <div className="group">
-            <motion.h3
-              animate={{ opacity: open ? 1 : 0, height: open ? "auto" : 0 }}
-            ></motion.h3>
-            <Item icon={<SettingsAccessibility />} name="Profile" />
-            <Item icon={<AttachMoneyRounded />} name="Donations" />{" "}
-            <Item icon={<Settings />} name="Settings" />
-          </div>
-          <div className="group">
-            <motion.h3
-              animate={{ opacity: open ? 1 : 0, height: open ? "auto" : 0 }}
-            ></motion.h3>
-            <Item icon={<ContactPhone />} name="Contact" />
-            <DarkMode />
-          </div>
+          <img src={logo} alt="profile_img" />
         </motion.div>
+        {/* groups */}
+        <div className="groups">
+          <div className="group">
+            <motion.h3
+              animate={{ opacity: open ? 1 : 0, height: open ? "auto" : 0 }}
+            ></motion.h3>{" "}
+            <Item
+              icon={<DashboardRounded />}
+              name="Dashboard"
+              onClick={() => {
+                navigate("/dashboard");
+              }}
+            />
+            <Item
+              icon={<QueryStats />}
+              name="statistiques"
+              onClick={() => {
+                navigate("/statistiques");
+              }}
+            />{" "}
+            <Item
+              icon={<BarChartRounded />}
+              name="Community"
+              onClick={() => {
+                navigate("/Community");
+              }}
+            />
+          </div>
+        </div>
+        <div className="group">
+          <motion.h3
+            animate={{ opacity: open ? 1 : 0, height: open ? "auto" : 0 }}
+          ></motion.h3>
+          <Item
+            icon={<SettingsAccessibility />}
+            name="Profile"
+            onClick={() => {
+              navigate("/profile");
+            }}
+          />
+          <Item
+            icon={<AttachMoneyRounded />}
+            name="Donations"
+            onClick={() => {
+              navigate("/Donations");
+            }}
+          />
+          <Item
+            icon={<Settings />}
+            name="Settings"
+            onClick={() => {
+              navigate("/Settings");
+            }}
+          />
+        </div>
+        <div className="group">
+          <motion.h3
+            animate={{ opacity: open ? 1 : 0, height: open ? "auto" : 0 }}
+          ></motion.h3>
+          <Item
+            icon={<ContactPhone />}
+            name="Contact"
+            onClick={() => {
+              navigate("/Contact");
+            }}
+          />
+          <DarkMode />
+        </div>
       </motion.div>
-    </div>
+    </motion.div>
   );
 }
 
