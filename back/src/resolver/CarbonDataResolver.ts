@@ -14,15 +14,15 @@ class CarbonDataResolver {
     @Arg("title") title: string,
     @Arg("consumption") consumption: number,
     @Arg("price") price: number,
-    @Arg("categoryId") categoryId: number,
+    @Arg("category") categoryString: string,
     @Arg("userId") userId: number
-  ): Promise<String|GraphQLError> {
+  ): Promise<String|GraphQLError|any> {
     try {
       const args = new CarbonDataInput();
       args.title = title;
       args.consumption = consumption;
       args.price = price;
-      args.categoryId = categoryId;
+      args.categoryString = categoryString;
       args.userId = userId;
       const validationErrors = await validate(args);
 
@@ -36,9 +36,7 @@ class CarbonDataResolver {
       carbonData.price = price;
       carbonData.modifiedAt = new Date();
       carbonData.createdAt = new Date();
-      carbonData.category = await dataSource
-        .getRepository(Category)
-        .findOneByOrFail({ categoryId });
+      carbonData.categoryString = categoryString;
       carbonData.user = await dataSource
         .getRepository(User)
         .findOneByOrFail({ userId });

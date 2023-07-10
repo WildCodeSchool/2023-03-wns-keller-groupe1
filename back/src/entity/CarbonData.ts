@@ -15,20 +15,26 @@ export class CarbonData {
   title: string;
 
   @Field()
-  @Column()
+  @Column("float")
   consumption: number;
 
   @Field()
-  @Column()
+  @Column("float")
   price: number;
 
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.carbonData)
   user: User;
 
-  @Field(() => Category)
-  @ManyToOne(() => Category, (category) => category.carbonData)
+  @Field(() => Category, {nullable: true})
+  @ManyToOne(() => Category, (category) => category.carbonData, { nullable: true })
   category: Category;
+
+  @Field()
+  @Column({
+    nullable: true,
+  })
+  categoryString: string;
 
   @Field()
   @Column()

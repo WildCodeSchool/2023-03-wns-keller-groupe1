@@ -1,21 +1,50 @@
 .MainContainer {
-    padding: 5vh 3vw;
-    width: 90vw;
-    height: 100vh;
-    background-color: grey;
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    padding-left: 20%;
+    padding-right: 20%;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    animation: fadeIn 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
 
 .modalContainer {
     background-color: white;
     border-radius: 20px;
-    padding: 2%;
-    height: 90vh;
+    padding: 20px;
+    height: 90%;
     display: flex;
     flex-direction: column;
+    animation: scaleUp 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleUp {
+    0% {
+      transform:scale(1) translateY(1000px);
+      opacity:0;
+    }
+    100% {
+      transform:scale(1) translateY(0px);
+      opacity:1;
+    }
+  }
+  
+
 .modalTitle {
-    font-size: 38px;
+    font-size: 30px;
     font-weight: bold;
     color: #1c7b47;
     width: 100%;
@@ -27,7 +56,8 @@
 .formContainer {
     width: 100%;
     height: 100%;
-    padding: 2% 5% 0% 5%;
+    padding: 10px;
+    padding-top: 30px;
     text-align: center;
     color: #1c7b47;
     font-size: 28px;
@@ -64,8 +94,8 @@
     border-radius: 20px;
     border: none;
     color: white;
-    padding: 1% 0;
-    width: 350px;
+    padding-bottom: 5px;
+    width: 310px;
     height: 60px;
     text-align: center;
     display: inline-block;
@@ -86,5 +116,4 @@
 .formGroupSubmit {
     display: flex;
     justify-content: center;
-    margin: 2%;
 }

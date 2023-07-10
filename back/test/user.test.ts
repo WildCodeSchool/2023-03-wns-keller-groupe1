@@ -35,7 +35,7 @@ describe('UserResolver', () => {
     });
   });
 
-  it('Creates a user', async () => {
+  it('Validate input and creates a user', async () => {
     const email = 'test@example.com';
     const password = 'password';
     const firstname = 'John';

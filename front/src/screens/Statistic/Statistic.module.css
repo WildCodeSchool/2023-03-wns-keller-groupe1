@@ -33,20 +33,32 @@
   align-items: center;
 }
 .BtnList {
-  width: 40%;
+  width: 15%;
   height: 15vh;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 }
 
 .Btn {
   font-size: 20px;
   font-weight: bold;
-  color: #1c7b47;
+  color: #25a55f;
   background-color: inherit;
   border: none;
   cursor: pointer;
+  padding: 1.2vh 1.2vw;
+}
+
+.BtnSelected {
+  font-size: 20px;
+  font-weight: bold;
+  color:'#FFFFFF';
+  background-color: #25a55f;
+  border: none;
+  cursor: pointer;
+  padding: 1.2vh 1.2vw;
+  border-radius: 10px;
 }
 
 .chartContent {
@@ -56,7 +68,12 @@
   flex-grow: 1;
 }
 
-.SelectMonthContainer {
+.OptionListContainer {
+  width: 40%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .SelectMonth {
@@ -64,5 +81,44 @@
   outline: none;
   font-size: 20px;
   font-weight: bold;
-  color: #1c7b47;
+  color: #25a55f;
+}
+
+.SelectChartDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.chart {
+  width: 25px;
+}
+.SelectChartBtn1 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #1e1e1e;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 1.2vh 1.2vw;
+  border-radius: 10px;
+}
+.SelectChartBtn2 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #1e1e1e;
+  background-color: #25a55f;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  padding: 1.2vh 1.2vw;
+  border-radius: 10px;
+}
+
+.SelectChartBtn1Text {
+  margin-right: 0.5vw;
 }
