@@ -25,9 +25,7 @@ ChartJS.register(
 
 const Chart: React.FC<ChartProps> = ({
   data,
-  selectedMonth,
   OptionMonthSelected,
-  selectedYear,
 }) => {
   const [dataByPeriod, setDataByPeriod] = useState<{ [key: string]: number }>({});
 
