@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Chart from "../../components/chart/chart";
 import styles from "./Statistic.module.css";
 import { useGlobalState } from "../../GlobalStateContext";
@@ -13,8 +13,7 @@ import chart2White from "../../assets/icons/chart2White.png";
 const Statistic = () => {
   const [globalState, setGlobalState] = useGlobalState();
   const [LineChartSelected, setLineChartSelected] = useState<boolean>(false);
-  const [OptionMonthSelected, setOptionMonthSelected] =
-    useState<boolean>(true);
+  const [OptionMonthSelected, setOptionMonthSelected] = useState<boolean>(true);
   let { error, data } = useUserCarbonData(globalState?.user?.userId);
   const [months, setMonths] = useState<Array<{ month: string; year: string }>>(
     []
@@ -23,7 +22,7 @@ const Statistic = () => {
   const [currentMonth, setCurrentMonth] = useState<string>("");
   const [selectedMonth, setSelectedMonth] = useState<string>(currentMonth);
   const [selectedYear, setSelectedYear] = useState<string>("");
-  const [filteredData, setFilteredData] = useState<ICarbonData[]>([]);
+
   useEffect(() => {
     const currentDate = new Date();
     const month = currentDate.toLocaleString("fr-FR", { month: "long" });
@@ -33,6 +32,7 @@ const Statistic = () => {
     const currentYear = currentDate.getFullYear().toString();
     setSelectedYear(currentYear);
   }, []);
+  
   useEffect(() => {
     if (typeof data != "undefined") {
       const ticketsByMonthAndYear: { [monthAndYear: string]: ICarbonData[] } =
@@ -68,9 +68,9 @@ const Statistic = () => {
     }
   }, [data]);
 
-  useEffect(() => {
+  const filteredData = useMemo(() => {
     if (typeof data !== "undefined") {
-      let newFilteredData = OptionMonthSelected
+      return OptionMonthSelected
         ? data.filter((ticket: ICarbonData) => {
             const month = ticket.createdAt.toLocaleString("fr-FR", {
               month: "long",
@@ -81,11 +81,10 @@ const Statistic = () => {
             const year = ticket.createdAt.getFullYear().toString();
             return year === selectedYear;
           });
-      setFilteredData(newFilteredData);
-      console.log(newFilteredData)
+    } else {
+      return [];
     }
   }, [data, OptionMonthSelected, selectedMonth, selectedYear]);
-
   return (
     <div className={styles.MainContainer}>
       <div className={styles.chartContainer}>
@@ -161,7 +160,7 @@ const Statistic = () => {
           </div>
         </div>
         <div className={styles.chartContent}>
-          {data ? (
+          {typeof data != "undefined" ? (
             LineChartSelected ? (
               <Chart
                 data={{ data: filteredData as ICarbonData[] }}

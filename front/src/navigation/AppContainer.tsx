@@ -19,8 +19,7 @@ function App() {
 import { useEffect } from "react";
 import SideBar from "../components/SideBar/SideBar";
 import * as React from "react";
-import FriendList from "../components/FriendList";
-import { display } from "@mui/system";
+
 
 function App() {
   const [globalState, setGlobalState] = useGlobalState();
