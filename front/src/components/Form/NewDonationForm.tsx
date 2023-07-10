@@ -21,7 +21,7 @@ const NewDonationForm = ({}) => {
             <div className={styles.formGroupSubmit}>
               <button
                 className={styles.submitButton}
-                onClick={() => handleFormSubmit(localStorage.getItem("user_id"))}
+                onClick={() => handleFormSubmit(sessionStorage.getItem("user_id"))}
               >
                 Je contribue
               </button>

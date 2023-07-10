@@ -8,16 +8,19 @@ import {
 import HomePage from "../screens/Dashboard/HomePage";
 import Login from "../screens/UserConnexion/Login";
 import Statistic from "../screens/Statistic/Statistic";
-import { useGlobalState } from "../GlobalStateContext";
-import { useEffect } from "react";
 import SideBar from "../components/SideBar/SideBar";
 import * as React from "react";
 import Success from "../screens/Payment/Success";
+import { gql, useQuery } from "@apollo/client";
+import NotFound from "../screens/Error/404";
 
+export const VERIFY_TOKEN = gql`
+  query Query($token: String!) {
+    verifyToken(token: $token)
+  }
+`;
 
 function App() {
-  const [globalState, setGlobalState] = useGlobalState();
-  console.log(globalState.isLogged);
 
   return (
     <BrowserRouter>
@@ -36,20 +39,24 @@ function App() {
           path="/payment/success"
           element={<PrivateRoute element={<Success />} />}
         />
+        <Route 
+          path="*" 
+          element={<NotFound />} 
+        />
       </Routes>
     </BrowserRouter>
   );
 }
 
 function PrivateRoute({ element }: { element: React.ReactNode }) {
-  const [globalState] = useGlobalState();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      navigate("/login");
-    }
-  }, [globalState.isLogged, navigate]);
+  const { error } = useQuery(VERIFY_TOKEN, {
+    variables: { token: sessionStorage.getItem("token") },
+    fetchPolicy: "network-only",
+  })
+
+  if (error) navigate("/login");
 
   return (
     <div style={{ display: "flex" }}>

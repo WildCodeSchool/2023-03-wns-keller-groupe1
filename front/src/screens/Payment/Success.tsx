@@ -12,8 +12,8 @@ const Success = () => {
   console.log(searchParams.get("session_id"));
 
   useEffect(() => {
-    if (sessionId != null && localStorage.getItem("user_id")) {
-      const userId = localStorage.getItem("user_id");
+    if (sessionId != null && sessionStorage.getItem("user_id")) {
+      const userId = sessionStorage.getItem("user_id");
       if (userId) {
         handleFormSubmit(parseInt(userId), sessionId);
       }   

@@ -60,11 +60,10 @@ class DonationResolver {
   }
 
 
-
   @Mutation(() => String)
   async checkoutDonation(
     @Arg("userid") userId: number,
-  ): Promise<any> {
+  ): Promise<string|GraphQLError> {
     try {
       const user = await dataSource
       .getRepository(User)
@@ -94,9 +93,13 @@ class DonationResolver {
         cancel_url: `http://localhost:3000/dashboard`,
       });
   
-      return session.url;
-    } catch (error: any) {
-      return new GraphQLError(error); 
+      if (session.url) {
+        return session.url;
+      } else {
+        return new GraphQLError("An error occured"); 
+      }
+    } catch (error) {
+      return new GraphQLError("An error occured"); 
     }
    
   }
@@ -105,7 +108,7 @@ class DonationResolver {
   async checkoutSuccess(
     @Arg("userid") userId: number,
     @Arg("sessionId") sessionId: string,
-  ): Promise<any> {
+  ): Promise<string|GraphQLError> {
 
     try {
       const user = await dataSource
@@ -131,10 +134,9 @@ class DonationResolver {
       await dataSource.getRepository(Donation).save(donation);
   
       return "Payment succeeded";
-    } catch (error: any) {
-      return new GraphQLError(error)
+    } catch (error) {
+      return new GraphQLError("An error occured")
     }
-   
   }
 }
 

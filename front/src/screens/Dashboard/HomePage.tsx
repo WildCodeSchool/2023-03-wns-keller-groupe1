@@ -18,8 +18,8 @@ const HomePage = () => {
 
   let parsedUserId;
 
-  if (localStorage.getItem("user_id")) {
-    const userId = localStorage.getItem("user_id");
+  if (sessionStorage.getItem("user_id")) {
+    const userId = sessionStorage.getItem("user_id");
     if (userId != null ) {
       parsedUserId = parseInt(userId);
     }
@@ -77,7 +77,7 @@ const HomePage = () => {
           co2,
           price,
           category,
-          localStorage.getItem("user_id"),
+          sessionStorage.getItem("user_id"),
           setQuery,
           setCo2,
           setPrice,
