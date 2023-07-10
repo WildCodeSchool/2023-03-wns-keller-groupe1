@@ -2,6 +2,7 @@ import DarkMode from "../theme/DarkMode";
 import { useNavigate } from "react-router-dom";
 import "./SideBar.css";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import {
   AttachMoneyRounded,
   BarChartRounded,
@@ -119,24 +120,14 @@ function App() {
             <Item
               icon={<DashboardRounded />}
               name="Dashboard"
-              onClick={() => {
-                navigate("/dashboard");
-              }}
+              to="/dashboard"
             />
             <Item
               icon={<QueryStats />}
               name="statistiques"
-              onClick={() => {
-                navigate("/statistiques");
-              }}
-            />{" "}
-            <Item
-              icon={<BarChartRounded />}
-              name="Community"
-              onClick={() => {
-                navigate("/Community");
-              }}
+              to="/statistic"
             />
+            <Item icon={<BarChartRounded />} name="Community" to="/Community" />
           </div>
         </div>
         <div className="group">
@@ -150,20 +141,14 @@ function App() {
               navigate("/profile");
             }}
           />
+          <Item icon={<SettingsAccessibility />} name="Profile" to="/Profile" />
+
           <Item
             icon={<AttachMoneyRounded />}
             name="Donations"
-            onClick={() => {
-              navigate("/Donations");
-            }}
+            to="/Donations"
           />
-          <Item
-            icon={<Settings />}
-            name="Settings"
-            onClick={() => {
-              navigate("/Settings");
-            }}
-          />
+          <Item icon={<Settings />} name="Settings" to="/Settings" />
         </div>
         <div className="group">
           <motion.h3

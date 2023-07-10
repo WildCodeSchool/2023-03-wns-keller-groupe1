@@ -1,8 +1,15 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import "./Item.css";
 
-function Item({ icon, name }: any) {
+function Item({ icon, name, to }: any) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(to);
+  };
+
   const subheading = {
     true: {
       opacity: 1,
@@ -12,9 +19,11 @@ function Item({ icon, name }: any) {
       display: "none",
     },
   };
+
   return (
     <motion.div
       className="item"
+      onClick={handleClick}
       whileHover={{
         backgroundColor: "rgba(255, 255, 255, 0.3)",
         boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
@@ -35,3 +44,4 @@ function Item({ icon, name }: any) {
 }
 
 export default Item;
+
