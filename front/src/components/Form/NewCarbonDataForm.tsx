@@ -117,18 +117,6 @@ const NewCarbonDataForm = ({
               </input>
             </div>
             <div>
-              <p className={styles.formTitle}>Prix</p>
-              <input
-                className={styles.formInputLogin}
-                type="number"
-                name="price"
-                id="price"
-                onChange={handleInputNumberChange(setPrice)}
-                required
-                value={price}
-              />
-            </div>
-            <div>
               <p className={styles.formTitle}>Poid carbone en kg Co2 ?</p>
               <input
                 className={styles.formInputLogin}
@@ -138,6 +126,18 @@ const NewCarbonDataForm = ({
                 onChange={handleInputNumberChange(setCo2)}
                 required
                 value={Co2}
+              />
+            </div>
+            <div>
+              <p className={styles.formTitle}>Prix</p>
+              <input
+                className={styles.formInputLogin}
+                type="number"
+                name="price"
+                id="price"
+                onChange={handleInputNumberChange(setPrice)}
+                required
+                value={price}
               />
             </div>
             <div className={styles.formGroupSubmit}>
