@@ -1,4 +1,3 @@
-import Navbar from '../navigation/Navbar'
 import styles  from "../styles/social.module.css";
 import { ReactComponent as CrossIcon } from "../assets/icons/cross.svg";
 import { ReactComponent as VectorIcon } from "../assets/icons/Vector.svg";
@@ -32,7 +31,6 @@ console.log(userFriendsLists);
   return (
     <div className={styles.container}>
       <section className={styles.all_sections}>
-        <Navbar />
         <div className={styles.content}>
         {loading && <p>Fetching data...</p>}
           <section className={styles.section}>

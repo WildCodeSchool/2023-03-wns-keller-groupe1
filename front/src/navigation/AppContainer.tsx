@@ -23,7 +23,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/social" element={<Social />} />
+        <Route
+          path="/social"
+          element={<PrivateRoute element={<Social />} />}
+        />
         <Route
           path="/dashboard"
           element={<PrivateRoute element={<HomePage />} />}
