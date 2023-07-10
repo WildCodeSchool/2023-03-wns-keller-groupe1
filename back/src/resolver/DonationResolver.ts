@@ -2,26 +2,21 @@ import { Arg, Mutation, Query, Resolver } from "type-graphql";
 import dataSource from "../utils";
 import { Donation } from "../entity/Donation";
 import { User } from "../entity/User";
+import Stripe from "stripe";
+import { GraphQLError } from 'graphql';
+import { STRIPE_SECRET } from "../index";
 
 @Resolver()
 class DonationResolver {
-  @Mutation(() => String)
-  async createDonation(
-    // les Arg sont des données passer que l'on veut récupéré depuis l'entity
-    @Arg("userid") userId: number,
-    @Arg("amount") amount: number
-  ): Promise<any> {
+  @Query(() => [Donation])
+  async getAllDonation(): Promise<Donation[] | String> {
     try {
-      const donation = new Donation();
-      donation.amount = amount;
-      donation.user = await dataSource
-        .getRepository(User)
-        .findOneByOrFail({ userId });
-      donation.created_at = new Date();
-      await dataSource.getRepository(Donation).save(donation);
-      return "Donation created";
+      const donation = await dataSource
+        .getRepository(Donation)
+        .find({ relations: ["user"] });
+      return donation;
     } catch (error) {
-      return error;
+      return "An error occured";
     }
   }
 
@@ -64,16 +59,82 @@ class DonationResolver {
     }
   }
 
-  @Query(() => [Donation])
-  async getAllDonation(): Promise<Donation[] | String> {
+
+
+  @Mutation(() => String)
+  async checkoutDonation(
+    @Arg("userid") userId: number,
+  ): Promise<any> {
     try {
-      const donation = await dataSource
-        .getRepository(Donation)
-        .find({ relations: ["user"] });
-      return donation;
-    } catch (error) {
-      return "An error occured";
+      const user = await dataSource
+      .getRepository(User)
+      .findOne({
+        where: { userId }
+      });
+  
+      if (!user) {
+        return new GraphQLError("No user found"); 
+      }
+  
+      const stripe = new Stripe(STRIPE_SECRET , {
+        apiVersion: '2022-11-15',
+      });
+  
+      const session = await stripe.checkout.sessions.create({
+        customer_email: user.email,
+        submit_type: 'donate',
+        line_items: [
+          {
+            price: 'price_1NSKjoBnwmYc7FtQC6n3crqD',
+            quantity: 1,
+          },
+        ],
+        mode: 'payment',
+        success_url: "http://localhost:3000/payment/success?session_id={CHECKOUT_SESSION_ID}",
+        cancel_url: `http://localhost:3000/dashboard`,
+      });
+  
+      return session.url;
+    } catch (error: any) {
+      return new GraphQLError(error); 
     }
+   
+  }
+
+  @Mutation(() => String)
+  async checkoutSuccess(
+    @Arg("userid") userId: number,
+    @Arg("sessionId") sessionId: string,
+  ): Promise<any> {
+
+    try {
+      const user = await dataSource
+      .getRepository(User)
+      .findOne({
+        where: { userId }
+      });
+  
+      if (!user) {
+        return new GraphQLError("No user found"); 
+      }
+  
+      const stripe = new Stripe(STRIPE_SECRET, {
+        apiVersion: '2022-11-15',
+      });
+  
+      const session: any = await stripe.checkout.sessions.retrieve(sessionId);
+  
+      const donation = new Donation();
+      donation.amount = session.amount_subtotal;
+      donation.user = user;
+      donation.created_at = new Date();
+      await dataSource.getRepository(Donation).save(donation);
+  
+      return "Payment succeeded";
+    } catch (error: any) {
+      return new GraphQLError(error)
+    }
+   
   }
 }
 

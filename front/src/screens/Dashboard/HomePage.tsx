@@ -1,7 +1,6 @@
 import { useState } from "react";
 import NewCarbonDataForm from "../../components/Form/NewCarbonDataForm";
 import CreateCarbonData from "../../services/crateCarbonData";
-import { useGlobalState } from "../../GlobalStateContext";
 import styles from "./HomePage.module.css";
 import UserSummary from "../../components/dashboard/UserSummary";
 import { useUserCarbonData } from "../../services/getUserCarbonData";
@@ -16,8 +15,17 @@ const HomePage = () => {
   const [co2, setCo2] = useState<number|undefined>(0);
   const [query, setQuery] = useState("");
   const { handleFormSubmit } = CreateCarbonData();
-  const [globalState, setGlobalState] = useGlobalState();
-  const { loading, error, data } = useUserCarbonData(globalState?.user?.userId);
+
+  let parsedUserId;
+
+  if (localStorage.getItem("user_id")) {
+    const userId = localStorage.getItem("user_id");
+    if (userId != null ) {
+      parsedUserId = parseInt(userId);
+    }
+  }
+  
+  const { loading, error, data } = useUserCarbonData(parsedUserId);
 
   const modalDonationTest: any = document.getElementById("new-donation-modal");
   const handleModalDonation = () => {
@@ -28,10 +36,10 @@ const HomePage = () => {
   const donationModal: any = document.getElementById("new-donation-modal");
 
   window.onclick = function(event) {
-    if (event.target == modal) {
+    if (event.target === modal) {
       modal.style.display = "none";
     }
-    if (event.target == donationModal) {
+    if (event.target === donationModal) {
       donationModal.style.display = "none";
     }  
   } 
@@ -69,7 +77,7 @@ const HomePage = () => {
           co2,
           price,
           category,
-          globalState.user.userId,
+          localStorage.getItem("user_id"),
           setQuery,
           setCo2,
           setPrice,

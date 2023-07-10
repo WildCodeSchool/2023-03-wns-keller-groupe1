@@ -12,6 +12,7 @@ import { useGlobalState } from "../GlobalStateContext";
 import { useEffect } from "react";
 import SideBar from "../components/SideBar/SideBar";
 import * as React from "react";
+import Success from "../screens/Payment/Success";
 
 
 function App() {
@@ -31,6 +32,10 @@ function App() {
           path="/statistic"
           element={<PrivateRoute element={<Statistic />} />}
         />
+        <Route
+          path="/payment/success"
+          element={<PrivateRoute element={<Success />} />}
+        />
       </Routes>
     </BrowserRouter>
   );
@@ -41,7 +46,7 @@ function PrivateRoute({ element }: { element: React.ReactNode }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!globalState.isLogged) {
+    if (!localStorage.getItem("token")) {
       navigate("/login");
     }
   }, [globalState.isLogged, navigate]);

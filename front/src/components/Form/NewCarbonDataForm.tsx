@@ -1,7 +1,6 @@
 import React, { useEffect, useState, ChangeEvent } from "react";
 import styles from "./ModalForm.module.css";
 import { NewCarbonDataFormProps } from "../../interface/NewCarbonDataFormProps";
-import GetAllCategories from "../../services/getAllCategories";
 import CarbonResults from "./CarbonResult";
 
 const NewCarbonDataForm = ({
@@ -17,20 +16,10 @@ const NewCarbonDataForm = ({
   query,
   setQuery
 }: NewCarbonDataFormProps|any) => {
-  const [categories, setCategories] = useState<any>();
-  const { getAllCategories } = GetAllCategories();
-
   const [results, setResults] = useState([]);
-
-
   const [selectedOption, setSelectedOption] = useState("");
   const [selectedData, setSelectedData] = useState<any>(null);
 
-  useEffect(() => {
-    getAllCategories().then((data) => {
-      setCategories(data.data.getAllCategories);
-    });
-  }, []);
 
   const fetchAdemeApi = async () => {
     const response = await fetch(`https://data.ademe.fr/data-fair/api/v1/datasets/base-carboner/lines?q=${query}&q_mode=complete`);

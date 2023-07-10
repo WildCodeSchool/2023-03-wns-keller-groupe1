@@ -55,7 +55,8 @@ export const useAuth = () => {
       toast.error(`Error getting user data: ${error.message}`);
     },
     onCompleted: (data) => {
-      setGlobalState({ isLogged: true, user: data.getUserFromToken });
+      setGlobalState({ isLogged: true, user: data.getUserFromToken });  
+      localStorage.setItem("user_id", data.getUserFromToken.userId);
       navigate("/dashboard");
     },
   });
