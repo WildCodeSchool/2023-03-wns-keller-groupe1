@@ -1,0 +1,161 @@
+.MainContainer {
+  padding: 20px;
+  width: 90vw;
+  background-color: #eaecf0;
+  overflow-y: scroll;
+}
+
+.userSummaryContainer {
+  background-color: white;
+  border-radius: 20px;
+  height: 460px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.title {
+  font-size: 30px;
+  font-weight: bold;
+  color: #1c7b47;
+  width: 50%;
+  height: "10%";
+  display: flex;
+  align-items: center;
+}
+
+.totalCo2 {
+  font-size: 34px;
+  color: #1c7b47;
+  width: 50%;
+  font-weight: normal;
+  text-align: end;
+  /* position: absolute; */
+}
+
+.subtitle {
+  width: 100%;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.newCarbonData {
+  width: 100%;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: end;
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  overflow-y: scroll;
+}
+
+.table th {
+  border-top: #D9D9D9 2px solid;
+  border-bottom: #D9D9D9 2px solid;
+  padding: 8px;
+  font-weight: normal;
+}
+
+.tableHeader {
+  font-size: 18px;
+}
+
+.tableHeaderCell {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.tableCell {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  font-size: 16px;
+}
+
+
+.submitButton {
+  background-color: #25a55f;
+  border-radius: 30px;
+  border: none;
+  color: white;
+  padding-bottom: 4px;
+  width: 270px;
+  height: 38px;
+  text-align: center;
+  display: inline-block;
+  cursor: pointer;
+  font-family: "Noto Sans JP";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 29px;
+}
+
+.submitButton:hover {
+  background-color: #1c7b47;
+  color: grey;
+}
+
+.formGroupSubmit {
+  display: flex;
+  justify-content: end;
+}
+
+.tableContainer {
+  overflow-y: scroll;
+  height: 230px;
+}
+
+.donateButton {
+  background-color: #25a55f;
+  border-radius: 20px;
+  border: none;
+  color: white;
+  padding-bottom: 4px;
+  margin-top: 30px;
+  width: 100%;
+  height: 60px;
+  text-align: center;
+  display: inline-block;
+  cursor: pointer;
+  font-family: "Noto Sans JP";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 29px;
+}
+
+.donateButton:hover {
+  background-color: #1c7b47;
+  color: grey;
+}
+
+.co2Text {
+  color: #25a55f;
+  font-size: 20px;
+  font-weight: 550;
+}
+
+.bottomSectionContainer {
+  display: flex; 
+  justify-content: space-between; 
+  flex-wrap: wrap;
+}
+
+.bottomSection {
+  width: 49%; 
+  padding-top: 30px; 
+  min-width: 400px;
+}
+
+@media (max-width: 940px) { 
+  .bottomSection {
+    width: 100%; 
+  }
+}

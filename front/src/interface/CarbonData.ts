@@ -1,12 +1,18 @@
 export interface ICarbonData {
-  title: string;
-  consumption: number;
-  price: number;
-  createdAt: Date;
-  modifiedAt: string;
-  __typename: string;
-}
-
-export interface ICarbonDataArray {
-  data: ICarbonData[];
-}
+    id:string;
+    title: string;
+    consumption: number;
+    price: number;
+    createdAt: Date;
+    modifiedAt: string;
+    __typename: string;
+    categoryString: string;
+    category: {
+      title: string
+    }
+  }
+  
+  export interface ICarbonDataArray {
+    data: ICarbonData[];
+  }
+  
