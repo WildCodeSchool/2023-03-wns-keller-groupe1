@@ -30,9 +30,7 @@ ChartJS.register(
 
 const BarChart: React.FC<ChartProps> = ({
   data,
-  selectedMonth,
   OptionMonthSelected,
-  selectedYear,
 }) => {
   const [dataByMonth, setDataByMonth] = useState<{ [key: string]: number }>({});
   const [dataByYear, setDataByYear] = useState<{ [key: string]: number }>({});
