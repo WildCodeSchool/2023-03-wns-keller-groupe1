@@ -12,6 +12,8 @@ import { useGlobalState } from "../GlobalStateContext";
 const Navbar = () => {
   const [selectedIcon, setSelectedIcon] = useState<string | null>("dashboard");
   const [globalState, setGlobalState] = useGlobalState();
+  console.log(selectedIcon);
+  
 
   const navigate = useNavigate();
 
