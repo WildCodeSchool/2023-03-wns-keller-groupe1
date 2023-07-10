@@ -32,7 +32,7 @@ const Statistic = () => {
     const currentYear = currentDate.getFullYear().toString();
     setSelectedYear(currentYear);
   }, []);
-  
+
   useEffect(() => {
     if (typeof data != "undefined") {
       const ticketsByMonthAndYear: { [monthAndYear: string]: ICarbonData[] } =
@@ -160,25 +160,23 @@ const Statistic = () => {
           </div>
         </div>
         <div className={styles.chartContent}>
-          {typeof data != "undefined" ? (
-            LineChartSelected ? (
-              <Chart
-                data={{ data: filteredData as ICarbonData[] }}
-                selectedMonth={selectedMonth}
-                selectedYear={selectedYear}
-                OptionMonthSelected={OptionMonthSelected}
-              />
+          <div style={{ width: "70%", height: "60vh", display: "flex" }}>
+            {typeof data != "undefined" ? (
+              LineChartSelected ? (
+                <Chart
+                  data={{ data: filteredData as ICarbonData[] }}
+                  OptionMonthSelected={OptionMonthSelected}
+                />
+              ) : (
+                <BarChart
+                  data={{ data: filteredData as ICarbonData[] }}
+                  OptionMonthSelected={OptionMonthSelected}
+                />
+              )
             ) : (
-              <BarChart
-                data={{ data: filteredData as ICarbonData[] }}
-                selectedMonth={selectedMonth}
-                selectedYear={selectedYear}
-                OptionMonthSelected={OptionMonthSelected}
-              />
-            )
-          ) : (
-            <div>Chargement...</div>
-          )}
+              <div>Chargement...</div>
+            )}
+          </div>
         </div>
       </div>
     </div>

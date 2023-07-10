@@ -1,9 +1,5 @@
 import { gql, useQuery } from '@apollo/client';
 
-
-
-
-
 export const GET_USER_FRIEND_LIST =  gql`
 query Query($userId: Float!) {
     getUserFriendList(userId: $userId) {
@@ -18,6 +14,7 @@ query Query($userId: Float!) {
 
 export const useGetUserFriendList = (userId: number) => {
     const {data, error, loading } = useQuery(GET_USER_FRIEND_LIST , {variables: {userId}})
+    console.log("data", data)
     return {
         userFriendsLists: data || [],
         error,
