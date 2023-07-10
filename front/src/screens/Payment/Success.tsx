@@ -1,15 +1,13 @@
 import { useSearchParams } from "react-router-dom";
 import SaveDonation from "../../services/saveDonationInDatabase";
-import { useGlobalState } from "../../GlobalStateContext";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Success = () => {
   const { handleFormSubmit } = SaveDonation();
   const [searchParams, setSearchParams] = useSearchParams();
   const sessionId = searchParams.get("session_id");
-  const [globalState, setGlobalState] = useGlobalState();
-
-  console.log(searchParams.get("session_id"));
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (sessionId != null && sessionStorage.getItem("user_id")) {
@@ -17,6 +15,8 @@ const Success = () => {
       if (userId) {
         handleFormSubmit(parseInt(userId), sessionId);
       }   
+    } else {
+      navigate("/dashboard");
     }
   }, [])
   

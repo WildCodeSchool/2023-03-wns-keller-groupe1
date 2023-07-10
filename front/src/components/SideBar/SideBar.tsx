@@ -124,10 +124,10 @@ function App() {
             />
             <Item
               icon={<QueryStats />}
-              name="statistiques"
+              name="Statistiques"
               to="/statistic"
             />
-            <Item icon={<BarChartRounded />} name="Community" to="/Community" />
+            <Item icon={<BarChartRounded />} name="Communauté" to="/community" />
           </div>
         </div>
         <div className="group">
@@ -141,8 +141,6 @@ function App() {
               navigate("/profile");
             }}
           />
-          <Item icon={<SettingsAccessibility />} name="Profile" to="/Profile" />
-
           <Item
             icon={<AttachMoneyRounded />}
             name="Donations"
