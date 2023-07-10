@@ -1,7 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import { ICarbonData } from "../interface/CarbonData";
 import {fakeData} from "../helper/helper"
-const GET_USER = gql`
+ export const GET_USER = gql`
   query GetUser($userId: Float!) {
     getUser(userId: $userId) {
       carbonData {
