@@ -1,4 +1,4 @@
-import styles from "./HomePage.module.css";
+import styles from "../../screens/Dashboard/HomePage.module.css";
 import { ICarbonData } from "../../interface/CarbonData";
 import trashRed from "../../assets/icons/trash-red.svg";
 import DeleteCarbonData from "../../services/deleteCarbonData";

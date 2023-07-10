@@ -3,10 +3,10 @@ import NewCarbonDataForm from "../../components/Form/NewCarbonDataForm";
 import CreateCarbonData from "../../services/crateCarbonData";
 import { useGlobalState } from "../../GlobalStateContext";
 import styles from "./HomePage.module.css";
-import UserSummary from "./UserSummary";
+import UserSummary from "../../components/dashboard/UserSummary";
 import { useUserCarbonData } from "../../services/getUserCarbonData";
-import StatsSection from "./StatsSection";
-import CommunitySection from "./CommunitySection";
+import StatsSection from "../../components/dashboard/StatsSection";
+import CommunitySection from "../../components/dashboard/CommunitySection";
 import NewDonationForm from "../../components/Form/NewDonationForm";
 
 const HomePage = () => {
