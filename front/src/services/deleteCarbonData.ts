@@ -19,7 +19,7 @@ const DeleteCarbonData = () => {
     refetchQueries: [GET_USER],
   })
 
-  const handleFormSubmit = async (
+  const handleFormSubmitDelete = async (
     carbonDataId: string
 	): Promise<void>  => {
 		await deleteCarbonData({
@@ -29,7 +29,7 @@ const DeleteCarbonData = () => {
 		})
 	}
 
-  return { handleFormSubmit };
+  return { handleFormSubmitDelete };
 }
 
 export default DeleteCarbonData;
