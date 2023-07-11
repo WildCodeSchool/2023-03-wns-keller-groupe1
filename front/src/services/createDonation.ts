@@ -15,6 +15,11 @@ const SaveDonation = () => {
 		onCompleted: (data) => {   
       window.location.href = data.checkoutDonation;
     },
+		context: {
+      headers: {
+        "authorization": `Bearer ${sessionStorage.getItem("token")}`
+      }
+    }
 	})
 
 	const handleFormSubmit = async (

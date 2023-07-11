@@ -16,6 +16,11 @@ const ProgressBar = () => {
 
   const { data } = useQuery(GET_ALL_DONATION, {
     fetchPolicy: "network-only",
+    context: {
+      headers: {
+        "authorization": `Bearer ${sessionStorage.getItem("token")}`
+      }
+    }
   })
 
   useEffect(() => {

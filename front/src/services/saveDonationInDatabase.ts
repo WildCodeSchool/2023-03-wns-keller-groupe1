@@ -18,6 +18,11 @@ const CreateDonation = () => {
       navigate("/donations");
       toast.success("Merci pour votre donation !");
     },
+    context: {
+      headers: {
+        "authorization": `Bearer ${sessionStorage.getItem("token")}`
+      }
+    }
 	})
 
 	const handleFormSubmit = async (
