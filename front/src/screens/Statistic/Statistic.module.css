@@ -1,8 +1,9 @@
 .MainContainer {
-  padding: 5vh 3vw;
+  padding: 5vh 20px;
   width: 90vw;
   height: 100vh;
-  background-color: grey;
+  overflow: visible;
+  /* background-color: grey; */
 }
 .chartContainer {
   background-color: white;
@@ -11,6 +12,7 @@
   height: 90vh;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 }
 
 .chartTitle {

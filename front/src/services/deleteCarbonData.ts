@@ -1,4 +1,3 @@
-import React from "react";
 import { gql, useMutation } from "@apollo/client";
 import { toast } from "react-toastify";
 import { GET_USER } from "./getUserCarbonData";

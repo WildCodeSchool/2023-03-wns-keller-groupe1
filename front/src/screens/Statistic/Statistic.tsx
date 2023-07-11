@@ -14,7 +14,6 @@ const Statistic = () => {
   const [globalState, setGlobalState] = useGlobalState();
   const [LineChartSelected, setLineChartSelected] = useState<boolean>(false);
   const [OptionMonthSelected, setOptionMonthSelected] = useState<boolean>(true);
-  let { error, data } = useUserCarbonData(globalState?.user?.userId);
   const [months, setMonths] = useState<Array<{ month: string; year: string }>>(
     []
   );
@@ -22,6 +21,17 @@ const Statistic = () => {
   const [currentMonth, setCurrentMonth] = useState<string>("");
   const [selectedMonth, setSelectedMonth] = useState<string>(currentMonth);
   const [selectedYear, setSelectedYear] = useState<string>("");
+
+  let parsedUserId;
+
+  if (sessionStorage.getItem("user_id")) {
+    const userId = sessionStorage.getItem("user_id");
+    if (userId) {
+      parsedUserId = parseInt(userId);
+    }
+  }
+  
+  const { error, data } = useUserCarbonData(parsedUserId);
 
   useEffect(() => {
     const currentDate = new Date();

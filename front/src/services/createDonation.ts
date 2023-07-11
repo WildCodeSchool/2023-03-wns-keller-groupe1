@@ -2,41 +2,40 @@ import { gql, useMutation } from "@apollo/client";
 import { toast } from "react-toastify";
 
 export const CREATE_DONATION = gql`
-  mutation CreateDonation(
-    $amount: Float!, 
-    $userid: Float!) {
-      createDonation(
-        amount: $amount, 
-        userid: $userid
-      )
+  mutation Mutation($userid: Float!) {
+    checkoutDonation(userid: $userid)
   }
 `;
 
-const CreateDonation = () => {
-	const [createNewDonation, donationData] = useMutation(CREATE_DONATION, {
+const SaveDonation = () => {
+	const [createNewDonation] = useMutation(CREATE_DONATION, {
 		onError: (error) => {
       toast.error(`Error creating donation: ${error.message}`);
     },
 		onCompleted: (data) => {   
-      toast.success("Merci pour votre donation !");
-			const modal: any = document.getElementById("new-donation-modal");
-			modal.style.display = "none";	
+      window.location.href = data.checkoutDonation;
     },
+		context: {
+      headers: {
+        "authorization": `Bearer ${sessionStorage.getItem("token")}`
+      }
+    }
 	})
 
 	const handleFormSubmit = async (
-    userId: string|undefined,
-    amount: number
+    userId: string|null
 	): Promise<void>  => {
-    await createNewDonation({
-			variables: {
-				userid: userId,
-				amount: amount
-			}
-		})
+		if (userId) {
+			const parsedUserId = parseInt(userId);
+			await createNewDonation({
+				variables: {
+					userid: parsedUserId
+				}
+			})
+		}
 	}
 
 	return { handleFormSubmit };
 }
 
-export default CreateDonation;
+export default SaveDonation;
