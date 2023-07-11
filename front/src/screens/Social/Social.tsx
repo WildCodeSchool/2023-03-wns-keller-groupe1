@@ -1,6 +1,6 @@
 import styles from "./social.module.css";
-import { ReactComponent as CrossIcon } from "../assets/icons/cross.svg";
-import { ReactComponent as VectorIcon } from "../assets/icons/Vector.svg";
+import { ReactComponent as CrossIcon } from "../../assets/icons/cross.svg";
+import { ReactComponent as VectorIcon } from "../../assets/icons/Vector.svg";
 import { useGlobalState } from "../../GlobalStateContext";
 import { useEffect, useState } from "react";
 import { GetUsersByName } from "../../services/getUsersByName";
