@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "Wild-carbon",
+    "slug": "Wild-carbon",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./config/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./config/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./config/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./config/favicon.png"
+    }
+  }
+}
