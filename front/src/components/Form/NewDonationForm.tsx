@@ -7,7 +7,7 @@ const NewDonationForm = ({}) => {
   return (
     <>
       <div id="new-donation-modal" className={styles.MainContainer}>
-        <div className={styles.modalContainer}>
+        <div className={styles.modalContainerCreate}>
           <h1 className={styles.modalTitle}>Création d'une forêt urbaine et humaine en France</h1>
           <div className={styles.formContainer}>
             <div>

@@ -80,12 +80,12 @@ const UpdateCarbonDataForm = ({
   return (
     <>
       <div id="update-carbon-modal" className={styles.MainContainer}>
-        <div className={styles.modalContainer}>
+        <div className={styles.modalContainerUpdate}>
           <h1 className={styles.modalTitle}>Modifier une dépense carbone</h1>
           <div className={styles.formContainer}>
             <div>
               <p className={styles.formTitle}>
-                Rechercher une dépense carbone (WIP)
+                Rechercher une dépense
               </p>
               <input
                 className={styles.formInputLogin}
@@ -116,7 +116,7 @@ const UpdateCarbonDataForm = ({
               </input>
             </div>
             <div>
-              <p className={styles.formTitle}>Poid carbone en kg Co2 ?</p>
+              <p className={styles.formTitle}>Poid carbone en kg Co2</p>
               <input
                 className={styles.formInputLogin}
                 type="number"
@@ -128,7 +128,7 @@ const UpdateCarbonDataForm = ({
               />
             </div>
             <div>
-              <p className={styles.formTitle}>Prix</p>
+              <p className={styles.formTitle}>Prix <span style={{color: "lightgrey"}}>(optionnel)</span></p>
               <input
                 className={styles.formInputLogin}
                 type="number"
