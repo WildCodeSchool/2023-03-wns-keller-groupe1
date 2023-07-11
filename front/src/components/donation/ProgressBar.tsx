@@ -6,8 +6,6 @@ export const GET_ALL_DONATION = gql`
   query GetAllDonation {
     getAllDonation {
       amount
-      created_at
-      Id
     }
   }
 `;
@@ -16,15 +14,15 @@ const ProgressBar = () => {
   const [progress, setProgress] = useState(0);
   const [donation, setDonation] = useState<number>(0);
 
-  const { loading, error, data } = useQuery(GET_ALL_DONATION, {
+  const { data } = useQuery(GET_ALL_DONATION, {
     fetchPolicy: "network-only",
   })
 
   useEffect(() => {
     let totalDonations = 0;
-    
+
     if (data) {
-      data.getAllDonation.forEach((element: any) => {
+      data.getAllDonation.forEach((element: {"amount": number}) => {
         totalDonations = totalDonations + (element.amount/100) 
         setDonation(totalDonations)
       });
