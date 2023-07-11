@@ -32,7 +32,10 @@ function App() {
     false: {
       width: "9rem",
       transition: {
-        delay: 0.4,
+        delay: 0.3,
+        duration: 0.5,
+        type: "spring",
+        damping: 13,
       },
     },
   };
@@ -40,9 +43,12 @@ function App() {
   const sidebarVariants = {
     true: {},
     false: {
-      width: "6rem",
+      width: "90px",
       transition: {
         delay: 0.3,
+        duration: 0.5,
+        type: "spring",
+        damping: 13,
       },
     },
   };
@@ -61,7 +67,7 @@ function App() {
   };
   return (
     <motion.div
-      data-Open={open}
+      data-open={open}
       variants={sideContainerVariants}
       initial={`${open}`}
       animate={`${open}`}
@@ -82,7 +88,7 @@ function App() {
             backgroundColor: "rgba(255, 255, 255, 0.3)",
             backdropFilter: "blur(3.5px)",
             WebkitBackdropFilter: "blur(3.5px)",
-            border: "1px solid rgba( 255, 255, 255, 0.18 )",
+            // border: "1px solid rgba( 255, 255, 255, 0.18 )",
             transition: {
               delay: 0.3,
               duration: 0.3,
@@ -124,10 +130,10 @@ function App() {
             />
             <Item
               icon={<QueryStats />}
-              name="statistiques"
+              name="Statistiques"
               to="/statistic"
             />
-            <Item icon={<BarChartRounded />} name="Community" to="/Community" />
+            <Item icon={<BarChartRounded />} name="Communauté" to="/community" />
           </div>
         </div>
         <div className="group">
@@ -141,8 +147,6 @@ function App() {
               navigate("/profile");
             }}
           />
-          <Item icon={<SettingsAccessibility />} name="Profile" to="/Profile" />
-
           <Item
             icon={<AttachMoneyRounded />}
             name="Donations"

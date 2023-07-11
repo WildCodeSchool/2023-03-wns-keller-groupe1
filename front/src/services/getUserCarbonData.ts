@@ -18,7 +18,7 @@ import { useEffect, useState } from "react";
   }
 `;
 
-export const useUserCarbonData = (userId: number) => {
+export const useUserCarbonData = (userId: number|undefined) => {
   const [userCarbonData, setUserCarbonData] = useState<ICarbonData[]>([]);
   const { loading, error, data } = useQuery(GET_USER, {
     variables: { userId },

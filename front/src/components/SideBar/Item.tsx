@@ -29,7 +29,7 @@ function Item({ icon, name, to }: any) {
         boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
         backdropFilter: "blur(5.5px)",
         WebkitBackdropFilter: "blur(5.5px)",
-        border: "1px solid rgba( 255, 255, 255, 0.18 )",
+        // border: "1px solid rgba( 255, 255, 255, 0.18 )",
         cursor: "pointer",
       }}
       transition={{

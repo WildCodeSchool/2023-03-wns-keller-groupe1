@@ -43,26 +43,29 @@ const CreateCarbonData = () => {
 		co2: number|undefined,
 		price: number|undefined,
 		category: string|undefined,
-		userId: number|undefined,
+		userId: string|null,
 		setQuery: Function,
 		setCo2: Function,
 		setPrice: Function,
 		setCategory: Function
 	): Promise<void>  => {
 		event.preventDefault();
-		await createNewCarbonData({
-			variables: {
-				userId: userId,
-				category: category,
-				price: price,
-				consumption: co2,
-				title: name
-			}
-		})
-		setQuery("");
-		setCo2(0);
-		setPrice(0);
-		setCategory("");
+		if (userId) {
+			const parsedUserId = parseInt(userId);
+			await createNewCarbonData({
+				variables: {
+					userId: parsedUserId,
+					category: category,
+					price: price,
+					consumption: co2,
+					title: name
+				}
+			})
+			setQuery("");
+			setCo2(0);
+			setPrice(0);
+			setCategory("");
+		}
 	}
 
 	return { handleFormSubmit };
