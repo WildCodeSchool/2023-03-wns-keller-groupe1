@@ -98,18 +98,18 @@ const UserSummary = ({
                       <td className={styles.tableCell}>{data.categoryString}</td>
                       <td className={styles.co2Text}>{data.consumption.toFixed(2)}</td>
                       <td className={styles.tableCell}>{formattedDate}</td>
-                      <td>
-                        <img 
-                          src={trashRed} 
-                          alt="trash can" 
-                          style={{paddingBottom: "3px", cursor: "pointer"}}
-                          onClick={() => handleFormSubmitDelete(data.id)}
-                        />
+                      <td>                
                         <img 
                           src={update} 
                           alt="update" 
                           style={{cursor: "pointer"}}
                           onClick={() => handleModalUpdate(data)}
+                        />   
+                        <img 
+                          src={trashRed} 
+                          alt="trash can" 
+                          style={{paddingBottom: "3px", paddingLeft: "6xp", cursor: "pointer"}}
+                          onClick={() => handleFormSubmitDelete(data.id)}
                         />
                       </td>
                     </tr>
