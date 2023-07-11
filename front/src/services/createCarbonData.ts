@@ -22,6 +22,23 @@ export const CREATE_CARBON_DATA = gql`
   }
 `;
 
+export const UPDATE_CARBON_DATA = gql `
+	mutation UpdateCarbonData(
+		$price: Float!, 
+		$consumption: Float!, 
+		$category: String!,
+		$title: String!, 
+		$updateCarbonDataId: Float!
+	) {
+		updateCarbonData(
+			price: $price, 
+			consumption: $consumption,
+			category: $category,
+			title: $title, 
+			id: $updateCarbonDataId)
+	}
+`;
+
 const CreateCarbonData = () => {
 	// const navigate = useNavigate();
 
@@ -30,8 +47,20 @@ const CreateCarbonData = () => {
       toast.error(`Error creating carbon data: ${error.message}`);
     },
 		onCompleted: (data) => {
-      toast.success("Une nouvelle dépense carbone a bien été créé ");
+      toast.success("Une nouvelle dépense carbone a bien été créé");
 			const modal: any = document.getElementById("new-carbon-modal");
+			modal.style.display = "none";	
+    },
+		refetchQueries: [GET_USER]
+	})
+
+	const [updateCarbonData, updatedCarbonData] = useMutation(UPDATE_CARBON_DATA, {
+		onError: (error) => {
+      toast.error(`Error updating carbon data: ${error.message}`);
+    },
+		onCompleted: (data) => {
+      toast.success("La dépense carbone a bien été modifié");
+			const modal: any = document.getElementById("update-carbon-modal");
 			modal.style.display = "none";	
     },
 		refetchQueries: [GET_USER]
@@ -68,7 +97,35 @@ const CreateCarbonData = () => {
 		}
 	}
 
-	return { handleFormSubmit };
+	const handleUpdateFormSubmit = async (
+		event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+		name: string|undefined,
+		co2: number|undefined,
+		price: number|undefined,
+		category: string|undefined,
+		updateCarbonDataId: string|null,
+		setQuery: Function,
+		setCo2: Function,
+		setPrice: Function,
+		setCategory: Function
+	): Promise<void>  => {
+		event.preventDefault();
+		await updateCarbonData({
+			variables: {
+				category: category,
+				price: price,
+				consumption: co2,
+				title: name,
+				updateCarbonDataId: updateCarbonDataId
+			}
+		})
+		setQuery("");
+		setCo2(0);
+		setPrice(0);
+		setCategory("");	
+	}
+
+	return { handleFormSubmit, handleUpdateFormSubmit };
 }
 
 export default CreateCarbonData;
