@@ -1,24 +1,24 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql, useQuery } from "@apollo/client";
 
-export const GET_USER_FRIEND_LIST =  gql`
-query Query($userId: Float!) {
-    getUserFriendList(userId: $userId) {
-        userFriend {
-            userId
-            lastname
-            firstname
-        }
+export const GET_FRIENDS = gql`
+  query ($userId: Float!) {
+    getFriends(userId: $userId) {
+      userId
+      lastname
+      firstname
+      totalCo2
     }
-}
-`
+  }
+`;
 
 export const useGetUserFriendList = (userId: number) => {
-    const {data, error, loading } = useQuery(GET_USER_FRIEND_LIST , {variables: {userId}})
-    console.log("data", data)
-    return {
-        userFriendsLists: data || [],
-        error,
-        loading
-    }
-
-}
+  const { data, error, loading } = useQuery(GET_FRIENDS, {
+    variables: { userId },
+  });
+  console.log(data, "Data from getUserFriendList");
+  return {
+    userFriendsLists: data?.getFriends || [],
+    error,
+    loading,
+  };
+};

@@ -9,7 +9,7 @@ import HomePage from "../screens/Dashboard/HomePage";
 import Login from "../screens/UserConnexion/Login";
 import Statistic from "../screens/Statistic/Statistic";
 import { useGlobalState } from "../GlobalStateContext";
-import Social from "../components/Social";
+import Social from "../screens/Social/Social";
 import { useEffect } from "react";
 import SideBar from "../components/SideBar/SideBar";
 import * as React from "react";

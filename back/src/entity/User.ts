@@ -1,11 +1,19 @@
 import { UserFriends } from "./UserFriends";
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable, OneToOne, JoinColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  ManyToMany,
+  JoinTable,
+  OneToOne,
+  JoinColumn,
+} from "typeorm";
 import { Field, ObjectType } from "type-graphql";
 import { CarbonData } from "./CarbonData";
 import { UserGroupe } from "./UserGroupe";
 import { Donation } from "./Donation";
 import { BankDetails } from "./BankDetails";
-
 
 @ObjectType()
 @Entity()
@@ -44,28 +52,29 @@ export class User {
   carbonData: CarbonData[];
 
   @Field(() => [UserFriends])
-  @OneToMany(() => UserFriends, (userFriend) => userFriend.userFriend)
-  userFriend: UserFriends[];
-
   @OneToMany(() => UserFriends, (userFriend) => userFriend.userSender)
   userSender: UserFriends[];
+
+  @Field(() => [UserFriends])
+  @OneToMany(() => UserFriends, (userFriend) => userFriend.userReceiver)
+  userReceiver: UserFriends[];
 
   @Field(() => [UserGroupe])
   @OneToMany(() => UserGroupe, (userGroupe) => userGroupe.user)
   chefGroupe: UserGroupe[];
 
   @Field(() => [UserGroupe])
-  @ManyToMany(() => UserGroupe, (userGroup) => userGroup.members )
+  @ManyToMany(() => UserGroupe, (userGroup) => userGroup.members)
   @JoinTable()
   groups: UserGroupe[];
 
   @Field(() => [Donation])
   @OneToMany(() => Donation, (donation) => donation.user)
-  donation : Donation[];
+  donation: Donation[];
 
   @Field(() => BankDetails)
   @OneToOne(() => BankDetails, (bankDetails) => bankDetails.user, {
-    onDelete: "SET NULL"
+    onDelete: "SET NULL",
   })
   @JoinColumn()
   bankDetails: BankDetails;
@@ -77,5 +86,4 @@ export class User {
   @Field()
   @Column()
   createdAt: Date;
-
 }
