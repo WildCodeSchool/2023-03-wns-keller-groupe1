@@ -16,7 +16,7 @@ const Success = () => {
         handleFormSubmit(parseInt(userId), sessionId);
       }   
     } else {
-      navigate("/dashboard");
+      navigate("/donations");
     }
   }, [])
   

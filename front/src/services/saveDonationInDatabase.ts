@@ -15,7 +15,7 @@ const CreateDonation = () => {
       toast.error(`Error creating donation: ${error.message}`);
     },
 		onCompleted: (data) => {   
-      navigate("/dashboard");
+      navigate("/donations");
       toast.success("Merci pour votre donation !");
     },
 	})

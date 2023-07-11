@@ -4,6 +4,7 @@
   /* background-color: #eaecf0; */
   overflow-y: scroll;
   overflow: visible;
+  color: black;
 }
 
 .userSummaryContainer {

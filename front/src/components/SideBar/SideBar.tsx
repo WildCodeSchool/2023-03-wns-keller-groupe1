@@ -150,7 +150,7 @@ function App() {
           <Item
             icon={<AttachMoneyRounded />}
             name="Donations"
-            to="/Donations"
+            to="/donations"
           />
           <Item icon={<Settings />} name="Settings" to="/Settings" />
         </div>
@@ -165,8 +165,9 @@ function App() {
               navigate("/Contact");
             }}
           />
-          <DarkMode />
+          
         </div>
+        <DarkMode />
       </motion.div>
     </motion.div>
   );
