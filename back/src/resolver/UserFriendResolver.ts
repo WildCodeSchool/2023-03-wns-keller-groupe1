@@ -155,6 +155,30 @@ class UserFriendResolver {
       return new GraphQLError("An error occured");
     }
   }
+
+  @Mutation(() => String)
+  async acceptFriendRequest(
+    @Arg("id") id: number
+  ): Promise<string | GraphQLError> {
+    try {
+      const args = new UserFriendInput();
+      args.id = id;
+      const validationErrors = await validate(args);
+
+      if (validationErrors.length > 0) {
+        return new GraphQLError("Validation error");
+      }
+
+      await dataSource
+        .getRepository(UserFriends)
+        .update(id, { accepted: true });
+
+      return "Demande d'amitié acceptée";
+    } catch (error) {
+      console.log(error);
+      return new GraphQLError("Une erreur est survenue");
+    }
+  }
 }
 
 export default UserFriendResolver;

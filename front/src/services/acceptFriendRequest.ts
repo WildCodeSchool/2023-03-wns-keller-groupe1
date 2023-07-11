@@ -2,8 +2,8 @@ import { gql, useMutation } from "@apollo/client";
 import { toast } from "react-toastify";
 
 const ACCEPT_FRIEND_REQUEST = gql`
-  mutation AcceptFriendRequest($id: Float!, $user1Id: Float!, $user2Id: Float!) {
-    acceptFriendRequest(id: $id, user1Id: $user1Id, user2Id: $user2Id)
+  mutation AcceptFriendRequest($id: Float!) {
+    acceptFriendRequest(id: $id)
   }
 `;
 
