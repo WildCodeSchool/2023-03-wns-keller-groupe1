@@ -133,7 +133,7 @@ function App() {
               name="Statistiques"
               to="/statistic"
             />
-            <Item icon={<BarChartRounded />} name="Communauté" to="/community" />
+            <Item icon={<BarChartRounded />} name="Communauté" to="/social" />
           </div>
         </div>
         <div className="group">
