@@ -20,7 +20,7 @@ const HomePage = () => {
 
   if (sessionStorage.getItem("user_id")) {
     const userId = sessionStorage.getItem("user_id");
-    if (userId != null ) {
+    if (userId) {
       parsedUserId = parseInt(userId);
     }
   }
