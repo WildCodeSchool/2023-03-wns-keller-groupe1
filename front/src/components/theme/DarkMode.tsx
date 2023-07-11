@@ -15,6 +15,9 @@ export default function DarkMode() {
       createTheme({
         palette: {
           mode: mode ? "dark" : "light",
+          background: {
+            default: mode ? "#000000" : "#eaecf0;",
+          },
         },
       }),
     [mode]

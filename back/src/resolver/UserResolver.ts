@@ -54,12 +54,17 @@ class UserResolver {
     try {
       const user = await dataSource
         .getRepository(User)
-        .findOneByOrFail({ email });
+        .findOne({ where: { email } });
+      
+      if (!user) {
+        return new GraphQLError("Cette adresse mail n'est pas utilisé");
+      }
+
       if (await argon2.verify(user.hashedPassword, password)) {
         const token = jwt.sign({ email }, JWT_SECRET);
         return token;
       } else {
-        return new GraphQLError("Password does not match");
+        return new GraphQLError('Mauvais identifiants');  
       }
     } catch (err) {
       return new GraphQLError("An error occured");

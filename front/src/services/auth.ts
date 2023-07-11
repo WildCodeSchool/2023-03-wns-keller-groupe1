@@ -55,17 +55,18 @@ export const useAuth = () => {
       toast.error(`Error getting user data: ${error.message}`);
     },
     onCompleted: (data) => {
-      setGlobalState({ isLogged: true, user: data.getUserFromToken });
+      setGlobalState({ isLogged: true, user: data.getUserFromToken });  
+      sessionStorage.setItem("user_id", data.getUserFromToken.userId);
       navigate("/dashboard");
     },
   });
 
   const [login] = useLazyQuery(LOGIN, {
     onError: (error) => {
-      toast.error(`Error logging in: ${error.message}`);
+      toast.error(`${error.message}`);
     },
     onCompleted: (data) => {
-      localStorage.setItem("token", data.login);
+      sessionStorage.setItem("token", data.login);
       getUserFromToken({ variables: { token: data.login } });
     },
   });

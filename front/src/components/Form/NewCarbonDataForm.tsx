@@ -1,7 +1,6 @@
 import React, { useEffect, useState, ChangeEvent } from "react";
 import styles from "./ModalForm.module.css";
 import { NewCarbonDataFormProps } from "../../interface/NewCarbonDataFormProps";
-import GetAllCategories from "../../services/getAllCategories";
 import CarbonResults from "./CarbonResult";
 
 const NewCarbonDataForm = ({
@@ -17,20 +16,10 @@ const NewCarbonDataForm = ({
   query,
   setQuery
 }: NewCarbonDataFormProps|any) => {
-  const [categories, setCategories] = useState<any>();
-  const { getAllCategories } = GetAllCategories();
-
   const [results, setResults] = useState([]);
-
-
   const [selectedOption, setSelectedOption] = useState("");
   const [selectedData, setSelectedData] = useState<any>(null);
 
-  useEffect(() => {
-    getAllCategories().then((data) => {
-      setCategories(data.data.getAllCategories);
-    });
-  }, []);
 
   const fetchAdemeApi = async () => {
     const response = await fetch(`https://data.ademe.fr/data-fair/api/v1/datasets/base-carboner/lines?q=${query}&q_mode=complete`);
@@ -128,18 +117,6 @@ const NewCarbonDataForm = ({
               </input>
             </div>
             <div>
-              <p className={styles.formTitle}>Prix</p>
-              <input
-                className={styles.formInputLogin}
-                type="number"
-                name="price"
-                id="price"
-                onChange={handleInputNumberChange(setPrice)}
-                required
-                value={price}
-              />
-            </div>
-            <div>
               <p className={styles.formTitle}>Poid carbone en kg Co2 ?</p>
               <input
                 className={styles.formInputLogin}
@@ -149,6 +126,18 @@ const NewCarbonDataForm = ({
                 onChange={handleInputNumberChange(setCo2)}
                 required
                 value={Co2}
+              />
+            </div>
+            <div>
+              <p className={styles.formTitle}>Prix</p>
+              <input
+                className={styles.formInputLogin}
+                type="number"
+                name="price"
+                id="price"
+                onChange={handleInputNumberChange(setPrice)}
+                required
+                value={price}
               />
             </div>
             <div className={styles.formGroupSubmit}>
