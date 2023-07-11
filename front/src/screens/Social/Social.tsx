@@ -15,10 +15,13 @@ const Social = () => {
   const { getUsersByName, data } = GetUsersByName();
   const [searchTerm, setSearchTerm] = useState("");
   const { sendFriendRequest } = useSendFriendRequest();
-  const { friendRequests } = useGetAllFriendRequests(globalState?.user?.userId);
-  const { acceptFriendRequest } = useAcceptFriendRequest();
 
-  const { userFriendsLists } = useGetUserFriendList(globalState?.user?.userId);
+  const { acceptFriendRequest } = useAcceptFriendRequest();
+  const { friendRequests, refetch: refetchFriendRequests } =
+    useGetAllFriendRequests(globalState?.user?.userId);
+
+  const { userFriendsLists, refetch: refetchUserFriendsLists } =
+    useGetUserFriendList(globalState?.user?.userId);
 
   console.log(userFriendsLists, "userFriendsLists");
 
@@ -43,7 +46,15 @@ const Social = () => {
     console.log(id, user1Id, user2Id, "id, user1Id, user2Id");
     acceptFriendRequest({
       variables: { id: id, user1Id: user1Id, user2Id: user2Id },
-    });
+    })
+      .then(() => {
+        refetchFriendRequests();
+        refetchUserFriendsLists();
+        toast.success("Demande d'amis acceptée");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   useEffect(() => {
@@ -79,40 +90,54 @@ const Social = () => {
                   ))}
               </div>
             </div>
-            <div className={styles.friends_request}>
-              <h3>Demande d'amis :</h3>
-              {friendRequests.map((request: any, index: any) => (
-                <div className={styles.cards}>
-                  <div key={index} className={styles.card}>
-                    <h2>
-                      {request.userSender.firstname}{" "}
-                      {request.userSender.lastname}
-                      {request.userSender.userId}
-                    </h2>
-                    <div className={styles.answer_friend}>
-                      <span className={styles.icons}>
-                        <CrossIcon onClick={() => console.log("refuse")} />
-                      </span>
-                      <span className={styles.icons}>
-                        <VectorIcon
-                          onClick={() =>
-                            handleAcceptRequest(
-                              request.id,
-                              request.userReceiver.userId,
-                              request.userSender.userId
-                            )
-                          }
-                        />
-                      </span>
+            {friendRequests.filter((request: any) => !request.accepted).length >
+              0 && (
+              <div className={styles.friends_request}>
+                <h3>Demande d'amis :</h3>
+                {friendRequests
+                  .filter((request: any) => !request.accepted)
+                  .map((request: any, index: any) => (
+                    <div className={styles.cards}>
+                      <div key={index} className={styles.card}>
+                        <h2>
+                          {request.userSender.firstname}{" "}
+                          {request.userSender.lastname}
+                          {request.userSender.userId}
+                        </h2>
+                        <div className={styles.answer_friend}>
+                          <span className={styles.icons}>
+                            <CrossIcon onClick={() => console.log("refuse")} />
+                          </span>
+                          <span className={styles.icons}>
+                            <VectorIcon
+                              onClick={() =>
+                                handleAcceptRequest(
+                                  request.id,
+                                  request.userReceiver.userId,
+                                  request.userSender.userId
+                                )
+                              }
+                            />
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+                  ))}
+              </div>
+            )}
 
             <div className={styles.friends_list}>
               <h2>Votre liste d'amis :</h2>
-              <div className={styles.cards}></div>
+              <div className={styles.cards}>
+                {userFriendsLists.map((friend: any, index: any) => (
+                  <div key={index} className={styles.card}>
+                    <h2>
+                      {friend.firstname} {friend.lastname}
+                    </h2>
+                    <h2>{friend.totalCo2} KG Co2</h2>
+                  </div>
+                ))}
+              </div>
             </div>
           </section>
 

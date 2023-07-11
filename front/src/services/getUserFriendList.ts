@@ -12,7 +12,7 @@ export const GET_FRIENDS = gql`
 `;
 
 export const useGetUserFriendList = (userId: number) => {
-  const { data, error, loading } = useQuery(GET_FRIENDS, {
+  const { data, error, loading , refetch} = useQuery(GET_FRIENDS, {
     variables: { userId },
   });
   console.log(data, "Data from getUserFriendList");
@@ -20,5 +20,6 @@ export const useGetUserFriendList = (userId: number) => {
     userFriendsLists: data?.getFriends || [],
     error,
     loading,
+    refetch,
   };
 };
