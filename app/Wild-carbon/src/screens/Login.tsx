@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { images } from "../assets";
 import {
   responsiveHeight,
@@ -7,9 +7,9 @@ import {
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "../components/Button";
-import Palette from "../styles/Palette";
 import FontsProps from "../styles/fontProps";
 import LoginFrom from "../components/LoginForm";
+import { useAuth } from "../services/Auth";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -20,6 +20,9 @@ const Login: React.FC = () => {
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [IsConnexionScreen, setIsConnexionScreen] = useState(true);
   const [isSignUpPhaseOne, setIsSignUpPhaseOne] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { handleFormSubmit } = useAuth();
 
   const isValidEmail = (email: string): boolean => {
     const re: RegExp =
@@ -28,34 +31,46 @@ const Login: React.FC = () => {
   };
 
   const isValidPassword = (password: string): boolean => {
-    const re: RegExp =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&_])[A-Za-z\d@$!%*#?&_]{6,}$/;
+    const re: RegExp = /^.{6,}$/;
     return re.test(password);
-  };
-
-  const handleEmailChange = (email: string) => {
-    setEmail(email);
-    setIsEmailValid(isValidEmail(email));
-  };
-
-  const handlePasswordChange = (password: string) => {
-    setPassword(password);
-    setIsPasswordValid(isValidPassword(password));
   };
 
   const handleButtonClick = () => {
     if (IsConnexionScreen) {
-      console.log(`Email: ${email}, Password: ${password}`);
+      handleFormSubmit(
+        false,
+        email,
+        password,
+        firstName,
+        lastName,
+        setIsLoading
+      );
     } else {
       if (isSignUpPhaseOne) {
         setIsSignUpPhaseOne(false);
       } else {
-        console.log(
-          `First name: ${firstName}, Last name: ${lastName}, Email: ${email}, Password: ${password}`
+        setEmail("");
+        setPassword("");
+        setFirstName("");
+        setLastName("");
+        setIsEmailValid(false);
+        setIsPasswordValid(false);
+        setIsConnexionScreen(!IsConnexionScreen);
+        handleFormSubmit(
+          true,
+          email,
+          password,
+          firstName,
+          lastName,
+          setIsLoading
         );
       }
     }
   };
+  useEffect(() => {
+    setIsEmailValid(isValidEmail(email));
+    setIsPasswordValid(isValidPassword(password));
+  }, [email, password]);
 
   return (
     <SafeAreaView style={styles.Container}>
@@ -92,14 +107,29 @@ const Login: React.FC = () => {
             ? firstName.length < 2 || lastName.length < 2
             : !isEmailValid || !isPasswordValid
         }
+        onPress={handleButtonClick}
       />
       <TouchableOpacity
         onPress={() => {
-          setIsConnexionScreen(!IsConnexionScreen);
+          if (!isSignUpPhaseOne) {
+            setIsSignUpPhaseOne(true);
+          } else {
+            setEmail("");
+            setPassword("");
+            setFirstName("");
+            setLastName("");
+            setIsEmailValid(false);
+            setIsPasswordValid(false);
+            setIsConnexionScreen(!IsConnexionScreen);
+          }
         }}
       >
         <Text style={[FontsProps.subtitle(), styles.subtitlebtn]}>
-          {IsConnexionScreen ? "S'inscrire" : "Se connecter"}
+          {IsConnexionScreen
+            ? "S'inscrire"
+            : isSignUpPhaseOne
+            ? "Se connecter"
+            : "Retour"}
         </Text>
       </TouchableOpacity>
     </SafeAreaView>
