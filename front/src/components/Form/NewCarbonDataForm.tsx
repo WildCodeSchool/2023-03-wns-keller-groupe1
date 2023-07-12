@@ -81,12 +81,12 @@ const NewCarbonDataForm = ({
   return (
     <>
       <div id="new-carbon-modal" className={styles.MainContainer}>
-        <div className={styles.modalContainer}>
+        <div className={styles.modalContainerCreate}>
           <h1 className={styles.modalTitle}>Ajouter une dépense carbone</h1>
           <div className={styles.formContainer}>
             <div>
               <p className={styles.formTitle}>
-                Rechercher une dépense carbone (WIP)
+                Rechercher une dépense
               </p>
               <input
                 className={styles.formInputLogin}
@@ -117,7 +117,7 @@ const NewCarbonDataForm = ({
               </input>
             </div>
             <div>
-              <p className={styles.formTitle}>Poid carbone en kg Co2 ?</p>
+              <p className={styles.formTitle}>Poid carbone en kg Co2</p>
               <input
                 className={styles.formInputLogin}
                 type="number"
@@ -129,7 +129,7 @@ const NewCarbonDataForm = ({
               />
             </div>
             <div>
-              <p className={styles.formTitle}>Prix</p>
+              <p className={styles.formTitle}>Prix <span style={{color: "lightgrey"}}>(optionnel)</span></p>
               <input
                 className={styles.formInputLogin}
                 type="number"

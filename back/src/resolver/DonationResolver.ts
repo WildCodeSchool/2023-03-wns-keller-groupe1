@@ -1,4 +1,4 @@
-import { Arg, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Authorized, Mutation, Query, Resolver } from "type-graphql";
 import dataSource from "../utils";
 import { Donation } from "../entity/Donation";
 import { User } from "../entity/User";
@@ -8,6 +8,7 @@ import { STRIPE_SECRET } from "../index";
 
 @Resolver()
 class DonationResolver {
+  @Authorized()
   @Query(() => [Donation])
   async getAllDonation(): Promise<Donation[] | String> {
     try {
@@ -20,6 +21,7 @@ class DonationResolver {
     }
   }
 
+  @Authorized()
   @Mutation(() => String)
   async deleteDonation(@Arg("id") id: number): Promise<string> {
     try {
@@ -30,6 +32,7 @@ class DonationResolver {
     }
   }
 
+  @Authorized()
   @Mutation(() => String)
   async updateDonation(
     @Arg("id") id: number,
@@ -43,6 +46,7 @@ class DonationResolver {
     }
   }
 
+  @Authorized()
   @Query(() => Donation)
   async getDonation(@Arg("id") Id: number): Promise<Donation | String> {
     try {
@@ -59,7 +63,7 @@ class DonationResolver {
     }
   }
 
-
+  @Authorized()
   @Mutation(() => String)
   async checkoutDonation(
     @Arg("userid") userId: number,
@@ -104,6 +108,7 @@ class DonationResolver {
    
   }
 
+  @Authorized()
   @Mutation(() => String)
   async checkoutSuccess(
     @Arg("userid") userId: number,
