@@ -16,6 +16,7 @@ import * as React from "react";
 import Success from "../screens/Payment/Success";
 import { gql, useQuery } from "@apollo/client";
 import NotFound from "../screens/Error/404";
+import DonationPage from "../screens/Donation/DonationPage";
 
 export const VERIFY_TOKEN = gql`
   query Query($token: String!) {
@@ -45,6 +46,10 @@ function App() {
         <Route
           path="/payment/success"
           element={<PrivateRoute element={<Success />} />}
+        />
+        <Route
+          path="/donations"
+          element={<PrivateRoute element={<DonationPage />} />}
         />
         <Route 
           path="*" 

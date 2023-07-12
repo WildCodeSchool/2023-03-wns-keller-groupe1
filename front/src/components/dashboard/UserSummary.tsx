@@ -1,11 +1,20 @@
 import styles from "../../screens/Dashboard/HomePage.module.css";
 import { ICarbonData } from "../../interface/CarbonData";
 import trashRed from "../../assets/icons/trash-red.svg";
+import update from "../../assets/icons/update.svg";
 import DeleteCarbonData from "../../services/deleteCarbonData";
 import { useEffect, useState } from "react";
 
-const UserSummary = ({ data }: any) => {
-  const { handleFormSubmit } = DeleteCarbonData();
+const UserSummary = ({ 
+    data,
+    setQuery,
+    setName,
+    setCategory,
+    setPrice,
+    setCo2,
+    setUpdateCarbonDataId
+  }: any) => {
+  const { handleFormSubmitDelete } = DeleteCarbonData();
   const [dataByMonth, setDataByMonth] = useState<{ [key: string]: number }>({});
 
   const date = new Date();
@@ -14,9 +23,20 @@ const UserSummary = ({ data }: any) => {
   const year = date.getFullYear();
   const currentDate = `${capitalizedMonth} ${year}`;
 
-  const modal: any = document.getElementById("new-carbon-modal");
+  const newCarbonDataModal: any = document.getElementById("new-carbon-modal");
   const handleModal = () => {
-    modal.style.display = "block";
+    newCarbonDataModal.style.display = "block";
+  }
+
+  const updateCarbonDataModal: any = document.getElementById("update-carbon-modal");
+  const handleModalUpdate = (data: ICarbonData) => {
+    updateCarbonDataModal.style.display = "block";
+    setCategory(data.categoryString);
+    setCo2(data.consumption);
+    setQuery(data.title);
+    setName(data.title);
+    setPrice(data.price);
+    setUpdateCarbonDataId(data.id)
   }
 
   useEffect(() => {
@@ -71,19 +91,25 @@ const UserSummary = ({ data }: any) => {
               <tbody>     
                 {data && data.toReversed().map((data: ICarbonData, index: string) => {
                   const myDate = new Date(data.createdAt);
-                  const formattedDate = myDate.toLocaleDateString();
+                  const formattedDate = myDate.toLocaleDateString();                 
                   return (
                     <tr key={index} style={{textAlign: "center"}}>
                       <td className={styles.tableCell} style={{textAlign: "start"}}>{data.title}</td>
                       <td className={styles.tableCell}>{data.categoryString}</td>
                       <td className={styles.co2Text}>{data.consumption.toFixed(2)}</td>
                       <td className={styles.tableCell}>{formattedDate}</td>
-                      <td>
+                      <td>                
+                        <img 
+                          src={update} 
+                          alt="update" 
+                          style={{cursor: "pointer"}}
+                          onClick={() => handleModalUpdate(data)}
+                        />   
                         <img 
                           src={trashRed} 
                           alt="trash can" 
-                          style={{paddingTop: "6px", cursor: "pointer"}}
-                          onClick={() => handleFormSubmit(data.id)}
+                          style={{paddingBottom: "3px", paddingLeft: "6xp", cursor: "pointer"}}
+                          onClick={() => handleFormSubmitDelete(data.id)}
                         />
                       </td>
                     </tr>
