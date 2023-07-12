@@ -1,0 +1,29 @@
+.card-update{
+  width: 500px;
+  height: 680px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px  1px  10px  1px  black;
+  
+}
+
+.update-container{
+  border-radius: 10px;
+  height: 130px;
+  background: linear-gradient(to left , rgba(23, 118, 31, 0.912) 0%, rgb(73, 169, 84) 50%, rgb(111, 202, 113) 100%);
+}
+
+.lower-update-container{
+  width: 150px;
+  height: 500px;
+}
+
+  .lower-update-container>input{
+    display: flex;
+    align-items: center;
+   flex-direction: column;
+    width: 100px;
+    height: 30px;
+    padding: 10px;
+    margin-top: 10px;
+  }

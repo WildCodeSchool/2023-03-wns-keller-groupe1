@@ -13,6 +13,8 @@ import * as React from "react";
 import Success from "../screens/Payment/Success";
 import { gql, useQuery } from "@apollo/client";
 import NotFound from "../screens/Error/404";
+import Profile from "../screens/Profile/Profile";
+import Contact from "../screens/Contact/Contact";
 
 export const VERIFY_TOKEN = gql`
   query Query($token: String!) {
@@ -21,7 +23,6 @@ export const VERIFY_TOKEN = gql`
 `;
 
 function App() {
-
   return (
     <BrowserRouter>
       <Routes>
@@ -39,10 +40,16 @@ function App() {
           path="/payment/success"
           element={<PrivateRoute element={<Success />} />}
         />
-        <Route 
-          path="*" 
-          element={<NotFound />} 
+        <Route
+          path="/Profile"
+          element={<PrivateRoute element={<Profile />} />}
         />
+        <Route
+          path="/Contact"
+          element={<PrivateRoute element={<Contact />} />}
+        />
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
@@ -54,7 +61,7 @@ function PrivateRoute({ element }: { element: React.ReactNode }) {
   const { error } = useQuery(VERIFY_TOKEN, {
     variables: { token: sessionStorage.getItem("token") },
     fetchPolicy: "network-only",
-  })
+  });
 
   if (error) navigate("/login");
 
