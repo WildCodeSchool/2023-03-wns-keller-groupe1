@@ -28,13 +28,10 @@ ChartJS.register(
   BarController
 );
 
-const BarChart: React.FC<ChartProps> = ({
-  data,
-  OptionMonthSelected,
-}) => {
+const BarChart: React.FC<ChartProps> = ({ data, OptionMonthSelected }) => {
   const [dataByMonth, setDataByMonth] = useState<{ [key: string]: number }>({});
   const [dataByYear, setDataByYear] = useState<{ [key: string]: number }>({});
-
+  console.log(OptionMonthSelected);
   useEffect(() => {
     const dataByPeriod: { [key: string]: number } = {};
 
@@ -120,7 +117,15 @@ const BarChart: React.FC<ChartProps> = ({
   };
 
   return (
-    <div style={{ width: "70%", height: "60vh", display: "flex" }}>
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <Bar options={options} data={chartData} />
     </div>
   );
