@@ -1,8 +1,6 @@
 import React from "react";
 
 const CarbonResults = ({data}: any) => {
-console.log(data);
-
   return (
     <>
       {(data && data.length > 0) && 

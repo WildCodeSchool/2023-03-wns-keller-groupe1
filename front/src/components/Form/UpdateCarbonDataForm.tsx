@@ -24,7 +24,6 @@ const UpdateCarbonDataForm = ({
     const response = await fetch(`https://data.ademe.fr/data-fair/api/v1/datasets/base-carboner/lines?q=${query}&q_mode=complete`);
     const responseJson = await response.json();
     setResults(responseJson.results);
-    console.log(responseJson.results);
     
   }
 

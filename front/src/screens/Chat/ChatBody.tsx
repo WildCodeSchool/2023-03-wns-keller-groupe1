@@ -12,16 +12,16 @@ const ChatBody = ({messages, lastMessageRef }: any) => {
 
       {/*This shows messages sent from you*/}
       <div className="message__container">
-        {messages.map((message: any) =>
+        {messages.map((message: any, index: string) =>
           message.username === sessionStorage.getItem('firstname') ? (
-            <div className="message__chats">
+            <div key={index} className="message__chats">
               <p className="sender__name">Vous</p>
               <div className="message__sender">
                 <p>{message.message}</p>
               </div>
             </div>
           ) : (
-            <div className="message__chats">
+            <div key={index} className="message__chats">
               <p className="other_name">{message.username}</p>
               <div className="message__recipient">
                 <p>{message.message}</p>

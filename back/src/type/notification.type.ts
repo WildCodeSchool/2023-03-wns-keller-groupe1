@@ -20,3 +20,13 @@ export interface NotificationPayload {
   message?: string;
   username?: string;
 }
+
+@ObjectType()
+export class SubscribedUsers {
+  
+  @Field()
+  topic: string;
+
+  @Field()
+  username: string;
+}

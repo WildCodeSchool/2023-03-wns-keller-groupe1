@@ -68,7 +68,6 @@ function App() {
 function PrivateRoute({ element }: { element: React.ReactNode }) {
   const navigate = useNavigate();
   
-
   const { error } = useQuery(VERIFY_TOKEN, {
     variables: { token: sessionStorage.getItem("token") },
     fetchPolicy: "network-only",

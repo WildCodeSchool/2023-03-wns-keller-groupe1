@@ -63,6 +63,8 @@ type Mutation {
   publisherMutation(id: Float!, message: String, username: String): Boolean!
   removeUserFromGroup(groupeId: Float!, userId: Float!): String!
   sendFriendRequest(friendId: Float!, userId: Float!): String!
+  subscribeToDynamicTopic(topic: String!, username: String!): Boolean!
+  unsubscribeFromDynamicTopic(topic: String!, username: String!): Boolean!
   updateBankDetails(id: Float!, stripeDetails: String!): String!
   updateCarbonData(category: String!, consumption: Float!, id: Float!, price: Float!, title: String!): String!
   updateCategory(categoryId: Float!, title: String!): String!
@@ -83,7 +85,7 @@ type Query {
   getAllCarbonData: [CarbonData!]!
   getAllCategories: [Category!]!
   getAllDonation: [Donation!]!
-  getAllFriendRequest: [UserFriends!]!
+  getAllFriendRequest(userId: Float!): [UserFriends!]!
   getAllUserGroupe: [UserGroupe!]!
   getAllUsers: [User!]!
   getBankDetails(id: Float!): BankDetails!
@@ -91,14 +93,22 @@ type Query {
   getCategory(categoryId: Float!): Category!
   getDonation(id: Float!): Donation!
   getFriendRequest(id: Float!): UserFriends!
+  getFriends(userId: Float!): [User!]!
+  getSubscribedUsers(topic: String!): [SubscribedUsers!]!
   getUser(userId: Float!): User!
   getUserBankDetails(userId: Float!): BankDetails!
   getUserFriendList(userId: Float!): [UserFriends!]!
   getUserFromToken(token: String!): User!
   getUserGroupe(id: Float!): UserGroupe!
+  getUsersByName(name: String!): [User!]!
   login(email: String!, password: String!): String!
   refreshToken(token: String!): String!
   verifyToken(token: String!): String!
+}
+
+type SubscribedUsers {
+  topic: String!
+  username: String!
 }
 
 type Subscription {
@@ -119,15 +129,16 @@ type User {
   lastname: String!
   modifiedAt: DateTime!
   totalCo2: Float!
-  userFriend: [UserFriends!]!
   userId: Float!
+  userReceiver: [UserFriends!]!
+  userSender: [UserFriends!]!
 }
 
 type UserFriends {
   accepted: Boolean!
   createdAt: DateTime!
   id: Float!
-  userFriend: User!
+  userReceiver: User!
   userSender: User!
 }
 

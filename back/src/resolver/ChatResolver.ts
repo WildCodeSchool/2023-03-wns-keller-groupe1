@@ -1,9 +1,54 @@
 import { PubSubEngine } from "graphql-subscriptions";
 import { Arg, Mutation, PubSub, Publisher, Query, Resolver, ResolverFilterData, Root, Subscription } from "type-graphql";
-import { NotificationPayload, Notification } from "../type/notification.type";
+import { NotificationPayload, Notification, SubscribedUsers } from "../type/notification.type";
 
 @Resolver()
 export class ChatResolver {
+
+  private subscribedUsers: Array<SubscribedUsers> = [];
+
+  // private sendNotificationToSubscribers(pubSub: PubSubEngine, topic: string, payload: NotificationPayload) {
+  //   this.subscribedUsers.forEach((user) => {
+  //     if (user.topic == topic) {
+  //       pubSub.publish(user.topic, payload);
+  //     } 
+  //   });
+  // }
+  
+  @Query(() => [SubscribedUsers])
+  async getSubscribedUsers(
+    @Arg("topic") topic: string
+  ): Promise<any> {
+    let usersArray: Array<SubscribedUsers> = [];
+    this.subscribedUsers.forEach((user) => {
+      if (user.topic === topic) {
+        usersArray.push(user);
+      }
+    });
+    return usersArray;
+  }
+
+  @Mutation(returns => Boolean)
+  async subscribeToDynamicTopic(
+    @PubSub() pubSub: PubSubEngine,
+    @Arg("username") username: string,
+    @Arg("topic") topic: string
+  ): Promise<boolean> {
+    this.subscribedUsers.push({topic, username});
+    return true;
+  }
+
+   @Mutation(returns => Boolean)
+   async unsubscribeFromDynamicTopic(
+     @Arg("username") username: string,
+     @Arg("topic") topic: string
+   ): Promise<any> {
+    const index = this.subscribedUsers.findIndex(user => user.username === username && user.topic === topic);
+    if (index > -1) {
+      this.subscribedUsers.splice(index, 1);
+    }
+    return true;
+   }
 
   @Mutation(returns => Boolean)
   async pubSubMutation(
@@ -57,13 +102,27 @@ export class ChatResolver {
     return true;
   }
 
+  // @Subscription({
+  //   topics: ({ args }) => args.topic,
+  // })
+  // subscriptionWithFilterToDynamicTopic(
+  //   @Arg("topic") topic: string,
+  //   @Root() { id, message, username }: NotificationPayload,
+  // ): Notification {
+  //   return { id, message, username, date: new Date() };
+  // }
+
+  // Updated subscription method with the addition of sending notifications to subscribers
+
   @Subscription({
     topics: ({ args }) => args.topic,
   })
   subscriptionWithFilterToDynamicTopic(
     @Arg("topic") topic: string,
     @Root() { id, message, username }: NotificationPayload,
+    @PubSub() pubSub: PubSubEngine
   ): Notification {
-    return { id, message, username, date: new Date() };
+    const notification: Notification = { id, message, username, date: new Date() };
+    return notification;
   }
 }
