@@ -21,7 +21,7 @@ const GET_ALL_FRIEND_REQUESTS = gql`
 `;
 
 export const useGetAllFriendRequests = (userId : number) => {
-  const { data, error, loading } = useQuery(GET_ALL_FRIEND_REQUESTS, {
+  const { data, error, loading ,refetch } = useQuery(GET_ALL_FRIEND_REQUESTS, {
     variables: { userId },
     onError: (error) => {
       toast.error(`Error getting friend requests: ${error.message}`);
@@ -32,5 +32,6 @@ export const useGetAllFriendRequests = (userId : number) => {
     friendRequests: data?.getAllFriendRequest || [],
     error,
     loading,
+    refetch,
   };
 };
