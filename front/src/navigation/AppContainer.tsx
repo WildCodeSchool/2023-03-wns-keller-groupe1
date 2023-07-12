@@ -8,6 +8,9 @@ import {
 import HomePage from "../screens/Dashboard/HomePage";
 import Login from "../screens/UserConnexion/Login";
 import Statistic from "../screens/Statistic/Statistic";
+import { useGlobalState } from "../GlobalStateContext";
+import Social from "../screens/Social/Social";
+import { useEffect } from "react";
 import SideBar from "../components/SideBar/SideBar";
 import * as React from "react";
 import Success from "../screens/Payment/Success";
@@ -29,6 +32,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
+        <Route
+          path="/social"
+          element={<PrivateRoute element={<Social />} />}
+        />
         <Route
           path="/dashboard"
           element={<PrivateRoute element={<HomePage />} />}
@@ -60,6 +67,7 @@ function App() {
 
 function PrivateRoute({ element }: { element: React.ReactNode }) {
   const navigate = useNavigate();
+  
 
   const { error } = useQuery(VERIFY_TOKEN, {
     variables: { token: sessionStorage.getItem("token") },

@@ -26,7 +26,7 @@ const LoginRegisterForm = ({
 
   const isValidPassword = (password: string): boolean => {
     const re: RegExp =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&_])[A-Za-z\d@$!%*#?&_]{6,}$/;
+    /^.{3,}$/
     return re.test(password);
   };
 

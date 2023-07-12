@@ -1,29 +1,15 @@
 import React from "react";
 import { View, Text, StyleSheet, TextInput } from "react-native";
-import FontsProps from "../styles/fontProps";
-import { CheckIcon } from "../assets/index";
+import FontsProps from "../../styles/fontProps";
+import { CheckIcon } from "../../assets/index";
 import {
   responsiveHeight,
   responsiveWidth,
 } from "react-native-responsive-dimensions";
-import Palette from "../styles/Palette";
+import Palette from "../../styles/Palette";
+import { LoginFormProps } from "../../interfaces/LoginFormProps";
 
-interface Props {
-  email: string;
-  handleEmailChange: (value: string) => void;
-  password: string;
-  handlePasswordChange: (value: string) => void;
-  isEmailValid: boolean;
-  isPasswordValid: boolean;
-  IsConnexionScreen: boolean;
-  firstName?: string;
-  handleFirstNameChange: (value: string) => void;
-  lastName?: string;
-  handleLastNameChange: (value: string) => void;
-  isSignUpPhaseOne?: boolean;
-}
-
-const LoginFrom: React.FC<Props> = ({
+const LoginFrom: React.FC<LoginFormProps> = ({
   email,
   handleEmailChange,
   password,
@@ -31,18 +17,31 @@ const LoginFrom: React.FC<Props> = ({
   isEmailValid,
   isPasswordValid,
   IsConnexionScreen,
+  firstName,
+  handleFirstNameChange,
+  lastName,
+  handleLastNameChange,
+  isSignUpPhaseOne,
 }) => {
   return (
     <View style={styles.Container}>
       <View style={styles.inputContainer}>
-        <Text style={[FontsProps.regularLarge(), styles.subtitle]}>Email</Text>
+        <Text style={[FontsProps.regularLarge(), styles.subtitle]}>
+          {IsConnexionScreen || !isSignUpPhaseOne ? "Email" : "Nom"}
+        </Text>
         <View style={styles.inputView}>
           <TextInput
-            value={email}
-            onChangeText={handleEmailChange}
+            value={IsConnexionScreen || !isSignUpPhaseOne ? email : lastName}
+            onChangeText={
+              IsConnexionScreen || !isSignUpPhaseOne
+                ? handleEmailChange
+                : handleLastNameChange
+            }
             style={[styles.input, FontsProps.regular()]}
           />
-          {isEmailValid && (
+          {(IsConnexionScreen || !isSignUpPhaseOne
+            ? isEmailValid
+            : lastName && lastName.length > 1) && (
             <CheckIcon
               width={responsiveWidth(8)}
               height={responsiveWidth(8)}
@@ -53,17 +52,34 @@ const LoginFrom: React.FC<Props> = ({
       </View>
       <View style={styles.inputContainer}>
         <Text style={[FontsProps.regularLarge(), styles.subtitle]}>
-          Mot de passe
+          {IsConnexionScreen
+            ? "Mot de passe"
+            : isSignUpPhaseOne
+            ? "Prénom"
+            : "Mot de passe"}
         </Text>
         <View style={styles.inputView}>
           <TextInput
-            value={password}
-            onChangeText={handlePasswordChange}
-            textContentType="password"
-            secureTextEntry={true}
+            value={
+              IsConnexionScreen || !isSignUpPhaseOne ? password : firstName
+            }
+            onChangeText={
+              IsConnexionScreen || !isSignUpPhaseOne
+                ? handlePasswordChange
+                : handleFirstNameChange
+            }
+            textContentType={
+              IsConnexionScreen || !isSignUpPhaseOne ? "password" : "name"
+            }
+            secureTextEntry={
+              IsConnexionScreen || !isSignUpPhaseOne ? true : false
+            }
             style={[styles.input, FontsProps.regular()]}
           />
-          {isPasswordValid && (
+
+          {(IsConnexionScreen || !isSignUpPhaseOne
+            ? isPasswordValid
+            : firstName && firstName.length > 1) && (
             <CheckIcon
               width={responsiveWidth(8)}
               height={responsiveWidth(8)}

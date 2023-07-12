@@ -8,12 +8,22 @@ const FontsProps = {
     fontFamily: "NotoSansJP-Regular",
     color: "#111111",
   }),
+  regularSmall: (fontSize = 13) => ({
+    fontSize: scaleFromFigma(fontSize),
+    fontFamily: "NotoSansJP-Regular",
+    color: "#111111",
+  }),
   regularLarge: (fontSize = 19) => ({
     fontSize: scaleFromFigma(fontSize),
     fontFamily: "NotoSansJP-Regular",
     color: "#111111",
   }),
-  title: (fontSize = 36) => ({
+  bold: (fontSize = 16) => ({
+    fontSize: scaleFromFigma(fontSize),
+    fontFamily: "NotoSansJP-Bold",
+    color: "#111111",
+  }),
+  title: (fontSize = 30) => ({
     fontSize: scaleFromFigma(fontSize),
     fontFamily: "NotoSansJP-Bold",
     color: "#E6E6E6",
