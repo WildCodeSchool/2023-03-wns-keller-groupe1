@@ -24,15 +24,32 @@ class UserFriendResolver {
         return new GraphQLError("Validation error");
       }
 
+      const userSender = await dataSource
+      .getRepository(User)
+      .findOneByOrFail({ userId });
+
+      const userReceiver = await dataSource
+        .getRepository(User)
+        .findOneByOrFail({ userId: friendId });
+
+      const existingFriendRequest = await dataSource.getRepository(UserFriends).findOneBy({userSender: userSender, userReceiver: userReceiver});
+
+      if (existingFriendRequest) {
+        return new GraphQLError('This friend request already exist');
+      }
+
+      if (!existingFriendRequest) {
+        const existingFriendRequest = await dataSource.getRepository(UserFriends).findOneBy({userSender: userReceiver, userReceiver: userSender});
+        if (existingFriendRequest) {
+          return new GraphQLError('This friend request already exist');
+        }
+      }
+      
       const userFriend = new UserFriends();
       userFriend.accepted = false;
       userFriend.createdAt = new Date();
-      userFriend.userSender = await dataSource
-        .getRepository(User)
-        .findOneByOrFail({ userId });
-      userFriend.userReceiver = await dataSource
-        .getRepository(User)
-        .findOneByOrFail({ userId: friendId });
+      userFriend.userSender = userSender;
+      userFriend.userReceiver = userReceiver;
       await dataSource.getRepository(UserFriends).save(userFriend);
       return "userFriend created!!";
     } catch (error) {
