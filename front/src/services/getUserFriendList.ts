@@ -15,7 +15,6 @@ export const useGetUserFriendList = (userId: number) => {
   const { data, error, loading , refetch} = useQuery(GET_FRIENDS, {
     variables: { userId },
   });
-  // console.log(data, "Data from getUserFriendList");
   return {
     userFriendsLists: data?.getFriends || [],
     error,

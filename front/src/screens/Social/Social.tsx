@@ -9,26 +9,22 @@ import { useSendFriendRequest } from "../../services/sendFriendRequest";
 import { useGetAllFriendRequests } from "../../services/getAllFriendRequest";
 import { useAcceptFriendRequest } from "../../services/acceptFriendRequest";
 import { useGetUserFriendList } from "../../services/getUserFriendList";
+import { useDeleteFriendRequests } from "../../services/deleteFriendRequest";
 
 const Social = () => {
   const [globalState, setGlobalState] = useGlobalState();
   const { getUsersByName, data } = GetUsersByName();
   const [searchTerm, setSearchTerm] = useState("");
   const { sendFriendRequest } = useSendFriendRequest();
-
   const { acceptFriendRequest } = useAcceptFriendRequest();
-  const { friendRequests, refetch: refetchFriendRequests } =
-    useGetAllFriendRequests(globalState?.user?.userId);
-
-  const { userFriendsLists, refetch: refetchUserFriendsLists } =
-    useGetUserFriendList(globalState?.user?.userId);
-
-  console.log(userFriendsLists, "userFriendsLists");
+  const { friendRequests, refetch: refetchFriendRequests } = useGetAllFriendRequests(globalState?.user?.userId);
+  const { userFriendsLists, refetch: refetchUserFriendsLists } = useGetUserFriendList(globalState?.user?.userId);
+  const { deleteFriendRequest } = useDeleteFriendRequests()
+  
 
   useEffect(() => {
     if (searchTerm.length > 1) {
       getUsersByName({ variables: { name: searchTerm } });
-      console.log(data);
     }
   }, [searchTerm, getUsersByName]);
 
@@ -43,9 +39,8 @@ const Social = () => {
     user1Id: number,
     user2Id: number
   ) => {
-    console.log(id, user1Id, user2Id, "id, user1Id, user2Id");
     acceptFriendRequest({
-      variables: { id: id, user1Id: user1Id, user2Id: user2Id },
+      variables: { id: id, user1Id: user1Id, user2Id: user2Id }
     })
       .then(() => {
         refetchFriendRequests();
@@ -53,13 +48,22 @@ const Social = () => {
         toast.success("Demande d'amis acceptée");
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
       });
   };
 
-  useEffect(() => {
-    console.log(friendRequests, "friendRequests");
-  }, [friendRequests]);
+  const handleDeleteRequest = (id: number) => {
+    deleteFriendRequest({
+      variables: { deleteFriendRequestId: id }
+    })
+      .then(() => {
+        refetchFriendRequests();
+        refetchUserFriendsLists();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
   return (
     <div className={styles.container}>
       <section className={styles.all_sections}>
@@ -67,7 +71,6 @@ const Social = () => {
           <section className={styles.section}>
             <div className={styles.communauty_header}>
               <h2>Communautés</h2>
-
               <div className={styles.communauty_header_search}>
                 <input
                   type="text"
@@ -76,7 +79,6 @@ const Social = () => {
                   placeholder="Ajoutez un ami"
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
-
                 {data &&
                   searchTerm.length > 1 &&
                   data.getUsersByName.slice(0, 5).map((user: any) => (
@@ -94,19 +96,19 @@ const Social = () => {
               0 && (
               <div className={styles.friends_request}>
                 <h3>Demande d'amis :</h3>
-                {friendRequests
-                  .filter((request: any) => !request.accepted)
-                  .map((request: any, index: any) => (
-                    <div className={styles.cards}>
+                  <div className={styles.cards}>
+                    {friendRequests
+                      .filter((request: any) => !request.accepted)
+                      .map((request: any, index: any) => (
                       <div key={index} className={styles.card}>
                         <h2>
-                          {request.userSender.firstname}{" "}
-                          {request.userSender.lastname}
-                          {request.userSender.userId}
-                        </h2>
+                        {request.userSender.firstname}{" "}
+                        {request.userSender.userId}
+                      </h2>
+                      <h2>{request.userSender.lastname}</h2>
                         <div className={styles.answer_friend}>
                           <span className={styles.icons}>
-                            <CrossIcon onClick={() => console.log("refuse")} />
+                            <CrossIcon onClick={() => handleDeleteRequest(request.id,)} />
                           </span>
                           <span className={styles.icons}>
                             <VectorIcon
@@ -121,26 +123,25 @@ const Social = () => {
                           </span>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
               </div>
             )}
-
             <div className={styles.friends_list}>
               <h2>Votre liste d'amis :</h2>
               <div className={styles.cards}>
                 {userFriendsLists.map((friend: any, index: any) => (
                   <div key={index} className={styles.card}>
-                    <h2>
-                      {friend.firstname} {friend.lastname}
-                    </h2>
-                    <h2>{friend.totalCo2} KG Co2</h2>
+                    <h2>{friend.firstname}</h2>
+                    <h2>{friend.lastname}</h2>
+                    <div className={styles.friend_stats}>
+                      <p>{friend.totalCo2} KG Co2</p>
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
           </section>
-
           <section className={styles.section}>
             <div className={styles.section_2_head}>
               <h2>Groupe</h2>

@@ -7,13 +7,6 @@ const ACCEPT_FRIEND_REQUEST = gql`
     acceptFriendRequest(id: $id)
   }
 `;
-const DELETE_FRIEND_REQUEST = gql`
-  mutation AcceptFriendRequest($id: Float!) {
-    acceptFriendRequest(id: $id)
-  }
-`;
-
-
 
 
 export const useAcceptFriendRequest = () => {
@@ -28,15 +21,4 @@ export const useAcceptFriendRequest = () => {
   });
 
   return { acceptFriendRequest, data, error, loading };
-};
-
-const useDeleteFriendRequest = () => {
-  const [deleteFriendRequest, { data, error, loading }] = useMutation(DELETE_FRIEND_REQUEST, {
-    onError: (error) => {
-      toast.error(`Erreur lors de la suppression de la demande d'amitié : ${error.message}`);
-    },
-    onCompleted: () => {
-      toast.success("Demande d'amitié supprimé !");
-    }
-  })
 };
