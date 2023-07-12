@@ -57,7 +57,6 @@ function App() {
 
 function PrivateRoute({ element }: { element: React.ReactNode }) {
   const navigate = useNavigate();
-  console.log(navigate);
   
 
   const { error } = useQuery(VERIFY_TOKEN, {

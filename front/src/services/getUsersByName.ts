@@ -18,6 +18,6 @@ export const GetUsersByName = () => {
       toast.error(`Error getting user data: ${error.message}`);
     },
   });
-console.log("data", data)
+// console.log("data", data)
   return { getUsersByName, data, error, loading };
 };

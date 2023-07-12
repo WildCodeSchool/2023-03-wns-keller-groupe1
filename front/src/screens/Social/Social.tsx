@@ -4,7 +4,6 @@ import { ReactComponent as VectorIcon } from "../../assets/icons/Vector.svg";
 import { useGlobalState } from "../../GlobalStateContext";
 import { useEffect, useState } from "react";
 import { GetUsersByName } from "../../services/getUsersByName";
-import { toast } from "react-toastify";
 import { useSendFriendRequest } from "../../services/sendFriendRequest";
 import { useGetAllFriendRequests } from "../../services/getAllFriendRequest";
 import { useAcceptFriendRequest } from "../../services/acceptFriendRequest";
@@ -17,15 +16,21 @@ const Social = () => {
   const { sendFriendRequest } = useSendFriendRequest();
   const { friendRequests } = useGetAllFriendRequests(globalState?.user?.userId);
   const { acceptFriendRequest } = useAcceptFriendRequest();
-
+  // const newRequests = friendRequests?.filter((request: any) => request.accepted === false )
+  const [requestFilter, setRequestFilter] = useState<any[]>(friendRequests)
   const { userFriendsLists } = useGetUserFriendList(globalState?.user?.userId);
+  const [accepted, setAccepted] = useState<boolean>(false)
 
-  console.log(userFriendsLists, "userFriendsLists");
+
+  useEffect(() => {
+    const newRequests: any = friendRequests?.filter((request: any) => request.accepted === false)
+    setRequestFilter(newRequests)
+    
+  }, [friendRequests, accepted]);
 
   useEffect(() => {
     if (searchTerm.length > 1) {
       getUsersByName({ variables: { name: searchTerm } });
-      console.log(data);
     }
   }, [searchTerm, getUsersByName]);
 
@@ -37,18 +42,15 @@ const Social = () => {
   };
   const handleAcceptRequest = (
     id: number,
-    user1Id: number,
-    user2Id: number
   ) => {
-    console.log(id, user1Id, user2Id, "id, user1Id, user2Id");
+    setAccepted(true)
     acceptFriendRequest({
-      variables: { id: id, user1Id: user1Id, user2Id: user2Id },
+      variables: { id: id },
     });
+    
   };
 
-  useEffect(() => {
-    console.log(friendRequests, "friendRequests");
-  }, [friendRequests]);
+
   return (
     <div className={styles.container}>
       <section className={styles.all_sections}>
@@ -81,38 +83,49 @@ const Social = () => {
             </div>
             <div className={styles.friends_request}>
               <h3>Demande d'amis :</h3>
-              {friendRequests.map((request: any, index: any) => (
                 <div className={styles.cards}>
-                  <div key={index} className={styles.card}>
-                    <h2>
-                      {request.userSender.firstname}{" "}
-                      {request.userSender.lastname}
-                      {request.userSender.userId}
-                    </h2>
-                    <div className={styles.answer_friend}>
-                      <span className={styles.icons}>
-                        <CrossIcon onClick={() => console.log("refuse")} />
-                      </span>
-                      <span className={styles.icons}>
-                        <VectorIcon
-                          onClick={() =>
-                            handleAcceptRequest(
-                              request.id,
-                              request.userReceiver.userId,
-                              request.userSender.userId
-                            )
-                          }
-                        />
-                      </span>
+                  {requestFilter.map((request: any, index: any) => (
+                    <div key={index} className={styles.card}>
+                      <h2>
+                        {request.userSender.firstname}{" "}
+                        {request.userSender.userId}
+                      </h2>
+                      <h2>{request.userSender.lastname}</h2>
+                      <div className={styles.answer_friend}>
+                        <span className={styles.icons}>
+                          <CrossIcon onClick={() => console.log("refuse")} />
+                        </span>
+                        <span className={styles.icons}>
+                          <VectorIcon
+                            onClick={() =>
+                              handleAcceptRequest(
+                                request.id,
+                              )
+                            }
+                          />
+                        </span>
+                      </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
-              ))}
             </div>
 
             <div className={styles.friends_list}>
-              <h2>Votre liste d'amis :</h2>
-              <div className={styles.cards}></div>
+              <h2>
+                Votre liste d'amis :
+              </h2>
+              <div className={styles.cards}>
+                {/* {error && <p>Error fetching data</p>} */}
+                {userFriendsLists?.map((user: any) => ( 
+                    <div key={user.userId} className={styles.card}>
+                        <h2>{user.firstname}</h2>
+                        <h2>{user.lastname}</h2>
+                      <div className={styles.friend_stats}>
+                        <p>{user.totalCo2} kg Co2</p>
+                      </div>
+                    </div>
+                ))}
+              </div>
             </div>
           </section>
 

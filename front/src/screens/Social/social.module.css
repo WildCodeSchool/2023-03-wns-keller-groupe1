@@ -27,9 +27,7 @@
     margin-bottom: 20px;
 }
 
-.communauty_header_search{
-    
-}
+
 .communauty_section h1 {
     color: #25A55F;
 }
@@ -48,11 +46,11 @@
 /* *************************************** card  ***************************/
 .cards {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-gap: 10px;
     margin-top: 15px;
     margin-left: 10px;
-    width: 120px;
+    /* width: 120px; */
 }
 .card {
     border: none;
@@ -69,7 +67,7 @@
 .answer_friend {
     display: flex;
     justify-content: space-between;
-    margin: 10px 15px 15px 15px;
+    margin: 2px 15px 20px 20px;
 }
 
 .icons {
@@ -84,7 +82,7 @@
 .friend_stats {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin: 2px 15px 20px 20px;
 }
 
 /********************************** section 2 ************************************************/
