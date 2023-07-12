@@ -14,6 +14,7 @@ import Success from "../screens/Payment/Success";
 import { gql, useQuery } from "@apollo/client";
 import NotFound from "../screens/Error/404";
 import DonationPage from "../screens/Donation/DonationPage";
+import Chat from "../screens/Chat/Chat";
 
 export const VERIFY_TOKEN = gql`
   query Query($token: String!) {
@@ -43,6 +44,10 @@ function App() {
         <Route
           path="/donations"
           element={<PrivateRoute element={<DonationPage />} />}
+        />
+        <Route
+          path="/chat"
+          element={<PrivateRoute element={<Chat />} />}
         />
         <Route 
           path="*" 

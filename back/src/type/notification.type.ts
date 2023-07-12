@@ -8,6 +8,9 @@ export class Notification {
   @Field({ nullable: true })
   message?: string;
 
+  @Field({ nullable: true })
+  username?: string;
+
   @Field(type => Date)
   date: Date;
 }
@@ -15,4 +18,5 @@ export class Notification {
 export interface NotificationPayload {
   id: number;
   message?: string;
+  username?: string;
 }

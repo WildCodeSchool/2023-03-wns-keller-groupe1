@@ -136,7 +136,6 @@ const HomePage = () => {
         setQuery={setQuery}
       />
       <NewDonationForm/>
-      <Chat/>
     </>
   );
 };

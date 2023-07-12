@@ -58,7 +58,9 @@ type Mutation {
   deleteFriendRequest(id: Float!): String!
   deleteUser(userId: Float!): String!
   deleteUserGroupe(id: Float!): String!
-  pubSubMutation(message: String!): Boolean!
+  pubSubMutation(id: Float!, message: String, username: String): Boolean!
+  pubSubMutationToDynamicTopic(id: Float!, message: String, topic: String!, username: String): Boolean!
+  publisherMutation(id: Float!, message: String, username: String): Boolean!
   removeUserFromGroup(groupeId: Float!, userId: Float!): String!
   sendFriendRequest(friendId: Float!, userId: Float!): String!
   updateBankDetails(id: Float!, stripeDetails: String!): String!
@@ -67,6 +69,13 @@ type Mutation {
   updateDonation(amount: Float!, id: Float!): String!
   updateUser(email: String!, firstname: String!, lastname: String!, totalCo2: Float!, userId: Float!): String!
   updateUserGroupe(id: Float!, title: String!): String!
+}
+
+type Notification {
+  date: DateTime!
+  id: ID!
+  message: String
+  username: String
 }
 
 type Query {
@@ -93,7 +102,8 @@ type Query {
 }
 
 type Subscription {
-  normalSubscription: String!
+  normalSubscription: Notification!
+  subscriptionWithFilterToDynamicTopic(topic: String!): Notification!
 }
 
 type User {

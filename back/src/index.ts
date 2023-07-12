@@ -14,7 +14,7 @@ import BankDetailsResolver from "./resolver/BankDetailsResolver";
 import { createServer } from 'http';
 import express from 'express';
 import { WebSocketServer } from 'ws';
-import {TestResolver} from "./resolver/TestResolver";
+import { ChatResolver } from "./resolver/ChatResolver";
 import { useServer } from "graphql-ws/lib/use/ws";
 import path from "path";
 import {
@@ -44,7 +44,7 @@ const start = async (): Promise<void> => {
   await dataSource.initialize();
   
   const typeGraphQLgeneratedSchema = await buildSchema({
-    resolvers: [UserResolver, CategoryResolver, CarbonDataResolver, DonationResolver, UserGroupeResolver, UserFriendResolver, BankDetailsResolver, TestResolver],
+    resolvers: [UserResolver, CategoryResolver, CarbonDataResolver, DonationResolver, UserGroupeResolver, UserFriendResolver, BankDetailsResolver, ChatResolver],
     authChecker: ({ context }) => {
       if (context.email !== undefined) {
         return true;
