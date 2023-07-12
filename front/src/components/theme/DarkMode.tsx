@@ -32,9 +32,9 @@ export default function DarkMode() {
       <div className="btn-2">
         <button onClick={handelClick} color="inherit" className="btn-1">
           {theme.palette.mode === "dark" ? (
-            <Brightness7Icon />
-          ) : (
             <Brightness4Icon />
+          ) : (
+            <Brightness7Icon />
           )}
         </button>
       </div>

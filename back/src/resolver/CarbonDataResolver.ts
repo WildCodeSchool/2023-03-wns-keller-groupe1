@@ -78,23 +78,26 @@ class CarbonDataResolver {
   async updateCarbonData(
     @Arg("id") id: number,
     @Arg("title") title: string,
+    @Arg("category") categoryString: string,
     @Arg("consumption") consumption: number,
-    @Arg("price") price: number
-  ): Promise<string|GraphQLError> {
+    @Arg("price") price: number,
+  ): Promise<string|GraphQLError|any> {
     try {
       const args = new CarbonDataInput();
       args.title = title;
       args.consumption = consumption;
       args.price = price;
       args.id = id;
+      args.categoryString = categoryString;
       const validationErrors = await validate(args);
 
       if (validationErrors.length > 0) {
         throw new GraphQLError('Validation error');  
       }
+      
       await dataSource
         .getRepository(CarbonData)
-        .update(id, { title, consumption, price });
+        .update(id, { title, consumption, price, categoryString });
       return "Carbon data updated";
     } catch (error) {
       return new GraphQLError('An error occured'); 

@@ -3,18 +3,17 @@ import styles from "./ModalForm.module.css";
 import { NewCarbonDataFormProps } from "../../interface/NewCarbonDataFormProps";
 import CarbonResults from "./CarbonResult";
 
-const NewCarbonDataForm = ({
+const UpdateCarbonDataForm = ({
   setName,
   setCategory,
   setPrice,
   setCo2,
-  name,
   category,
   price,
   Co2,
   handleFormSubmit,
   query,
-  setQuery
+  setQuery,
 }: NewCarbonDataFormProps|any) => {
   const [results, setResults] = useState([]);
   const [selectedOption, setSelectedOption] = useState("");
@@ -38,7 +37,7 @@ const NewCarbonDataForm = ({
   const handleInputChange =
     (setStateFunc: React.Dispatch<React.SetStateAction<string | undefined>>) =>
     (event: ChangeEvent<HTMLInputElement>): void => {
-      setStateFunc(event.target.value);
+      setStateFunc(event.target.value);   
     };
 
   const handleInputNumberChange =
@@ -80,9 +79,9 @@ const NewCarbonDataForm = ({
 
   return (
     <>
-      <div id="new-carbon-modal" className={styles.MainContainer}>
-        <div className={styles.modalContainerCreate}>
-          <h1 className={styles.modalTitle}>Ajouter une dépense carbone</h1>
+      <div id="update-carbon-modal" className={styles.MainContainer}>
+        <div className={styles.modalContainerUpdate}>
+          <h1 className={styles.modalTitle}>Modifier une dépense carbone</h1>
           <div className={styles.formContainer}>
             <div>
               <p className={styles.formTitle}>
@@ -155,4 +154,4 @@ const NewCarbonDataForm = ({
   );
 };
 
-export default NewCarbonDataForm;
+export default UpdateCarbonDataForm;
