@@ -54,8 +54,10 @@ function App() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          backgroundColor: Palette.grey[1],
         },
         tabBarActiveTintColor: Palette.green[4],
+
         tabBarLabelStyle: {
           marginBottom: responsiveHeight(1),
         },

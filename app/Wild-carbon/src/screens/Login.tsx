@@ -8,7 +8,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "../components/Button";
 import FontsProps from "../styles/fontProps";
-import LoginFrom from "../components/LoginForm";
+import LoginFrom from "../components/Form/LoginForm";
 import { useAuth } from "../services/Auth";
 
 const Login: React.FC = () => {
