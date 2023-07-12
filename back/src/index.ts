@@ -3,7 +3,7 @@ import * as dotenv from "dotenv";
 import * as jwt from "jsonwebtoken";
 import dataSource from "./utils";
 import { buildSchema } from "type-graphql";
-import { ApolloServer } from "apollo-server";
+import { ApolloServer, gql } from "apollo-server-express";
 import UserResolver from "./resolver/UserResolver";
 import CategoryResolver from "./resolver/CategoryResolver";
 import CarbonDataResolver from "./resolver/CarbonDataResolver";
@@ -11,6 +11,16 @@ import UserGroupeResolver from "./resolver/UserGroupeResolver";
 import DonationResolver from "./resolver/DonationResolver";
 import UserFriendResolver from "./resolver/UserFriendResolver";
 import BankDetailsResolver from "./resolver/BankDetailsResolver";
+import { createServer } from 'http';
+import express from 'express';
+import { WebSocketServer } from 'ws';
+import {TestResolver} from "./resolver/TestResolver";
+import { useServer } from "graphql-ws/lib/use/ws";
+import path from "path";
+import {
+  ApolloServerPluginDrainHttpServer,
+  ApolloServerPluginLandingPageLocalDefault,
+} from "apollo-server-core";
 
 dotenv.config();
 
@@ -21,10 +31,20 @@ if (JWT_SECRET === undefined) {
   throw Error("JWT secret undefined");
 }
 
+
+const app = express();
+const httpServer = createServer(app);
+
+const wsServer = new WebSocketServer({
+  server: httpServer,
+  path: '/',
+});
+
 const start = async (): Promise<void> => {
   await dataSource.initialize();
+  
   const typeGraphQLgeneratedSchema = await buildSchema({
-    resolvers: [UserResolver, CategoryResolver, CarbonDataResolver, DonationResolver, UserGroupeResolver, UserFriendResolver, BankDetailsResolver],
+    resolvers: [UserResolver, CategoryResolver, CarbonDataResolver, DonationResolver, UserGroupeResolver, UserFriendResolver, BankDetailsResolver, TestResolver],
     authChecker: ({ context }) => {
       if (context.email !== undefined) {
         return true;
@@ -32,7 +52,10 @@ const start = async (): Promise<void> => {
         return false;
       }
     },
+    emitSchemaFile: path.resolve(__dirname, "schema.gql"),
   });
+
+  const serverCleanup = useServer({ schema : typeGraphQLgeneratedSchema }, wsServer);
 
   const server = new ApolloServer({
     schema: typeGraphQLgeneratedSchema,
@@ -49,10 +72,36 @@ const start = async (): Promise<void> => {
       }
       return {};
     },
+    plugins: [
+      // Proper shutdown for the HTTP server.
+      ApolloServerPluginDrainHttpServer({ httpServer }),
+      // Proper shutdown for the WebSocket server.
+      {
+        async serverWillStart() {
+          return {
+            async drainServer() {
+              await serverCleanup.dispose();
+            },
+          };
+        },
+      },
+      ApolloServerPluginLandingPageLocalDefault({ embed: true }),
+    ],
+    
   });
 
-  const { url } = await server.listen();
-  console.log(`🚀  Server ready at ${url}`);
+  await server.start();
+
+  server.applyMiddleware({ 
+    app,
+    path: "/"
+  });
+
+  const PORT = 4000;
+
+  httpServer.listen(PORT, () => {
+    console.log(`Server is now running on http://localhost:${PORT}${server.graphqlPath}`);
+  });
 };
 
 void start();
