@@ -14,6 +14,9 @@ import Success from "../screens/Payment/Success";
 import { gql, useQuery } from "@apollo/client";
 import NotFound from "../screens/Error/404";
 import DonationPage from "../screens/Donation/DonationPage";
+import * as io from "socket.io-client";
+
+const socket = io.connect("http://localhost:5000");
 
 export const VERIFY_TOKEN = gql`
   query Query($token: String!) {
