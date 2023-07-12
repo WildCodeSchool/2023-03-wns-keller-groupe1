@@ -1,5 +1,7 @@
-import { log } from "console";
 import "./CardUpdate.css";
+import { useUpdateUsers } from "../../services/updateProfil";
+import { useGlobalState } from "../../GlobalStateContext";
+
 export default function CardUpdate({
   setName,
   setCity,
@@ -16,9 +18,28 @@ export default function CardUpdate({
   gender,
   city,
 }: any) {
+  const { updateUser } = useUpdateUsers();
+  const [globalState, setGlobalState] = useGlobalState();
+  const userId = globalState?.user?.userId;
+  console.log(userId);
+
   const handleSubmit = () => {
-    console.log(handleSubmit);
+    updateUser({
+      variables: {
+        firstname: name,
+        lastname: name,
+        age: age,
+        email: email,
+        tel: tel,
+        about: about,
+        gender: gender,
+        city: city,
+        totalCo2: 0,
+        userId: userId,
+      },
+    });
   };
+
   return (
     <div className="card-update">
       <div className="update-container">
@@ -26,7 +47,7 @@ export default function CardUpdate({
           <img src="" alt="" />
         </div>
       </div>
-      <form className="lower-update-container">
+      <div className="lower-update-container">
         <p>Update Your Profil</p>
         <input
           type="text"
@@ -45,7 +66,7 @@ export default function CardUpdate({
           }}
         />
         <input
-          type="text"
+          type="number"
           placeholder="age"
           value={age}
           onChange={(e) => {
@@ -84,10 +105,10 @@ export default function CardUpdate({
             return setAbout(e.target.value), e.preventDefault();
           }}
         />
-        <button type="submit" onSubmit={handleSubmit}>
+        <button type="submit" onClick={handleSubmit}>
           Update
         </button>
-      </form>
+      </div>
     </div>
   );
 }

@@ -134,6 +134,7 @@ function App() {
               name="Communauté"
               to="/community"
             />
+            <Item icon={<BarChartRounded />} name="Communauté" to="/social" />
           </div>
         </div>
         <div className="group">
@@ -144,7 +145,7 @@ function App() {
           <Item
             icon={<AttachMoneyRounded />}
             name="Donations"
-            to="/Donations"
+            to="/donations"
           />
           <Item icon={<Settings />} name="Settings" to="/Settings" />
         </div>
@@ -152,9 +153,15 @@ function App() {
           <motion.h3
             animate={{ opacity: open ? 1 : 0, height: open ? "auto" : 0 }}
           ></motion.h3>
-          <Item icon={<ContactPhone />} name="Contact" to="/contact" />
-          <DarkMode />
+          <Item
+            icon={<ContactPhone />}
+            name="Contact"
+            onClick={() => {
+              navigate("/Contact");
+            }}
+          />
         </div>
+        <DarkMode />
       </motion.div>
     </motion.div>
   );

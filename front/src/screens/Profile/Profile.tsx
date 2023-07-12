@@ -1,4 +1,3 @@
-import React from "react";
 import "./Profile.css";
 import Cards from "../../components/CardProfile/Cards";
 import CardUpdate from "../../components/CardProfile/CardUpdate";
@@ -6,12 +5,13 @@ import { useState } from "react";
 
 export default function Profile() {
   const [name, setName] = useState<String>("");
-  const [age, setAge] = useState<String>("");
+  const [age, setAge] = useState<Number>();
   const [about, setAbout] = useState<String>("");
   const [email, setEmail] = useState<String>("");
   const [tel, setTel] = useState<String>("");
   const [city, setCity] = useState<String>("");
   const [gender, setGender] = useState<String>("");
+
   return (
     <div className="profile">
       <Cards

@@ -8,13 +8,17 @@ import {
 import HomePage from "../screens/Dashboard/HomePage";
 import Login from "../screens/UserConnexion/Login";
 import Statistic from "../screens/Statistic/Statistic";
+import { useGlobalState } from "../GlobalStateContext";
+import Social from "../screens/Social/Social";
+import { useEffect } from "react";
 import SideBar from "../components/SideBar/SideBar";
 import * as React from "react";
 import Success from "../screens/Payment/Success";
 import { gql, useQuery } from "@apollo/client";
 import NotFound from "../screens/Error/404";
-import Profile from "../screens/Profile/Profile";
+import DonationPage from "../screens/Donation/DonationPage";
 import Contact from "../screens/Contact/Contact";
+import Profile from "../screens/Profile/Profile";
 
 export const VERIFY_TOKEN = gql`
   query Query($token: String!) {
@@ -28,6 +32,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/social" element={<PrivateRoute element={<Social />} />} />
         <Route
           path="/dashboard"
           element={<PrivateRoute element={<HomePage />} />}
@@ -37,13 +42,18 @@ function App() {
           element={<PrivateRoute element={<Statistic />} />}
         />
         <Route
+          path="/profile"
+          element={<PrivateRoute element={<Profile />} />}
+        />
+        <Route
           path="/payment/success"
           element={<PrivateRoute element={<Success />} />}
         />
         <Route
-          path="/Profile"
-          element={<PrivateRoute element={<Profile />} />}
+          path="/donations"
+          element={<PrivateRoute element={<DonationPage />} />}
         />
+        <Route path="*" element={<NotFound />} />
         <Route
           path="/Contact"
           element={<PrivateRoute element={<Contact />} />}
