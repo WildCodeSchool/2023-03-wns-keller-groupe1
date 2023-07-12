@@ -23,7 +23,7 @@ const FontsProps = {
     fontFamily: "NotoSansJP-Bold",
     color: "#111111",
   }),
-  title: (fontSize = 30) => ({
+  title: (fontSize = 22) => ({
     fontSize: scaleFromFigma(fontSize),
     fontFamily: "NotoSansJP-Bold",
     color: "#E6E6E6",
