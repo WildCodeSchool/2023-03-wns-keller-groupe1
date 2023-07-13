@@ -2,7 +2,6 @@ import DarkMode from "../theme/DarkMode";
 import { useNavigate } from "react-router-dom";
 import "./SideBar.css";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
 import {
   AttachMoneyRounded,
   BarChartRounded,
@@ -17,6 +16,7 @@ import {
 import Item from "./Item";
 import { useState } from "react";
 import logo from "../../assets/images/LeafWitheRbg.png";
+
 function App() {
   const [open, setOpen] = useState(true);
 
@@ -129,11 +129,7 @@ function App() {
               name="Dashboard"
               to="/dashboard"
             />
-            <Item
-              icon={<QueryStats />}
-              name="Statistiques"
-              to="/statistic"
-            />
+            <Item icon={<QueryStats />} name="Statistiques" to="/statistic" />
             <Item icon={<BarChartRounded />} name="Communauté" to="/social" />
           </div>
         </div>
@@ -141,13 +137,7 @@ function App() {
           <motion.h3
             animate={{ opacity: open ? 1 : 0, height: open ? "auto" : 0 }}
           ></motion.h3>
-          <Item
-            icon={<SettingsAccessibility />}
-            name="Profile"
-            onClick={() => {
-              navigate("/profile");
-            }}
-          />
+          <Item icon={<SettingsAccessibility />} name="Profile" to="/profile" />
           <Item
             icon={<AttachMoneyRounded />}
             name="Donations"

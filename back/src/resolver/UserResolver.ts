@@ -197,19 +197,25 @@ class UserResolver {
     @Arg("email") email: string,
     @Arg("firstname") firstname: string,
     @Arg("lastname") lastname: string,
-    @Arg("totalCo2") totalCo2: number
+    @Arg("totalCo2") totalCo2: number,
+    @Arg("age") age:  string,
+    @Arg("city") city: string,
+    @Arg("about") about: string,
+    @Arg("gender") gender: string,
+    @Arg("tel") tel: string,
+
   ): Promise<String | GraphQLError> {
     try {
-      const args = new UserInput();
-      args.email = email;
-      args.totalCo2 = totalCo2;
-      args.firstname = firstname;
-      args.lastname = lastname;
-      const validationErrors = await validate(args);
+      // const args = new UserInput();
+      // args.email = email;
+      // args.totalCo2 = totalCo2;
+      // args.firstname = firstname;
+      // args.lastname = lastname;
+      // const validationErrors = await validate(args);
 
-      if (validationErrors.length > 0) {
-        return new GraphQLError("Validation error");
-      }
+      // if (validationErrors.length > 0) {
+      //   return new GraphQLError("Validation error");
+      // }
 
       await dataSource.getRepository(User).update(userId, {
         email,
@@ -217,6 +223,11 @@ class UserResolver {
         lastname,
         totalCo2,
         modifiedAt: new Date(),
+        age,
+        city,
+        tel,
+        gender,
+        about,
       });
       return `User ${userId} updated`;
     } catch (error) {

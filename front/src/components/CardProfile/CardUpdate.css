@@ -1,0 +1,79 @@
+.card-update{
+  width: 500px;
+  height: 680px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px  1px  10px  1px  black;
+  list-style: none;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+.update-container{
+  border-radius: 10px;
+  height: 130px;
+  background: linear-gradient(to left , rgba(23, 118, 31, 0.912) 0%, rgb(73, 169, 84) 50%, rgb(111, 202, 113) 100%);
+}
+
+.lower-update-container{
+  width: 150px;
+  height: 500px;
+  display: flex;
+  margin-top:100px;
+  
+}
+.btn-10{
+    background: linear-gradient(to left , rgba(23, 118, 31, 0.912) 0%, rgb(73, 169, 84) 50%, rgb(111, 202, 113) 100%);
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 30px;
+    padding: 10px;
+    border-radius: 10px;
+    margin-left: 80px;
+    margin-bottom: 20px;
+    border: 1px transparent;
+
+  }
+  .btn-10:hover{
+    background: white;
+    color: green;
+    border: 1px solid green;
+  }
+
+  .lower-update-container,.input-1{
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 30px;
+    padding: 10px;
+    border-radius: 10px;
+    margin-left: 80px;
+    margin-bottom: 20px;
+    border: 1px solide black;
+  }
+
+  .img-update-container img {
+    margin-left: 75px;
+    background:white;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    padding: 5px;
+    transform: translate(95px,45px);
+  };
+  
+  
+  /* #p{
+    position: relative;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 150px;
+    height: 30px;
+    padding: 10px;
+    border-radius: 10px;
+    margin-left: 90px;
+    
+    border: 1px transparent;
+  }
+  */

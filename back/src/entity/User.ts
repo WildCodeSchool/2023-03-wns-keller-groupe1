@@ -41,6 +41,36 @@ export class User {
   @Column()
   totalCo2: number;
 
+  @Field({nullable:true})
+  @Column({
+    nullable: true,
+  })
+  age?:string;
+
+  @Field({nullable:true})
+  @Column({
+    nullable: true,
+  })
+  tel?:string;
+
+  @Field({nullable:true})
+  @Column({
+    nullable: true,
+  })
+  gender?:string;
+
+  @Field({nullable:true})
+  @Column({
+    nullable: true,
+  })
+  city?:string;
+
+  @Field({nullable:true})
+  @Column({
+    nullable: true,
+  })
+  about?:string;
+  
   @Field()
   @Column({
     nullable: true,

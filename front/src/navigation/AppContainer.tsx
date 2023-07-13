@@ -17,6 +17,8 @@ import Success from "../screens/Payment/Success";
 import { gql, useQuery } from "@apollo/client";
 import NotFound from "../screens/Error/404";
 import DonationPage from "../screens/Donation/DonationPage";
+import Contact from "../screens/Contact/Contact";
+import Profile from "../screens/Profile/Profile";
 import Chat from "../screens/Chat/Chat";
 
 export const VERIFY_TOKEN = gql`
@@ -26,16 +28,12 @@ export const VERIFY_TOKEN = gql`
 `;
 
 function App() {
-
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
-        <Route
-          path="/social"
-          element={<PrivateRoute element={<Social />} />}
-        />
+        <Route path="/social" element={<PrivateRoute element={<Social />} />} />
         <Route
           path="/dashboard"
           element={<PrivateRoute element={<HomePage />} />}
@@ -43,6 +41,10 @@ function App() {
         <Route
           path="/statistic"
           element={<PrivateRoute element={<Statistic />} />}
+        />
+        <Route
+          path="/profile"
+          element={<PrivateRoute element={<Profile />} />}
         />
         <Route
           path="/payment/success"
@@ -60,6 +62,8 @@ function App() {
           path="*" 
           element={<NotFound />} 
         />
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
@@ -67,11 +71,10 @@ function App() {
 
 function PrivateRoute({ element }: { element: React.ReactNode }) {
   const navigate = useNavigate();
-  
   const { error } = useQuery(VERIFY_TOKEN, {
     variables: { token: sessionStorage.getItem("token") },
     fetchPolicy: "network-only",
-  })
+  });
 
   if (error) navigate("/login");
 
