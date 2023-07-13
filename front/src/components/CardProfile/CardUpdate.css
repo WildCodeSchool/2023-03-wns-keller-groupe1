@@ -4,7 +4,10 @@
   background: white;
   border-radius: 10px;
   box-shadow: 0px  1px  10px  1px  black;
-  
+  background: linear-gradient(to left , rgba(147, 152, 148, 0.912) 0%, rgb(176, 182, 177) 50%, rgb(183, 186, 183) 100%);
+  list-style: none;
+  box-sizing: border-box;
+  text-decoration: none;
 }
 
 .update-container{
@@ -16,14 +19,53 @@
 .lower-update-container{
   width: 150px;
   height: 500px;
+  display: flex;
+  margin-top:100px;
+  
 }
 
-  .lower-update-container>input{
+  .lower-update-container,input{
     display: flex;
-    align-items: center;
-   flex-direction: column;
-    width: 100px;
+    flex-direction: column;
+    width: 110px;
     height: 30px;
     padding: 10px;
-    margin-top: 10px;
+    border-radius: 10px;
+    margin-left: 90px;
+    margin-bottom: 20px;
+    border: 1px transparent;
   }
+
+  .img-update-container img {
+    margin-left: 75px;
+    background:white;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    padding: 5px;
+    transform: translate(95px,45px);
+  };
+  
+.btn{
+  
+    width: 110px;
+    height: 30px;
+    padding: 10px;
+    border-radius: 10px;
+    margin-left: 90px;
+    margin-bottom: 20px;
+    border: 1px transparent;
+  }
+  #p{
+    position: relative;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 150px;
+    height: 30px;
+    padding: 10px;
+    border-radius: 10px;
+    margin-left: 90px;
+    
+    border: 1px transparent;
+  }
+ 

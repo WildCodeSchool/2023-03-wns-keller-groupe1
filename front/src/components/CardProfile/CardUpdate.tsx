@@ -48,7 +48,6 @@ export default function CardUpdate({
         </div>
       </div>
       <div className="lower-update-container">
-        <p>Update Your Profil</p>
         <input
           type="text"
           placeholder="fullname"
@@ -105,7 +104,7 @@ export default function CardUpdate({
             return setAbout(e.target.value), e.preventDefault();
           }}
         />
-        <button type="submit" onClick={handleSubmit}>
+        <button className="btn" type="submit" onClick={handleSubmit}>
           Update
         </button>
       </div>
