@@ -49,7 +49,7 @@ export default function CardUpdate({
         </div>
       </div>
       <div className="lower-update-container">
-        <input
+        <input className="input-1"
           type="text"
           placeholder="fullname"
           value={name}
@@ -57,7 +57,7 @@ export default function CardUpdate({
             return setName(e.target.value), e.preventDefault();
           }}
         />
-        <input
+        <input className="input-1"
           type="text"
           placeholder="gender"
           value={gender}
@@ -65,7 +65,7 @@ export default function CardUpdate({
             return setGender(e.target.value), e.preventDefault();
           }}
         />
-        <input
+        <input className="input-1"
           type="number"
           placeholder="age"
           value={age}
@@ -73,7 +73,7 @@ export default function CardUpdate({
             return setAge(e.target.value), e.preventDefault();
           }}
         />
-        <input
+        <input className="input-1"
           type="text"
           placeholder="phone"
           value={tel}
@@ -81,7 +81,7 @@ export default function CardUpdate({
             return setTel(e.target.value), e.preventDefault();
           }}
         />
-        <input
+        <input className="input-1"
           type="text"
           placeholder="mail"
           value={email}
@@ -89,7 +89,7 @@ export default function CardUpdate({
             return setEmail(e.target.value), e.preventDefault();
           }}
         />
-        <input
+        <input className="input-1"
           type="text"
           placeholder="city"
           value={city}
@@ -97,7 +97,7 @@ export default function CardUpdate({
             return setCity(e.target.value), e.preventDefault();
           }}
         />
-        <input
+        <input className="input-1"
           type="text"
           placeholder="Bio"
           value={about}
