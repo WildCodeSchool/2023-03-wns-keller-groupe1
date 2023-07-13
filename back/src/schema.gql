@@ -68,7 +68,7 @@ type Mutation {
   updateCarbonData(category: String!, consumption: Float!, id: Float!, title: String!): String!
   updateCategory(categoryId: Float!, title: String!): String!
   updateDonation(amount: Float!, id: Float!): String!
-  updateUser(email: String!, firstname: String!, lastname: String!, totalCo2: Float!, userId: Float!): String!
+  updateUser(about: String!, age: String!, city: String!, email: String!, firstname: String!, gender: String!, lastname: String!, tel: String!, totalCo2: Float!, userId: Float!): String!
   updateUserGroupe(id: Float!, title: String!): String!
 }
 
@@ -116,17 +116,22 @@ type Subscription {
 }
 
 type User {
+  about: String
+  age: String
   bankDetails: BankDetails!
   carbonData: [CarbonData!]!
   chefGroupe: [UserGroupe!]!
+  city: String
   createdAt: DateTime!
   donation: [Donation!]!
   email: String!
   firstname: String!
+  gender: String
   groups: [UserGroupe!]!
   isVerified: Boolean!
   lastname: String!
   modifiedAt: DateTime!
+  tel: String
   totalCo2: Float!
   userId: Float!
   userReceiver: [UserFriends!]!
