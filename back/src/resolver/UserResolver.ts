@@ -198,7 +198,7 @@ class UserResolver {
     @Arg("firstname") firstname: string,
     @Arg("lastname") lastname: string,
     @Arg("totalCo2") totalCo2: number,
-    @Arg("age") age:  number,
+    @Arg("age") age:  string,
     @Arg("city") city: string,
     @Arg("about") about: string,
     @Arg("gender") gender: string,

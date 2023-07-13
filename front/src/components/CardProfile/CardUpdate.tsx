@@ -1,4 +1,5 @@
 import "./CardUpdate.css";
+import joker from "../../assets/images/joker.png";
 import { useUpdateUsers } from "../../services/updateProfil";
 import { useGlobalState } from "../../GlobalStateContext";
 
@@ -44,7 +45,7 @@ export default function CardUpdate({
     <div className="card-update">
       <div className="update-container">
         <div className="img-update-container">
-          <img src="" alt="" />
+          <img src={joker} alt="" height="100px" width="100px" />
         </div>
       </div>
       <div className="lower-update-container">
@@ -104,7 +105,7 @@ export default function CardUpdate({
             return setAbout(e.target.value), e.preventDefault();
           }}
         />
-        <button className="btn" type="submit" onClick={handleSubmit}>
+        <button className="btn-10" type="submit" onClick={handleSubmit}>
           Update
         </button>
       </div>

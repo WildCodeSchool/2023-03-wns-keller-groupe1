@@ -1,9 +1,30 @@
 import "./Profile.css";
 import Cards from "../../components/CardProfile/Cards";
 import CardUpdate from "../../components/CardProfile/CardUpdate";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { gql, useQuery } from "@apollo/client";
+import { useUpdateUsers } from "../../services/updateProfil";
+import { useGlobalState } from "../../GlobalStateContext";
+
+const DATA_PROFILE = gql`
+  query Query($userId: Float!) {
+    getUser(userId: $userId) {
+      about
+      age
+      city
+      email
+      firstname
+      gender
+      tel
+      userId
+      lastname
+    }
+  }
+`;
 
 export default function Profile() {
+  const [globalState, setGlobalState] = useGlobalState();
+  const userId = globalState?.user?.userId;
   const [name, setName] = useState<String>("");
   const [age, setAge] = useState<Number>();
   const [about, setAbout] = useState<String>("");
@@ -11,6 +32,26 @@ export default function Profile() {
   const [tel, setTel] = useState<String>("");
   const [city, setCity] = useState<String>("");
   const [gender, setGender] = useState<String>("");
+
+  const { loading, error, data, refetch } = useQuery(DATA_PROFILE, {
+    variables: {
+      userId: userId,
+    },
+  });
+
+  useEffect(() => {
+    if (data) {
+      setName(data.getUser.firstname);
+      setName(data.getUser.lastname);
+      setAbout(data.getUser.about);
+      setAge(data.getUser.age);
+      setGender(data.getUser.gender);
+      setTel(data.getUser.tel);
+      setEmail(data.getUser.email);
+      setCity(data.getUser.city);
+    }
+  }, [data]);
+  console.log(data);
 
   return (
     <div className="profile">

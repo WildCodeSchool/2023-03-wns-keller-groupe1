@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import "./Cards.css";
-import logo from "../../assets/images/LeafWitheRbg.png";
+import joker from "../../assets/images/joker.png";
 
 function Cards({ name, age, about, email, tel, city, gender }: any) {
   return (
     <div className="card">
       <div className="upper-container">
         <div className="img-container">
-          <img src={logo} alt="" height="100px" width="100px" />
+          <img src={joker} alt="" height="100px" width="100px" />
         </div>
       </div>
       <div className="lower-container">

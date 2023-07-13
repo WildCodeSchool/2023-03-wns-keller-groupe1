@@ -8,7 +8,7 @@ const UPDATE_USER = gql`
     $gender: String!
     $about: String!
     $city: String!
-    $age: Float!
+    $age: String!
     $totalCo2: Float!
     $lastname: String!
     $firstname: String!
@@ -29,6 +29,7 @@ const UPDATE_USER = gql`
     )
   }
 `;
+
 export const useUpdateUsers = () => {
   const [updateUser, { data, error, loading }] = useMutation(UPDATE_USER, {
     onError: (error) => {

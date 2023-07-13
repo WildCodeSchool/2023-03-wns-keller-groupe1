@@ -41,31 +41,31 @@ export class User {
   @Column()
   totalCo2: number;
 
-  @Field()
+  @Field({nullable:true})
   @Column({
     nullable: true,
   })
-  age?:number;
+  age?:string;
 
-  @Field()
+  @Field({nullable:true})
   @Column({
     nullable: true,
   })
   tel?:string;
 
-  @Field()
+  @Field({nullable:true})
   @Column({
     nullable: true,
   })
   gender?:string;
 
-  @Field()
+  @Field({nullable:true})
   @Column({
     nullable: true,
   })
   city?:string;
 
-  @Field()
+  @Field({nullable:true})
   @Column({
     nullable: true,
   })
