@@ -11,6 +11,7 @@ import {
   Settings,
   SettingsAccessibility,
   TocRounded,
+  Chat
 } from "@mui/icons-material";
 import Item from "./Item";
 import { useState } from "react";
@@ -147,19 +148,12 @@ function App() {
             name="Donations"
             to="/donations"
           />
-          <Item icon={<Settings />} name="Settings" to="/Settings" />
-        </div>
-        <div className="group">
-          <motion.h3
-            animate={{ opacity: open ? 1 : 0, height: open ? "auto" : 0 }}
-          ></motion.h3>
           <Item
-            icon={<ContactPhone />}
-            name="Contact"
-            onClick={() => {
-              navigate("/Contact");
-            }}
+            icon={<Chat />}
+            name="Chat"
+            to="/chat"
           />
+          <Item icon={<Settings />} name="Settings" to="/Settings" />
         </div>
         <DarkMode />
       </motion.div>

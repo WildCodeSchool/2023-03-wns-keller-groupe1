@@ -1,13 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet, TextInput } from "react-native";
-import FontsProps from "../styles/fontProps";
-import { CheckIcon } from "../assets/index";
+import FontsProps from "../../styles/fontProps";
+import { CheckIcon } from "../../assets/index";
 import {
   responsiveHeight,
   responsiveWidth,
 } from "react-native-responsive-dimensions";
-import Palette from "../styles/Palette";
-import { LoginFormProps } from "../interfaces/LoginFormProps";
+import Palette from "../../styles/Palette";
+import { LoginFormProps } from "../../interfaces/LoginFormProps";
 
 const LoginFrom: React.FC<LoginFormProps> = ({
   email,
@@ -38,6 +38,7 @@ const LoginFrom: React.FC<LoginFormProps> = ({
                 : handleLastNameChange
             }
             style={[styles.input, FontsProps.regular()]}
+            selectionColor={Palette.green[1]}
           />
           {(IsConnexionScreen || !isSignUpPhaseOne
             ? isEmailValid
@@ -75,6 +76,8 @@ const LoginFrom: React.FC<LoginFormProps> = ({
               IsConnexionScreen || !isSignUpPhaseOne ? true : false
             }
             style={[styles.input, FontsProps.regular()]}
+            selectionColor={Palette.green[1]}
+
           />
 
           {(IsConnexionScreen || !isSignUpPhaseOne

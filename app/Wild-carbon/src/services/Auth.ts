@@ -56,6 +56,16 @@ export const useAuth = () => {
     },
   });
 
+  const [login] = useLazyQuery(LOGIN, {
+    onError: (error) => {
+      Toast.show({ type: "error", text1: `${error.message}` });
+    },
+    onCompleted: async (data) => {
+      await AsyncStorage.setItem("token", data.login);
+      getUserFromToken({ variables: { token: data.login } });
+    },
+  });
+
   const [getUserFromToken] = useLazyQuery(GET_USER_FROM_TOKEN, {
     onError: (error) => {
       Toast.show({
@@ -64,19 +74,15 @@ export const useAuth = () => {
       });
     },
     onCompleted: async (data) => {
-      await AsyncStorage.setItem("user_id", data.getUserFromToken.userId);
-    },
-  });
-
-  const [login] = useLazyQuery(LOGIN, {
-    onError: (error) => {
-      Toast.show({ type: "error", text1: `${error.message}` });
-    },
-    onCompleted: async (data) => {
-      await AsyncStorage.setItem("token", data.login);
-      getUserFromToken({ variables: { token: data.login } });
-      navigation.navigate("Dashboard");
-  
+      await AsyncStorage.setItem("user", JSON.stringify(data.getUserFromToken));
+      console.log("data", data.getUserFromToken);
+      navigation.navigate("Main", {
+        screen: "MainTabs",
+        params: {
+          screen: "Dashboard",
+          params: { userData: data.getUserFromToken },
+        },
+      });
     },
   });
 

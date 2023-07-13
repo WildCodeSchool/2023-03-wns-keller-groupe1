@@ -19,6 +19,7 @@ import NotFound from "../screens/Error/404";
 import DonationPage from "../screens/Donation/DonationPage";
 import Contact from "../screens/Contact/Contact";
 import Profile from "../screens/Profile/Profile";
+import Chat from "../screens/Chat/Chat";
 
 export const VERIFY_TOKEN = gql`
   query Query($token: String!) {
@@ -53,10 +54,13 @@ function App() {
           path="/donations"
           element={<PrivateRoute element={<DonationPage />} />}
         />
-        <Route path="*" element={<NotFound />} />
         <Route
-          path="/Contact"
-          element={<PrivateRoute element={<Contact />} />}
+          path="/chat"
+          element={<PrivateRoute element={<Chat />} />}
+        />
+        <Route 
+          path="*" 
+          element={<NotFound />} 
         />
 
         <Route path="*" element={<NotFound />} />
@@ -67,7 +71,6 @@ function App() {
 
 function PrivateRoute({ element }: { element: React.ReactNode }) {
   const navigate = useNavigate();
-
   const { error } = useQuery(VERIFY_TOKEN, {
     variables: { token: sessionStorage.getItem("token") },
     fetchPolicy: "network-only",

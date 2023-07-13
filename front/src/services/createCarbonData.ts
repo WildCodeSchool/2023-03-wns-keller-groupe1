@@ -8,14 +8,12 @@ export const CREATE_CARBON_DATA = gql`
   mutation CreateCarbonData(
 		$userId: Float!, 
 		$category: String!, 
-		$price: Float!, 
 		$consumption: Float!, 
 		$title: String!
 	) {
     createCarbonData(
 			userId: $userId, 
 			category: $category, 
-			price: $price, 
 			consumption: $consumption, 
 			title: $title
 		)
@@ -23,15 +21,13 @@ export const CREATE_CARBON_DATA = gql`
 `;
 
 export const UPDATE_CARBON_DATA = gql `
-	mutation UpdateCarbonData(
-		$price: Float!, 
+	mutation UpdateCarbonData( 
 		$consumption: Float!, 
 		$category: String!,
 		$title: String!, 
 		$updateCarbonDataId: Float!
 	) {
 		updateCarbonData(
-			price: $price, 
 			consumption: $consumption,
 			category: $category,
 			title: $title, 
@@ -70,12 +66,10 @@ const CreateCarbonData = () => {
 		event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
 		name: string|undefined,
 		co2: number|undefined,
-		price: number|undefined,
 		category: string|undefined,
 		userId: string|null,
 		setQuery: Function,
 		setCo2: Function,
-		setPrice: Function,
 		setCategory: Function
 	): Promise<void>  => {
 		event.preventDefault();
@@ -85,14 +79,12 @@ const CreateCarbonData = () => {
 				variables: {
 					userId: parsedUserId,
 					category: category,
-					price: price,
 					consumption: co2,
 					title: name
 				}
 			})
 			setQuery("");
 			setCo2(0);
-			setPrice(0);
 			setCategory("");
 		}
 	}
@@ -101,19 +93,16 @@ const CreateCarbonData = () => {
 		event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
 		name: string|undefined,
 		co2: number|undefined,
-		price: number|undefined,
 		category: string|undefined,
 		updateCarbonDataId: string|null,
 		setQuery: Function,
 		setCo2: Function,
-		setPrice: Function,
 		setCategory: Function
 	): Promise<void>  => {
 		event.preventDefault();
 		await updateCarbonData({
 			variables: {
 				category: category,
-				price: price,
 				consumption: co2,
 				title: name,
 				updateCarbonDataId: updateCarbonDataId
@@ -121,7 +110,6 @@ const CreateCarbonData = () => {
 		})
 		setQuery("");
 		setCo2(0);
-		setPrice(0);
 		setCategory("");	
 	}
 

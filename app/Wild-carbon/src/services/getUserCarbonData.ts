@@ -1,6 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
-import { ICarbonData } from "../interface/CarbonData";
-import {fakeData} from "../helper/helper"
+import { ICarbonData } from "../interfaces/CarbonData";
 import { useEffect, useState } from "react";
  export const GET_USER = gql`
   query GetUser($userId: Float!) {
@@ -19,7 +18,7 @@ import { useEffect, useState } from "react";
 
 export const useUserCarbonData = (userId: number|undefined) => {
   const [userCarbonData, setUserCarbonData] = useState<ICarbonData[]>([]);
-  const { loading, error, data } = useQuery(GET_USER, {
+  const { loading, error, data ,refetch} = useQuery(GET_USER, {
     variables: { userId },
     fetchPolicy: "network-only",
   });
@@ -34,5 +33,5 @@ export const useUserCarbonData = (userId: number|undefined) => {
     }
   }, [data]);
 
-  return { loading, error, data: userCarbonData };
+  return { loading, error, data: userCarbonData ,refetch };
 };
