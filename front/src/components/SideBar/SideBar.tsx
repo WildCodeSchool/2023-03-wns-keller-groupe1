@@ -130,11 +130,6 @@ function App() {
               to="/dashboard"
             />
             <Item icon={<QueryStats />} name="Statistiques" to="/statistic" />
-            <Item
-              icon={<BarChartRounded />}
-              name="Communauté"
-              to="/community"
-            />
             <Item icon={<BarChartRounded />} name="Communauté" to="/social" />
           </div>
         </div>

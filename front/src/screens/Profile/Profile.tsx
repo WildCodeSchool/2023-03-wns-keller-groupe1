@@ -54,7 +54,7 @@ export default function Profile() {
   console.log(data);
 
   return (
-    <div className="profile">
+    <div className="profile-container">
       <Cards
         name={name}
         setName={setName}
