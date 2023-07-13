@@ -49,7 +49,7 @@ const Chat = () => {
   const groupData = useQuery(GET_JOINED_USERS, {
     variables: { topic: "Group 1" },
     fetchPolicy: "network-only",
-    pollInterval: 500,
+    pollInterval: 2000,
   })
 
   const [joinGroupChat, joinGroupChatData] = useMutation(JOIN_GROUP_CHAT, {
