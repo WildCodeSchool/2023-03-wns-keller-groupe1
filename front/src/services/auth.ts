@@ -57,6 +57,7 @@ export const useAuth = () => {
     onCompleted: (data) => {
       setGlobalState({ isLogged: true, user: data.getUserFromToken });  
       sessionStorage.setItem("user_id", data.getUserFromToken.userId);
+      sessionStorage.setItem("firstname", data.getUserFromToken.firstname);  
       navigate("/dashboard");
     },
   });

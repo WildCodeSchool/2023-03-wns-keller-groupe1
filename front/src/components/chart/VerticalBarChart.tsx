@@ -31,7 +31,7 @@ ChartJS.register(
 const BarChart: React.FC<ChartProps> = ({ data, OptionMonthSelected }) => {
   const [dataByMonth, setDataByMonth] = useState<{ [key: string]: number }>({});
   const [dataByYear, setDataByYear] = useState<{ [key: string]: number }>({});
-  console.log(OptionMonthSelected);
+
   useEffect(() => {
     const dataByPeriod: { [key: string]: number } = {};
 

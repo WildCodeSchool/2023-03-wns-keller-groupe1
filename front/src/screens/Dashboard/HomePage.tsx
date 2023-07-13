@@ -8,6 +8,7 @@ import StatsSection from "../../components/dashboard/StatsSection";
 import CommunitySection from "../../components/dashboard/CommunitySection";
 import NewDonationForm from "../../components/Form/NewDonationForm";
 import UpdateCarbonDataForm from "../../components/Form/UpdateCarbonDataForm";
+import Chat from "../Chat/Chat";
 
 const HomePage = () => {
   const [name, setName] = useState<string|undefined>();
