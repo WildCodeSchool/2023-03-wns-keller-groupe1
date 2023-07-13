@@ -18,7 +18,6 @@ type CarbonData {
   createdAt: DateTime!
   id: Float!
   modifiedAt: DateTime!
-  price: Float!
   title: String!
   user: User!
 }
@@ -47,7 +46,7 @@ type Mutation {
   checkoutDonation(userid: Float!): String!
   checkoutSuccess(sessionId: String!, userid: Float!): String!
   createBankDetails(stripeDetails: String!, userId: Float!): String!
-  createCarbonData(category: String!, consumption: Float!, price: Float!, title: String!, userId: Float!): String!
+  createCarbonData(category: String!, consumption: Float!, title: String!, userId: Float!): String!
   createCategory(title: String!): String!
   createUser(email: String!, firstname: String!, lastname: String!, password: String!): String!
   createUserGroupe(title: String!, userId: Float!): String!
@@ -66,7 +65,7 @@ type Mutation {
   subscribeToDynamicTopic(topic: String!, username: String!): Boolean!
   unsubscribeFromDynamicTopic(topic: String!, username: String!): Boolean!
   updateBankDetails(id: Float!, stripeDetails: String!): String!
-  updateCarbonData(category: String!, consumption: Float!, id: Float!, price: Float!, title: String!): String!
+  updateCarbonData(category: String!, consumption: Float!, id: Float!, title: String!): String!
   updateCategory(categoryId: Float!, title: String!): String!
   updateDonation(amount: Float!, id: Float!): String!
   updateUser(email: String!, firstname: String!, lastname: String!, totalCo2: Float!, userId: Float!): String!

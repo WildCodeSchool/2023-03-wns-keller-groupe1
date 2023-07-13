@@ -6,11 +6,9 @@ import CarbonResults from "./CarbonResult";
 const NewCarbonDataForm = ({
   setName,
   setCategory,
-  setPrice,
   setCo2,
   name,
   category,
-  price,
   Co2,
   handleFormSubmit,
   query,
@@ -126,18 +124,6 @@ const NewCarbonDataForm = ({
                 onChange={handleInputNumberChange(setCo2)}
                 required
                 value={Co2}
-              />
-            </div>
-            <div>
-              <p className={styles.formTitle}>Prix <span style={{color: "lightgrey"}}>(optionnel)</span></p>
-              <input
-                className={styles.formInputLogin}
-                type="number"
-                name="price"
-                id="price"
-                onChange={handleInputNumberChange(setPrice)}
-                required
-                value={price}
               />
             </div>
             <div className={styles.formGroupSubmit}>

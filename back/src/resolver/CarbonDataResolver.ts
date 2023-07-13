@@ -13,7 +13,6 @@ class CarbonDataResolver {
   async createCarbonData(
     @Arg("title") title: string,
     @Arg("consumption") consumption: number,
-    @Arg("price") price: number,
     @Arg("category") categoryString: string,
     @Arg("userId") userId: number
   ): Promise<String|GraphQLError|any> {
@@ -21,7 +20,6 @@ class CarbonDataResolver {
       const args = new CarbonDataInput();
       args.title = title;
       args.consumption = consumption;
-      args.price = price;
       args.categoryString = categoryString;
       args.userId = userId;
       const validationErrors = await validate(args);
@@ -33,7 +31,6 @@ class CarbonDataResolver {
       const carbonData = new CarbonData();
       carbonData.title = title;
       carbonData.consumption = consumption;
-      carbonData.price = price;
       carbonData.modifiedAt = new Date();
       carbonData.createdAt = new Date();
       carbonData.categoryString = categoryString;
@@ -80,13 +77,11 @@ class CarbonDataResolver {
     @Arg("title") title: string,
     @Arg("category") categoryString: string,
     @Arg("consumption") consumption: number,
-    @Arg("price") price: number,
   ): Promise<string|GraphQLError|any> {
     try {
       const args = new CarbonDataInput();
       args.title = title;
       args.consumption = consumption;
-      args.price = price;
       args.id = id;
       args.categoryString = categoryString;
       const validationErrors = await validate(args);
@@ -97,7 +92,7 @@ class CarbonDataResolver {
       
       await dataSource
         .getRepository(CarbonData)
-        .update(id, { title, consumption, price, categoryString });
+        .update(id, { title, consumption, categoryString });
       return "Carbon data updated";
     } catch (error) {
       return new GraphQLError('An error occured'); 

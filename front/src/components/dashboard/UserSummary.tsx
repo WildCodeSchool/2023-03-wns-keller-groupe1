@@ -10,7 +10,6 @@ const UserSummary = ({
     setQuery,
     setName,
     setCategory,
-    setPrice,
     setCo2,
     setUpdateCarbonDataId
   }: any) => {
@@ -35,7 +34,6 @@ const UserSummary = ({
     setCo2(data.consumption);
     setQuery(data.title);
     setName(data.title);
-    setPrice(data.price);
     setUpdateCarbonDataId(data.id)
   }
 

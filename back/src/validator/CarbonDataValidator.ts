@@ -13,9 +13,6 @@ export class CarbonDataInput {
   @Field(() => Float, { nullable: true })
   consumption: number;
 
-  @Field(() => Float, { nullable: true })
-  price: number;
-
   @Field(() => Int, { nullable: true })
   userId: number;
 

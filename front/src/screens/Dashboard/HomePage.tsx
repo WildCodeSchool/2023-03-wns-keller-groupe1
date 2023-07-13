@@ -13,7 +13,6 @@ import Chat from "../Chat/Chat";
 const HomePage = () => {
   const [name, setName] = useState<string|undefined>();
   const [category, setCategory] = useState<string|undefined>();
-  const [price, setPrice] = useState<number|undefined>(0);
   const [co2, setCo2] = useState<number|undefined>(0);
   const [updateCarbonDataId, setUpdateCarbonDataId] = useState<string|null>("");
   const [query, setQuery] = useState("");
@@ -46,7 +45,6 @@ const HomePage = () => {
       setCo2(0);
       setQuery("");
       setName("");
-      setPrice(0);
     }
     if (event.target === donationModal) {
       donationModal.style.display = "none";
@@ -57,7 +55,6 @@ const HomePage = () => {
       setCo2(0);
       setQuery("");
       setName("");
-      setPrice(0);
       setUpdateCarbonDataId("");
     }  
   } 
@@ -71,7 +68,6 @@ const HomePage = () => {
             setQuery={setQuery}
             setName={setName}
             setCategory={setCategory} 
-            setPrice={setPrice} 
             setCo2={setCo2}
             setUpdateCarbonDataId={setUpdateCarbonDataId}
           />
@@ -91,22 +87,18 @@ const HomePage = () => {
       <NewCarbonDataForm 
         setName={setName} 
         setCategory={setCategory} 
-        setPrice={setPrice} 
         setCo2={setCo2} 
         name={name}
         category={category}
-        price={price}
         Co2={co2}
         handleFormSubmit={(e: any) => handleFormSubmit(
           e,
           query,
           co2,
-          price,
           category,
           sessionStorage.getItem("user_id"),
           setQuery,
           setCo2,
-          setPrice,
           setCategory
         )}
         query={query}
@@ -115,21 +107,17 @@ const HomePage = () => {
       <UpdateCarbonDataForm
         setName={setName} 
         setCategory={setCategory} 
-        setPrice={setPrice} 
         setCo2={setCo2} 
         category={category}
-        price={price}
         Co2={co2}
         handleFormSubmit={(e: any) => handleUpdateFormSubmit(
           e,
           query,
           co2,
-          price,
           category,
           updateCarbonDataId,
           setQuery,
           setCo2,
-          setPrice,
           setCategory
         )}
         query={query}

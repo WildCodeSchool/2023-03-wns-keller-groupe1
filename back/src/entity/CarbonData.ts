@@ -18,10 +18,6 @@ export class CarbonData {
   @Column("float")
   consumption: number;
 
-  @Field()
-  @Column("float")
-  price: number;
-
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.carbonData)
   user: User;

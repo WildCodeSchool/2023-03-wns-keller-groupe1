@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
         id
         title
         consumption
-        price
         categoryString
         modifiedAt
         createdAt
