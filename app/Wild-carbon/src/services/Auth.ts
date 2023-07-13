@@ -75,9 +75,13 @@ export const useAuth = () => {
     },
     onCompleted: async (data) => {
       await AsyncStorage.setItem("user", JSON.stringify(data.getUserFromToken));
-      navigation.navigate("MainTabs", {
-        screen: "Dashboard",
-        params: { userData: data.getUserFromToken },
+      console.log("data", data.getUserFromToken);
+      navigation.navigate("Main", {
+        screen: "MainTabs",
+        params: {
+          screen: "Dashboard",
+          params: { userData: data.getUserFromToken },
+        },
       });
     },
   });

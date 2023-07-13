@@ -31,7 +31,6 @@ export const useUserCarbonData = (userId: number|undefined) => {
         createdAt: new Date(item.createdAt),
       }));
       setUserCarbonData(newData);
-      console.log("userCarbonData", newData);
     }
   }, [data]);
 

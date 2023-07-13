@@ -88,6 +88,7 @@ const Dashboard: React.FC = () => {
                 modifiedAt={new Date(item.modifiedAt)}
                 id={item.id}
                 consumption={item.consumption.toFixed(1)}
+                refreshData={refreshData}
               />
             ))
         ) : (
@@ -101,8 +102,7 @@ const Dashboard: React.FC = () => {
         <Button
           title={"Ajouter une dépense"}
           onPress={() => {
-            console.log("Button pressed"), 
-            refreshData();
+            console.log("Button pressed"), refreshData();
           }}
         />
       </View>

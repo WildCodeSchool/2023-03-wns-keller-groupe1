@@ -9,24 +9,32 @@ import {
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { CarbonContainerProps } from "../interfaces/CarbonContainerProps";
+import DeleteCarbonData from "../services/deleteCarbonData";
 
 const CarbonContainer: React.FC<CarbonContainerProps> = ({
   title,
   modifiedAt,
   id,
   consumption,
+  refreshData,
 }) => {
   const [viewFull, setViewFull] = useState(false);
+  const { handleFormSubmitDelete } = DeleteCarbonData();
+
+  const handleDelete = async () => {
+    await handleFormSubmitDelete(id);
+    refreshData();
+  };
 
   return (
-    <TouchableOpacity 
+    <TouchableOpacity
       style={styles.MainContainer}
       onPress={() => setViewFull(!viewFull)}
     >
       <View style={styles.TopView}>
         <View style={styles.LeftView}>
           <Text style={[FontsProps.bold(), styles.Text]}>
-            {title.length > 20 ? `${title.slice(0, 20)}...` : title}
+            {title.length > 22 ? `${title.slice(0, 22)}...` : title}
           </Text>
           <Text
             style={[FontsProps.regularSmall(), styles.Text, { marginLeft: 5 }]}
@@ -53,9 +61,13 @@ const CarbonContainer: React.FC<CarbonContainerProps> = ({
               Modifier
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handleDelete}>
             <Text
-              style={[FontsProps.bold(), styles.Text, { color: Palette.red[1] }]}
+              style={[
+                FontsProps.bold(),
+                styles.Text,
+                { color: Palette.red[1] },
+              ]}
             >
               Supprimer
             </Text>

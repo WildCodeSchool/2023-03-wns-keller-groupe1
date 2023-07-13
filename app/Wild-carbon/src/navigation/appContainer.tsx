@@ -188,7 +188,7 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={isLoggedIn ? "Main" : "Login"}
+        initialRouteName={"Login"}
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="Login" component={Login} />

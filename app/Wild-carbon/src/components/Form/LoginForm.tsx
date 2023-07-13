@@ -38,6 +38,7 @@ const LoginFrom: React.FC<LoginFormProps> = ({
                 : handleLastNameChange
             }
             style={[styles.input, FontsProps.regular()]}
+            selectionColor={Palette.green[1]}
           />
           {(IsConnexionScreen || !isSignUpPhaseOne
             ? isEmailValid
@@ -75,6 +76,8 @@ const LoginFrom: React.FC<LoginFormProps> = ({
               IsConnexionScreen || !isSignUpPhaseOne ? true : false
             }
             style={[styles.input, FontsProps.regular()]}
+            selectionColor={Palette.green[1]}
+
           />
 
           {(IsConnexionScreen || !isSignUpPhaseOne
