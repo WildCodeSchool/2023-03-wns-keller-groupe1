@@ -48,6 +48,11 @@ const FontsProps = {
     fontFamily: "NotoSansJP-Bold",
     color: "#25A55F",
   }),
+  questionDashboard: (fontSize = 22) => ({
+    fontSize: scaleFromFigma(fontSize),
+    fontFamily: "NotoSansJP-Bold",
+    color: "#1C7B47",
+  }),
 };
 
 export default FontsProps;

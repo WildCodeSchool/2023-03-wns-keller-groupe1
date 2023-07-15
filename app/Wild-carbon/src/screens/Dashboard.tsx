@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, ScrollView } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { useUserCarbonData } from "../services/getUserCarbonData";
 import { format, compareDesc } from "date-fns";
-import { fr } from "date-fns/locale";
+import { fr, tr } from "date-fns/locale";
 import Palette from "../styles/Palette";
 import {
   responsiveHeight,
@@ -13,6 +13,7 @@ import FontsProps from "../styles/fontProps";
 import CarbonContainer from "../components/CarbonContainer";
 import Button from "../components/Button";
 import { carbonDataStatic } from "../helpers/helper";
+import DashboardForm from "../components/Form/DashboardForm";
 
 const Dashboard: React.FC = () => {
   const route = useRoute();
@@ -20,8 +21,8 @@ const Dashboard: React.FC = () => {
   const { loading, error, data, refetch } = useUserCarbonData(
     userData ? userData.userId : undefined
   );
-
-  const [dataByMonth, setDataByMonth] = useState({});
+  const [dataByMonth, setDataByMonth] = useState<Record<string, number>>({});
+  const [showDashboardForm, setShowDashboardForm] = useState(false);
 
   useEffect(() => {
     if (data) {
@@ -29,16 +30,19 @@ const Dashboard: React.FC = () => {
         compareDesc(new Date(a.createdAt), new Date(b.createdAt))
       );
 
-      const groupedData = sortedData.reduce((acc, item) => {
-        const monthYear = format(new Date(item.createdAt), "MMMM yyyy", {
-          locale: fr,
-        });
-        if (!acc[monthYear]) {
-          acc[monthYear] = 0;
-        }
-        acc[monthYear] += item.consumption;
-        return acc;
-      }, {});
+      const groupedData = sortedData.reduce<Record<string, number>>(
+        (acc, item) => {
+          const monthYear = format(new Date(item.createdAt), "MMMM yyyy", {
+            locale: fr,
+          });
+          if (!acc[monthYear]) {
+            acc[monthYear] = 0;
+          }
+          acc[monthYear] += item.consumption;
+          return acc;
+        },
+        {}
+      );
 
       setDataByMonth(groupedData);
     }
@@ -69,7 +73,7 @@ const Dashboard: React.FC = () => {
   } else {
     backgroundColor = Palette.primary;
   }
-  return userData ? (
+  return showDashboardForm ? (
     <View style={styles.MainContainer}>
       <View style={[styles.HeaderContainer, { backgroundColor }]}>
         <Text style={[FontsProps.title(), styles.HeaderText]}>
@@ -87,7 +91,7 @@ const Dashboard: React.FC = () => {
                 title={item.title}
                 modifiedAt={new Date(item.modifiedAt)}
                 id={item.id}
-                consumption={item.consumption.toFixed(1)}
+                consumption={Number(item.consumption.toFixed(1))}
                 refreshData={refreshData}
               />
             ))
@@ -102,13 +106,16 @@ const Dashboard: React.FC = () => {
         <Button
           title={"Ajouter une dépense"}
           onPress={() => {
-            console.log("Button pressed"), refreshData();
+            setShowDashboardForm(!showDashboardForm);
           }}
         />
       </View>
     </View>
   ) : (
-    <Text>Chargement...</Text>
+    <DashboardForm
+      setShowDashboardForm={setShowDashboardForm}
+      showDashboardForm={showDashboardForm}
+    />
   );
 };
 

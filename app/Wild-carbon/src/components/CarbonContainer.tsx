@@ -34,7 +34,9 @@ const CarbonContainer: React.FC<CarbonContainerProps> = ({
       <View style={styles.TopView}>
         <View style={styles.LeftView}>
           <Text style={[FontsProps.bold(), styles.Text]}>
-            {title.length > 22 ? `${title.slice(0, 22)}...` : title}
+            {title.length > 22 && !viewFull
+              ? `${title.slice(0, 22)}...`
+              : title}
           </Text>
           <Text
             style={[FontsProps.regularSmall(), styles.Text, { marginLeft: 5 }]}

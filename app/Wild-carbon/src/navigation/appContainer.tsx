@@ -46,6 +46,7 @@ function App() {
     });
   };
 
+  
   const MainTabs = () => (
     <Tab.Navigator
       screenOptions={{
