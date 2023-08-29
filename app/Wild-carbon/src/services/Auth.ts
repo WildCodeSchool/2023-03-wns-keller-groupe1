@@ -1,6 +1,7 @@
 import { useMutation, useLazyQuery } from "@apollo/client";
 import { gql } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
+import { useGlobalState } from "../../GlobalStateContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
 
@@ -39,6 +40,7 @@ const GET_USER_FROM_TOKEN = gql`
 
 export const useAuth = () => {
   const navigation = useNavigation();
+  const [globalState, setGlobalState] = useGlobalState();
 
   const [createNewUser] = useMutation(CREATE_USER, {
     onError: (error) => {
@@ -76,6 +78,11 @@ export const useAuth = () => {
     onCompleted: async (data) => {
       await AsyncStorage.setItem("user", JSON.stringify(data.getUserFromToken));
       console.log("data", data.getUserFromToken);
+      setGlobalState((prevState) => ({
+        ...prevState,
+        user: data.getUserFromToken,
+      }));
+
       navigation.navigate("Main", {
         screen: "MainTabs",
         params: {

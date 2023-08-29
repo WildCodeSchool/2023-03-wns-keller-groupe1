@@ -1,21 +1,24 @@
 import { registerRootComponent } from "expo";
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
-import React from 'react';
-import Toast from 'react-native-toast-message';
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import React from "react";
+import Toast from "react-native-toast-message";
 
 import App from "./src/navigation/appContainer";
+import { GlobalStateProvider } from "./GlobalStateContext";
 
 // il faut votre  Adresse IPv4 si vous utiliser pas un emulateur
 const client = new ApolloClient({
-  uri: 'http://192.168.1.12:4000/', 
-  cache: new InMemoryCache()
+  uri: "http://192.168.1.12:4000/",
+  cache: new InMemoryCache(),
 });
 
 const ApolloApp = () => (
-  <ApolloProvider client={client}>
-    <App />
-    <Toast />
-  </ApolloProvider>
+  <GlobalStateProvider>
+    <ApolloProvider client={client}>
+      <App />
+      <Toast />
+    </ApolloProvider>
+  </GlobalStateProvider>
 );
 
 registerRootComponent(ApolloApp);

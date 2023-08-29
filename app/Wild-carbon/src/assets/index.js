@@ -1,14 +1,22 @@
 import React from "react";
 import { Svg, Path } from "react-native-svg";
 import LogoGreen from "./images/LogoGreen.png";
-
+import GreenLeaf from "./images/GreenLeaf.png";
+import DonationCard from "./images/DonationCard.png";
 
 export const images = {
   LogoGreen,
+  GreenLeaf,
+  DonationCard,
 };
 
 export const CheckIcon = ({ width, height, color }) => (
-  <Svg width={width} height={height} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <Path
       d="m11.998 2.005c5.517 0 9.997 4.48 9.997 9.997 0 5.518-4.48 9.998-9.997 9.998-5.518 0-9.998-4.48-9.998-9.998 0-5.517 4.48-9.997 9.998-9.997zm-5.049 10.386 3.851 3.43c.142.128.321.19.499.19.202 0 .405-.081.552-.242l5.953-6.509c.131-.143.196-.323.196-.502 0-.41-.331-.747-.748-.747-.204 0-.405.082-.554.243l-5.453 5.962-3.298-2.938c-.144-.127-.321-.19-.499-.19-.415 0-.748.335-.748.746 0 .205.084.409.249.557z"
       fill={color}
@@ -96,6 +104,22 @@ export const AngelRight = ({ width, height, color }) => (
   <Svg width={width} height={height} viewBox="0 0 24 24">
     <Path
       d="M7.33 24l-2.83-2.829 9.339-9.175-9.339-9.167 2.83-2.829 12.17 11.996z"
+      fill={color}
+    />
+  </Svg>
+);
+
+export const ArrowLeft = ({ width, height, color }) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+    fillRule="evenodd"
+    clipRule="evenodd"
+  >
+    <Path
+      d="M2.117 12l7.527 6.235-.644.765-9-7.521 9-7.479.645.764-7.529 6.236h21.884v1h-21.883z"
       fill={color}
     />
   </Svg>

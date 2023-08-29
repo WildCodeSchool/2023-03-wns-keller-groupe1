@@ -6,10 +6,10 @@ import {
 } from "react-native-responsive-dimensions";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Button from "../components/Button";
+import Button from "../components/shared/Button";
 import FontsProps from "../styles/fontProps";
 import LoginFrom from "../components/Form/LoginForm";
-import { useAuth } from "../services/Auth";
+import { useAuth } from "../services/auth";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");

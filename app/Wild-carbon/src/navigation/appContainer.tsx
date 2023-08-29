@@ -13,6 +13,7 @@ import Profil from "../screens/Profil";
 import Statistic from "../screens/Statistic";
 import Social from "../screens/Social";
 import Donation from "../screens/Donation";
+import UserDetails from "../screens/UserDetails";
 
 import { useFonts } from "expo-font";
 import { SplashScreen } from "../screens/SplashScreen";
@@ -46,7 +47,6 @@ function App() {
     });
   };
 
-  
   const MainTabs = () => (
     <Tab.Navigator
       screenOptions={{
@@ -71,11 +71,11 @@ function App() {
           tabBarIcon: (props) => TabIcon({ ...props, icon: HomeIcon }),
           headerStyle: {
             backgroundColor: Palette.green[4],
-            height: responsiveHeight(14),
+            height: responsiveHeight(12),
           },
           headerTitleStyle: {
             color: Palette.white,
-            fontSize: responsiveWidth(8),
+            fontSize: responsiveWidth(6),
             fontFamily: "NotoSansJP-Bold",
           },
           headerTitleAlign: "center",
@@ -88,11 +88,11 @@ function App() {
           tabBarIcon: (props) => TabIcon({ ...props, icon: ChartIcon }),
           headerStyle: {
             backgroundColor: Palette.green[4],
-            height: responsiveHeight(14),
+            height: responsiveHeight(12),
           },
           headerTitleStyle: {
             color: Palette.white,
-            fontSize: responsiveWidth(8),
+            fontSize: responsiveWidth(6),
             fontFamily: "NotoSansJP-Bold",
           },
           headerTitleAlign: "center",
@@ -105,11 +105,11 @@ function App() {
           tabBarIcon: (props) => TabIcon({ ...props, icon: GroupIcon }),
           headerStyle: {
             backgroundColor: Palette.green[4],
-            height: responsiveHeight(14),
+            height: responsiveHeight(12),
           },
           headerTitleStyle: {
             color: Palette.white,
-            fontSize: responsiveWidth(8),
+            fontSize: responsiveWidth(6),
             fontFamily: "NotoSansJP-Bold",
           },
           headerTitleAlign: "center",
@@ -122,11 +122,11 @@ function App() {
           tabBarIcon: (props) => TabIcon({ ...props, icon: DonationIcon }),
           headerStyle: {
             backgroundColor: Palette.green[4],
-            height: responsiveHeight(14),
+            height: responsiveHeight(12),
           },
           headerTitleStyle: {
             color: Palette.white,
-            fontSize: responsiveWidth(8),
+            fontSize: responsiveWidth(6),
             fontFamily: "NotoSansJP-Bold",
           },
           headerTitleAlign: "center",
@@ -139,11 +139,11 @@ function App() {
           tabBarIcon: (props) => TabIcon({ ...props, icon: ProfileIcon }),
           headerStyle: {
             backgroundColor: Palette.green[4],
-            height: responsiveHeight(14),
+            height: responsiveHeight(12),
           },
           headerTitleStyle: {
             color: Palette.white,
-            fontSize: responsiveWidth(8),
+            fontSize: responsiveWidth(6),
             fontFamily: "NotoSansJP-Bold",
           },
           headerTitleAlign: "center",
@@ -194,6 +194,7 @@ function App() {
       >
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Main" component={MainStack} />
+        <Stack.Screen name="UserDetails" component={UserDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );

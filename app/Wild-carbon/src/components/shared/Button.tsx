@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
-import Palette from "../styles/Palette";
-import FontsProps from "../styles/fontProps";
+import Palette from "../../styles/Palette";
+import FontsProps from "../../styles/fontProps";
 import {
   responsiveHeight,
   responsiveWidth,
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   button: {
     alignItems: "center",
     justifyContent: "center",
-    padding: 5,
+    padding: 2,
     borderRadius: 20,
     width: responsiveWidth(80),
   },

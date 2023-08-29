@@ -6,7 +6,7 @@ import {
   responsiveHeight,
   responsiveWidth,
 } from "react-native-responsive-dimensions";
-import Button from "../Button";
+import Button from "../shared/Button";
 
 interface DashboardFormProps {
   setShowDashboardForm: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,18 +20,19 @@ const DashboardForm: React.FC<DashboardFormProps> = ({
   const [step, setStep] = useState(1);
 
   const questions = [
-    'Quel est le nom de votre dépense ?',
-    'Sélectionnez la date ?',
-    'Poid carbon en kg Co2 ?',
+    "Quel est le nom de votre dépense ?",
+    "Sélectionnez la date ?",
+    "Quelle est la catégorie concernée ?",
+    "Poid carbon en kg Co2 ?",
   ];
 
   const handleNext = () => {
-    if (step < 3) {
+    if (step < 4) {
       setStep(step + 1);
     } else {
-      console.log('Finit');
+      console.log("Finit");
     }
-  }
+  };
 
   const handleBack = () => {
     if (step > 1) {
@@ -39,7 +40,7 @@ const DashboardForm: React.FC<DashboardFormProps> = ({
     } else {
       setShowDashboardForm(!showDashboardForm);
     }
-  }
+  };
 
   return (
     <View style={styles.MainContainer}>
@@ -48,27 +49,19 @@ const DashboardForm: React.FC<DashboardFormProps> = ({
           {questions[step - 1]}
         </Text>
       </View>
-      <View style={styles.BodyContainer}>
-        
-      </View>
+      <View style={styles.BodyContainer}></View>
 
       <View style={styles.FooterContainer}>
-        <Button
-          title={"SUIVANT"}
-          onPress={handleNext}
-        />
-        <TouchableOpacity
-          onPress={handleBack}
-        >
+        <Button title={"SUIVANT"} onPress={handleNext} />
+        <TouchableOpacity onPress={handleBack}>
           <Text style={[FontsProps.subtitle(), styles.subtitlebtn]}>
-            {step === 1 ? 'Annuler' : 'Retour'}
+            {step === 1 ? "Annuler" : "Retour"}
           </Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   MainContainer: {
@@ -91,7 +84,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: responsiveHeight(45),
-    backgroundColor:'pink'
+    backgroundColor: "pink",
   },
   FooterContainer: {
     width: responsiveWidth(100),

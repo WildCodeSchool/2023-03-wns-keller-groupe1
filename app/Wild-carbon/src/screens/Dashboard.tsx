@@ -11,7 +11,7 @@ import {
 } from "react-native-responsive-dimensions";
 import FontsProps from "../styles/fontProps";
 import CarbonContainer from "../components/CarbonContainer";
-import Button from "../components/Button";
+import Button from "../components/shared/Button";
 import { carbonDataStatic } from "../helpers/helper";
 import DashboardForm from "../components/Form/DashboardForm";
 
@@ -23,6 +23,11 @@ const Dashboard: React.FC = () => {
   );
   const [dataByMonth, setDataByMonth] = useState<Record<string, number>>({});
   const [showDashboardForm, setShowDashboardForm] = useState(false);
+
+  const [expenseName, setExpenseName] = useState<string | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [category, setCategory] = useState<string | null>(null);
+  const [carbonWeight, setCarbonWeight] = useState<number | null>(null);
 
   useEffect(() => {
     if (data) {
@@ -73,7 +78,7 @@ const Dashboard: React.FC = () => {
   } else {
     backgroundColor = Palette.primary;
   }
-  return showDashboardForm ? (
+  return !showDashboardForm ? (
     <View style={styles.MainContainer}>
       <View style={[styles.HeaderContainer, { backgroundColor }]}>
         <Text style={[FontsProps.title(), styles.HeaderText]}>
@@ -96,10 +101,14 @@ const Dashboard: React.FC = () => {
               />
             ))
         ) : (
-          <Text style={[FontsProps.subtitle()]}>
-            Vous n'avez pas encore créé de dépenses carbone. Commencez dès
-            maintenant !
-          </Text>
+          <>
+            <Text style={[FontsProps.subtitle(), styles.TextContainer]}>
+              Vous n'avez pas encore créé de dépenses carbone.
+            </Text>
+            <Text style={[FontsProps.subtitle(), styles.TextContainer]}>
+              Commencez dès maintenant !
+            </Text>
+          </>
         )}
       </ScrollView>
       <View style={styles.FooterContainer}>
@@ -115,6 +124,10 @@ const Dashboard: React.FC = () => {
     <DashboardForm
       setShowDashboardForm={setShowDashboardForm}
       showDashboardForm={showDashboardForm}
+      setExpenseName={setExpenseName}
+      setSelectedDate={setSelectedDate}
+      setCategory={setCategory}
+      setCarbonWeight={setCarbonWeight}
     />
   );
 };
@@ -138,6 +151,9 @@ const styles = StyleSheet.create({
 
     paddingTop: responsiveHeight(3),
     paddingBottom: responsiveHeight(15),
+  },
+  TextContainer: {
+    width: responsiveWidth(80),
   },
   FooterContainer: {
     width: responsiveWidth(100),
