@@ -67,6 +67,8 @@ class UserResolver {
         return new GraphQLError('Mauvais identifiants');  
       }
     } catch (err) {
+      console.log(err);
+      
       return new GraphQLError("An error occured");
     }
   }
