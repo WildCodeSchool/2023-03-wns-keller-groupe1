@@ -44,4 +44,4 @@ jobs:
         with:
           push: true
           context: "{{defaultContext}}:front"
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wildcarbonback:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wildcarbonfront:latest
