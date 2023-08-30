@@ -12,5 +12,8 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
         
+      - name: Create .env file
+        run: echo "${{ secrets.ENV_FILE }}" > .env
+
       - name: Go to back and run tests
         run: cd back && npm i && npm test
