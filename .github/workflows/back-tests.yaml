@@ -17,10 +17,7 @@ jobs:
           echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}" > .env
           cat .env
 
-      - name: Load .env file
-        run: |
-          npm install -g dotenv
-          dotenv-config
-
       - name: Go to back and run tests
+        env:
+            HOST_NAME: .env
         run: cd back && npm i && npm test
