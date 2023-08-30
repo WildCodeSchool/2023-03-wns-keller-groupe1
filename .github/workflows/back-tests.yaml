@@ -2,6 +2,9 @@ name: back-tests-workflow
 
 on: pull_request
 
+env:
+    HOST_NAME: .env
+
 jobs:
   test-client:
     runs-on: ubuntu-latest
