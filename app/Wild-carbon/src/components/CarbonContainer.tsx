@@ -16,7 +16,14 @@ const CarbonContainer: React.FC<CarbonContainerProps> = ({
   modifiedAt,
   id,
   consumption,
+  categoryString,
   refreshData,
+  setShowDashboardForm,
+  setExpenseName,
+  setCategory,
+  setCarbonWeight,
+  setIsUpdating,
+  setUpdatingExpenseId,
 }) => {
   const [viewFull, setViewFull] = useState(false);
   const { handleFormSubmitDelete } = DeleteCarbonData();
@@ -52,7 +59,16 @@ const CarbonContainer: React.FC<CarbonContainerProps> = ({
       </View>
       {viewFull && (
         <View style={styles.BottomView}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              setShowDashboardForm(true);
+              setExpenseName(title);
+              setCategory(categoryString);
+              setCarbonWeight(consumption);
+              setIsUpdating(true);
+              setUpdatingExpenseId(id);
+            }}
+          >
             <Text
               style={[
                 FontsProps.bold(),
