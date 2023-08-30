@@ -6,6 +6,8 @@ import { validate } from 'class-validator';
 import dataSource from '../src/utilsTest';
 import { User } from '../src/entity/User';
 import jwt from 'jsonwebtoken';
+import CarbonDataResolver from '../src/resolver/CarbonDataResolver';
+import { CarbonDataInput } from '../src/validator/CarbonDataValidator';
 
 describe('UserResolver', () => {
   const JWT_SECRET = process.env.JWT_SECRET_KEY as string;
@@ -131,6 +133,31 @@ console.log("token", token);
     const result = await resolver.updateUser(id, email, firstname, lastname, totalCo2, age, city, about, gender, tel);
 
     expect(result).toEqual(`User ${id} updated`);
+  });
+
+  it('Validate input and creates a carbon data', async () => {
+    const title = 'test';
+    const consumption = 123;
+    const category = 'test';
+    const id = userId;
+
+    // Create a resolver instance
+    const resolver = new CarbonDataResolver();
+
+    // Manually create and validate the input arguments
+    const args = new CarbonDataInput();
+    args.title = title;
+    args.consumption = consumption;
+    args.categoryString = category;
+    args.userId = userId;
+    const validationErrors = await validate(args);
+
+    // Execute the mutation using the resolver instance
+    const result = await resolver.createCarbonData(title, consumption, category, id);
+    
+    // Assertions
+    expect(validationErrors.length).toEqual(0);
+    expect(result).toEqual('Carbon data created');
   });
 
   it('Delete a user', async () => {
