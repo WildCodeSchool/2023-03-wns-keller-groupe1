@@ -5,9 +5,10 @@ import { Arg, Authorized, Mutation, Query, Resolver, } from "type-graphql";
 import { GraphQLError } from "graphql";
 import dataSource from "../utils";
 import { User } from "../entity/User";
-import { JWT_SECRET } from "../index";
 import { UserInput } from "../validator/UserValidator";
 import { validate } from "class-validator";
+
+const JWT_SECRET = process.env.JWT_SECRET_KEY as string;
 
 @Resolver()
 class UserResolver {
