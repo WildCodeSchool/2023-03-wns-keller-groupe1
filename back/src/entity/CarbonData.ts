@@ -22,8 +22,10 @@ export class CarbonData {
   @ManyToOne(() => User, (user) => user.carbonData)
   user: User;
 
-  @Field(() => Category, {nullable: true})
-  @ManyToOne(() => Category, (category) => category.carbonData, { nullable: true })
+  @Field(() => Category, { nullable: true })
+  @ManyToOne(() => Category, (category) => category.carbonData, {
+    nullable: true,
+  })
   category: Category;
 
   @Field()

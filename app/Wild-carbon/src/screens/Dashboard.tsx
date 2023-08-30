@@ -14,9 +14,11 @@ import CarbonContainer from "../components/CarbonContainer";
 import Button from "../components/shared/Button";
 import { carbonDataStatic } from "../helpers/helper";
 import DashboardForm from "../components/Form/DashboardForm";
+import CreateCarbonData from "../services/createCarbonData";
 
 const Dashboard: React.FC = () => {
   const route = useRoute();
+  const { handleFormSubmit, handleUpdateFormSubmit } = CreateCarbonData();
   const userData = route.params ? route.params.userData : null;
   const { loading, error, data, refetch } = useUserCarbonData(
     userData ? userData.userId : undefined
@@ -24,10 +26,9 @@ const Dashboard: React.FC = () => {
   const [dataByMonth, setDataByMonth] = useState<Record<string, number>>({});
   const [showDashboardForm, setShowDashboardForm] = useState(false);
 
-  const [expenseName, setExpenseName] = useState<string | null>(null);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [category, setCategory] = useState<string | null>(null);
-  const [carbonWeight, setCarbonWeight] = useState<number | null>(null);
+  const [expenseName, setExpenseName] = useState<string>("");
+  const [category, setCategory] = useState<string>("");
+  const [carbonWeight, setCarbonWeight] = useState<number>(0);
 
   useEffect(() => {
     if (data) {
@@ -78,6 +79,21 @@ const Dashboard: React.FC = () => {
   } else {
     backgroundColor = Palette.primary;
   }
+
+  const createExpense = () => {
+    if (expenseName && category && carbonWeight && userData?.userId) {
+      handleFormSubmit(
+        { preventDefault: () => {} } as any,
+        expenseName,
+        carbonWeight,
+        category,
+        userData.userId
+      );
+    } else {
+      console.warn("Tous les champs sont requis pour créer une dépense.");
+    }
+  };
+
   return !showDashboardForm ? (
     <View style={styles.MainContainer}>
       <View style={[styles.HeaderContainer, { backgroundColor }]}>
@@ -125,9 +141,12 @@ const Dashboard: React.FC = () => {
       setShowDashboardForm={setShowDashboardForm}
       showDashboardForm={showDashboardForm}
       setExpenseName={setExpenseName}
-      setSelectedDate={setSelectedDate}
+      ExpenseName={expenseName}
       setCategory={setCategory}
+      Category={category}
       setCarbonWeight={setCarbonWeight}
+      CarbonWeight={carbonWeight}
+      createExpense={createExpense}
     />
   );
 };
