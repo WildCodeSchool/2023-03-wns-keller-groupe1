@@ -13,4 +13,4 @@ jobs:
       - name: Go to back and run tests
         run: cd back && npm i && npm test
         env: 
-          JWT_SECRET_KEY: "test"
+          JWT_SECRET_KEY: "${{ variables.JWT_SECRET_KEY }} "
