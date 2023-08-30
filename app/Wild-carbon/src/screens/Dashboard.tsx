@@ -15,6 +15,10 @@ import Button from "../components/shared/Button";
 import { carbonDataStatic } from "../helpers/helper";
 import DashboardForm from "../components/Form/DashboardForm";
 import CreateCarbonData from "../services/createCarbonData";
+<<<<<<< HEAD
+import axios from "axios";
+=======
+>>>>>>> b31ca572bdf420071e4fce8213fecd6b77c1e038
 
 const Dashboard: React.FC = () => {
   const route = useRoute();
@@ -33,6 +37,10 @@ const Dashboard: React.FC = () => {
   const [updatingExpenseId, setUpdatingExpenseId] = useState<number | null>(
     null
   );
+<<<<<<< HEAD
+  const [apiResults, setApiResults] = useState<any[]>([]);
+=======
+>>>>>>> b31ca572bdf420071e4fce8213fecd6b77c1e038
 
   useEffect(() => {
     if (data) {
@@ -122,6 +130,25 @@ const Dashboard: React.FC = () => {
     setUpdatingExpenseId(null);
   };
 
+<<<<<<< HEAD
+  const fetchAdemeApi = async () => {
+    try {
+      const response = await axios.get(
+        `https://data.ademe.fr/data-fair/api/v1/datasets/base-carboner/lines?q=${expenseName}&q_mode=complete`
+      );
+      setApiResults(response.data.results);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des données:", error);
+    }
+  };
+  useEffect(() => {
+    if (expenseName) {
+      fetchAdemeApi();
+    }
+  }, [expenseName]);
+
+=======
+>>>>>>> b31ca572bdf420071e4fce8213fecd6b77c1e038
   return !showDashboardForm ? (
     <View style={styles.MainContainer}>
       <View style={[styles.HeaderContainer, { backgroundColor }]}>
@@ -183,6 +210,11 @@ const Dashboard: React.FC = () => {
       CarbonWeight={carbonWeight}
       createOrUpdateExpense={createOrUpdateExpense}
       resetState={resetState}
+<<<<<<< HEAD
+      apiResults={apiResults}
+      setApiResults={setApiResults}
+=======
+>>>>>>> b31ca572bdf420071e4fce8213fecd6b77c1e038
     />
   );
 };
