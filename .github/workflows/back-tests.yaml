@@ -5,14 +5,14 @@ on: pull_request
 jobs:
   test-client:
     runs-on: ubuntu-latest
-    env:
-      HOST_NAME: .env
 
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-
-      - name: Go to back and run tests
+        
+      - name: 'Create env file'
         run: |
           echo "${{ secrets.ENV_FILE }}" > .env
-          cd back && npm i && npm test
+
+      - name: Go to back and run tests
+        run: cd back && npm i && npm test
