@@ -61,7 +61,7 @@ class UserResolver {
       }
 
       if (await argon2.verify(user.hashedPassword, password)) {
-        const token = jwt.sign({ email }, JWT_SECRET);
+        const token = jwt.sign({ email }, process.env.JWT_SECRET_KEY as string);
         return token;
       } else {
         return new GraphQLError('Mauvais identifiants');  
