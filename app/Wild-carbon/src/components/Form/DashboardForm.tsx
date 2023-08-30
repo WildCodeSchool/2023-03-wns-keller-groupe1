@@ -26,8 +26,11 @@ const DashboardForm: React.FC<DashboardFormProps> = ({
   CarbonWeight,
   createOrUpdateExpense,
   resetState,
+  apiResults,
+  setApiResults,
 }) => {
   const [step, setStep] = useState(1);
+  const [isFocused, setIsFocused] = useState(false);
 
   const questions = [
     "Quel est le nom de votre dépense ?",
@@ -51,6 +54,11 @@ const DashboardForm: React.FC<DashboardFormProps> = ({
     }
   };
 
+  const getLastCategory = (categoryString) => {
+    const parts = categoryString.split(">");
+    return parts[parts.length - 1].trim();
+  };
+
   return (
     <View style={styles.MainContainer}>
       <View style={styles.HeaderContainer}>
@@ -60,7 +68,13 @@ const DashboardForm: React.FC<DashboardFormProps> = ({
       </View>
       <View style={styles.BodyContainer}>
         <TextInput
-          style={[styles.input, FontsProps.regularLarge()]}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          style={[
+            styles.input,
+            FontsProps.regularLarge(),
+            isFocused ? styles.focusedInput : {},
+          ]}
           onChangeText={(text) =>
             step === 1
               ? setExpenseName(text)
@@ -77,8 +91,42 @@ const DashboardForm: React.FC<DashboardFormProps> = ({
           }
           keyboardType={step === 3 ? "numeric" : "default"}
         />
-      </View>
 
+        {step === 1 && (
+          <View style={styles.suggestionsContainer}>
+            {apiResults?.slice(0, 6).map((suggestion, index) => (
+              <TouchableOpacity
+                style={styles.suggestionTouchable}
+                key={index}
+                onPress={() => {
+                  let finalExpenseName = "";
+                  if (suggestion.Nom_base_français) {
+                    finalExpenseName += suggestion.Nom_base_français;
+                  }
+                  if (suggestion.Nom_attribut_français) {
+                    finalExpenseName +=
+                      " - " + suggestion.Nom_attribut_français;
+                  }
+
+                  setExpenseName(finalExpenseName);
+                  setCategory(getLastCategory(suggestion.Code_de_la_catégorie));
+                  setCarbonWeight(Number(suggestion.Total_poste_non_décomposé));
+                  setApiResults([]);
+                }}
+              >
+                <Text style={[styles.suggrstionText, FontsProps.regular()]}>
+                  {suggestion.Nom_base_français || ""}{" "}
+                  {suggestion.Nom_base_français &&
+                  suggestion.Nom_attribut_français
+                    ? "- "
+                    : ""}
+                  {suggestion.Nom_attribut_français || ""}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
+      </View>
       <View style={styles.FooterContainer}>
         <Button title={"SUIVANT"} onPress={handleNext} />
         <TouchableOpacity onPress={handleBack}>
@@ -129,6 +177,22 @@ const styles = StyleSheet.create({
     width: responsiveWidth(70),
     paddingVertical: 0,
     paddingTop: responsiveHeight(1),
+  },
+  suggestionsContainer: {
+    width: responsiveWidth(70),
+    maxHeight: responsiveHeight(20),
+  },
+  suggestionTouchable: {
+    height: responsiveHeight(5),
+    marginVertical: responsiveWidth(0.5),
+    display: "flex",
+    justifyContent: "center",
+  },
+  suggrstionText: {
+    marginLeft: responsiveWidth(2),
+  },
+  focusedInput: {
+    borderBottomColor: "#2ECF77",
   },
 });
 

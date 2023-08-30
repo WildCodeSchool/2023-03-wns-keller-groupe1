@@ -9,4 +9,6 @@ export interface DashboardFormProps {
   CarbonWeight: number | null;
   createOrUpdateExpense: () => void;
   resetState: () => void;
+  apiResults: any;
+  setApiResults: React.Dispatch<React.SetStateAction<any>>;
 }
