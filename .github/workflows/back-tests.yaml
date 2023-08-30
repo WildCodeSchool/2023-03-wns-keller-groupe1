@@ -10,11 +10,9 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
         
-      - name: 'Create env file'
+      - name: Go to back and run tests
         run: |
           touch .env
           echo JWT_SECRET_KEY="test" > .env
           cat .env
-
-      - name: Go to back and run tests
-        run: cd back && npm i && npm test
+          cd back && npm i && npm test
