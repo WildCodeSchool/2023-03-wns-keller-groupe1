@@ -6,8 +6,6 @@ import { validate } from 'class-validator';
 import dataSource from '../src/utilsTest';
 import { User } from '../src/entity/User';
 import jwt from 'jsonwebtoken';
-import { JWT_SECRET } from '../src';
- 
 
 describe('UserResolver', () => {
   // Define server type
@@ -68,7 +66,7 @@ describe('UserResolver', () => {
     const resolver = new UserResolver();
     const token: any = await resolver.login(email, password);
 
-    const result: any = jwt.verify(token, JWT_SECRET)
+    const result: any = jwt.verify(token, process.env.JWT_SECRET_KEY)
     
     expect(result.email).toEqual(email);
   });

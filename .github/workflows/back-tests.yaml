@@ -9,14 +9,6 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-        
-      - name: 'Create env file'
-        run: |
-          touch .env
-          echo JWT_SECRET_KEY=${JWT_SECRET_KEY} >> .env
-          cat .env
-        env: 
-          JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }} 
 
       - name: Go to back and run tests
         run: cd back && npm i && npm test
