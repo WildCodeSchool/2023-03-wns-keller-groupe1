@@ -1,9 +1,9 @@
-name: back-tests-workflow
+name: front-tests-workflow
 
 on: pull_request
 
 jobs:
-  test-back:
+  test-front:
     runs-on: ubuntu-latest
 
     steps:
