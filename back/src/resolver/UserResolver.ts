@@ -67,7 +67,7 @@ class UserResolver {
         return new GraphQLError('Mauvais identifiants');  
       }
     } catch (err) {
-      console.log(process.env.JWT_SECRET_KEY as string);
+      console.log(err);
       
       return new GraphQLError("An error occured");
     }

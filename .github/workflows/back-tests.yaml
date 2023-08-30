@@ -11,10 +11,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Go to back and run tests
-        run: |
-          touch .env
-          echo JWT_SECRET_KEY=${JWT_SECRET_KEY} >> .env
-          cat .env
+        run:
           cd back && npm i && npm test
         env: 
           JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }} 
