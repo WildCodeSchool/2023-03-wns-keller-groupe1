@@ -4,6 +4,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import Login from '../screens/UserConnexion/Login';
 import { GlobalStateProvider } from '../GlobalStateContext';
 import { BrowserRouter } from "react-router-dom";
+import Sidebar from '../components/SideBar/SideBar';
 
 const client = new ApolloClient({
   uri: "http://192.168.1.12:4000/",
@@ -41,4 +42,24 @@ test('Render login component and click register button', () => {
   expect(screen.getByText(/S’inscrire/i)).toBeInTheDocument();
   fireEvent.click(screen.getByText(/S’inscrire/i));
   expect(screen.getByText(/Inscrivez-vous/i)).toBeInTheDocument();
+});
+
+test('Render navbar component', () => {
+
+  render(
+    <GlobalStateProvider>
+      <BrowserRouter>
+        <ApolloProvider client={client}>
+          <Sidebar />
+        </ApolloProvider>
+      </BrowserRouter>     
+    </GlobalStateProvider>
+  );
+
+  expect(screen.getByText(/Dashboard/i)).toBeInTheDocument();
+  expect(screen.getByText(/Profile/i)).toBeInTheDocument();
+  expect(screen.getByText(/Communauté/i)).toBeInTheDocument();
+  expect(screen.getByText(/Settings/i)).toBeInTheDocument();
+  expect(screen.getByText(/Donations/i)).toBeInTheDocument();
+  expect(screen.getByText(/Chat/i)).toBeInTheDocument();
 });
