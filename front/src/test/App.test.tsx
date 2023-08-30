@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom'
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { MockedProvider } from "@apollo/client/testing";
 import Login from '../screens/UserConnexion/Login';
 import { GlobalStateProvider } from '../GlobalStateContext';
 import { BrowserRouter } from "react-router-dom";
@@ -16,9 +17,9 @@ test('Render login component and check text', () => {
   render(
     <GlobalStateProvider>
       <BrowserRouter>
-        <ApolloProvider client={client}>
+        <MockedProvider>
           <Login />
-        </ApolloProvider>
+        </MockedProvider>
       </BrowserRouter>     
     </GlobalStateProvider>
   );
@@ -32,9 +33,9 @@ test('Render login component and click register button', () => {
   render(
     <GlobalStateProvider>
       <BrowserRouter>
-        <ApolloProvider client={client}>
+        <MockedProvider>
           <Login />
-        </ApolloProvider>
+        </MockedProvider>
       </BrowserRouter>     
     </GlobalStateProvider>
   );
@@ -49,9 +50,9 @@ test('Render navbar component', () => {
   render(
     <GlobalStateProvider>
       <BrowserRouter>
-        <ApolloProvider client={client}>
+        <MockedProvider>
           <Sidebar />
-        </ApolloProvider>
+        </MockedProvider>
       </BrowserRouter>     
     </GlobalStateProvider>
   );
