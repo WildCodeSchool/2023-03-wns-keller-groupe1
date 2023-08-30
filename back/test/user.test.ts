@@ -68,7 +68,6 @@ describe('UserResolver', () => {
     const token: any = await resolver.login(email, password);
 
     const result: any = jwt.verify(token, JWT_SECRET)
-    console.log(token);
     
     expect(result.email).toEqual(email);
   });
@@ -79,6 +78,7 @@ describe('UserResolver', () => {
 
     const resolver = new UserResolver();
     const token: any = await resolver.login(email, password);
+console.log("token", token);
 
     const result: any =  await resolver.refreshToken(token);
 
