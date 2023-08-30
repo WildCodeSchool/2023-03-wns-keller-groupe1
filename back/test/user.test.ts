@@ -8,6 +8,7 @@ import { User } from '../src/entity/User';
 import jwt from 'jsonwebtoken';
 
 describe('UserResolver', () => {
+  const JWT_SECRET = process.env.JWT_SECRET_KEY as string;
   // Define server type
   let server: ApolloServer;
   let userId: number;
@@ -66,7 +67,7 @@ describe('UserResolver', () => {
     const resolver = new UserResolver();
     const token: any = await resolver.login(email, password);
 
-    const result: any = jwt.verify(token, process.env.JWT_SECRET_KEY)
+    const result: any = jwt.verify(token, JWT_SECRET)
     
     expect(result.email).toEqual(email);
   });
