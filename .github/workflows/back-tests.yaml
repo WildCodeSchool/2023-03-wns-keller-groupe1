@@ -13,7 +13,7 @@ jobs:
       - name: Go to back and run tests
         run: cd back && npm i && npm test
         env: 
-          JWT_SECRET_KEY: "${{ env.JWT_SECRET_KEY }}"
+          JWT_SECRET_KEY: "test"
   
   docker:
     needs: test-back
@@ -36,4 +36,5 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: vahnra/WildCarbon:latest
+          context: "{{defaultContext}}:client"
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/WildCarbon:latest
