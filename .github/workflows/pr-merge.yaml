@@ -1,6 +1,8 @@
 name: create-docker-image-workflow
 
-on: pull_request
+on: 
+  pull_request:
+    types: [closed]
 
 jobs:
   docker:
