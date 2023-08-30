@@ -15,7 +15,7 @@ class CarbonDataResolver {
     @Arg("consumption") consumption: number,
     @Arg("category") categoryString: string,
     @Arg("userId") userId: number
-  ): Promise<String|GraphQLError|any> {
+  ): Promise<String | GraphQLError | any> {
     try {
       const args = new CarbonDataInput();
       args.title = title;
@@ -25,7 +25,7 @@ class CarbonDataResolver {
       const validationErrors = await validate(args);
 
       if (validationErrors.length > 0) {
-        return new GraphQLError('Validation error');  
+        return new GraphQLError("Validation error");
       }
 
       const carbonData = new CarbonData();
@@ -40,12 +40,14 @@ class CarbonDataResolver {
       await dataSource.getRepository(CarbonData).save(carbonData);
       return "Carbon data created";
     } catch (error) {
-      return new GraphQLError('An error occured'); 
+      return new GraphQLError("An error occured");
     }
   }
 
   @Query(() => CarbonData)
-  async getCarbonData(@Arg("id") id: number): Promise<CarbonData|GraphQLError> {
+  async getCarbonData(
+    @Arg("id") id: number
+  ): Promise<CarbonData | GraphQLError> {
     try {
       const carbonData = await dataSource
         .getRepository(CarbonData)
@@ -55,19 +57,19 @@ class CarbonDataResolver {
       }
       throw new Error();
     } catch (error) {
-      return new GraphQLError('An error occured'); 
+      return new GraphQLError("An error occured");
     }
   }
 
   @Query(() => [CarbonData])
-  async getAllCarbonData(): Promise<CarbonData[]|GraphQLError> {
+  async getAllCarbonData(): Promise<CarbonData[] | GraphQLError> {
     try {
       const carbonData = await dataSource
         .getRepository(CarbonData)
         .find({ relations: ["user", "category"] });
       return carbonData;
     } catch (error) {
-      return new GraphQLError('An error occured'); 
+      return new GraphQLError("An error occured");
     }
   }
 
@@ -76,8 +78,8 @@ class CarbonDataResolver {
     @Arg("id") id: number,
     @Arg("title") title: string,
     @Arg("category") categoryString: string,
-    @Arg("consumption") consumption: number,
-  ): Promise<string|GraphQLError|any> {
+    @Arg("consumption") consumption: number
+  ): Promise<string | GraphQLError | any> {
     try {
       const args = new CarbonDataInput();
       args.title = title;
@@ -87,32 +89,34 @@ class CarbonDataResolver {
       const validationErrors = await validate(args);
 
       if (validationErrors.length > 0) {
-        throw new GraphQLError('Validation error');  
+        throw new GraphQLError("Validation error");
       }
-      
+
       await dataSource
         .getRepository(CarbonData)
         .update(id, { title, consumption, categoryString });
       return "Carbon data updated";
     } catch (error) {
-      return new GraphQLError('An error occured'); 
+      return new GraphQLError("An error occured");
     }
   }
 
   @Mutation(() => String)
-  async deleteCarbonData(@Arg("id") id: number): Promise<string|GraphQLError> {
+  async deleteCarbonData(
+    @Arg("id") id: number
+  ): Promise<string | GraphQLError> {
     try {
       const args = new CarbonDataInput();
       args.id = id;
       const validationErrors = await validate(args);
 
       if (validationErrors.length > 0) {
-        throw new GraphQLError('Validation error');  
+        throw new GraphQLError("Validation error");
       }
       await dataSource.getRepository(CarbonData).delete(id);
       return "Carbon data deleted";
     } catch (error) {
-      return new GraphQLError('An error occured'); 
+      return new GraphQLError("An error occured");
     }
   }
 }

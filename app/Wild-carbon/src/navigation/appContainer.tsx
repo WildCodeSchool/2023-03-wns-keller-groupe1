@@ -62,6 +62,7 @@ function App() {
         tabBarLabelStyle: {
           marginBottom: responsiveHeight(1),
         },
+        tabBarHideOnKeyboard: true,
       }}
     >
       <Tab.Screen
