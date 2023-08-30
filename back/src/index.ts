@@ -31,6 +31,7 @@ if (JWT_SECRET === undefined) {
   throw Error("JWT secret undefined");
 }
 
+console.log("test");
 
 const app = express();
 const httpServer = createServer(app);
