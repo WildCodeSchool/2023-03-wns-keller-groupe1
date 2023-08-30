@@ -2,12 +2,12 @@ name: back-tests-workflow
 
 on: pull_request
 
-env:
-    HOST_NAME: .env
-
 jobs:
   test-client:
     runs-on: ubuntu-latest
+    env:
+      HOST_NAME: .env
+
     steps:
       - name: Check out code
         uses: actions/checkout@v2
