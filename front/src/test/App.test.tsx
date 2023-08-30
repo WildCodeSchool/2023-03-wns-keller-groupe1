@@ -5,13 +5,12 @@ import Login from '../screens/UserConnexion/Login';
 import { GlobalStateProvider } from '../GlobalStateContext';
 import { BrowserRouter } from "react-router-dom";
 
+const client = new ApolloClient({
+  uri: "http://192.168.1.12:4000/",
+  cache: new InMemoryCache(),
+});
 
 test('Render login component and check text', () => {
-
-  const client = new ApolloClient({
-    uri: "http://192.168.1.12:4000/",
-    cache: new InMemoryCache(),
-  });
 
   render(
     <GlobalStateProvider>
@@ -24,17 +23,10 @@ test('Render login component and check text', () => {
   );
 
   const linkElement = screen.getByText(/Connectez vous/i);
-
   expect(linkElement).toBeInTheDocument();
-
 });
 
 test('Render login component and click register button', () => {
-
-  const client = new ApolloClient({
-    uri: "http://192.168.1.12:4000/",
-    cache: new InMemoryCache(),
-  });
 
   render(
     <GlobalStateProvider>
