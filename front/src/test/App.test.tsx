@@ -1,14 +1,12 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom'
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import Login from '../screens/UserConnexion/Login';
 import { GlobalStateProvider } from '../GlobalStateContext';
-import {
-  BrowserRouter
-} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 
 
-test('render login component and check text', () => {
+test('Render login component and check text', () => {
 
   const client = new ApolloClient({
     uri: "http://192.168.1.12:4000/",
@@ -29,4 +27,26 @@ test('render login component and check text', () => {
 
   expect(linkElement).toBeInTheDocument();
 
+});
+
+test('Render login component and click register button', () => {
+
+  const client = new ApolloClient({
+    uri: "http://192.168.1.12:4000/",
+    cache: new InMemoryCache(),
+  });
+
+  render(
+    <GlobalStateProvider>
+      <BrowserRouter>
+        <ApolloProvider client={client}>
+          <Login />
+        </ApolloProvider>
+      </BrowserRouter>     
+    </GlobalStateProvider>
+  );
+
+  expect(screen.getByText(/S’inscrire/i)).toBeInTheDocument();
+  fireEvent.click(screen.getByText(/S’inscrire/i));
+  expect(screen.getByText(/Inscrivez-vous/i)).toBeInTheDocument();
 });
