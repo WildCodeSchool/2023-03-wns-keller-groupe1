@@ -3,7 +3,7 @@ name: back-tests-workflow
 on: pull_request
 
 jobs:
-  test-client:
+  test-back:
     runs-on: ubuntu-latest
 
     steps:
