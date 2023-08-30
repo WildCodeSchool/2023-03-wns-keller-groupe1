@@ -14,7 +14,9 @@ jobs:
         
       - name: Create .env file
         run: |
-          echo ${{ secrets.ENV_FILE }} > .env
+          touch .env
+          echo JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} >> .env
+          cat .env
 
       - name: Go to back and run tests
         run: cd back && npm i && npm test
