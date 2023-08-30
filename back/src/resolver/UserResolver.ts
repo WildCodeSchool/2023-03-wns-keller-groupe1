@@ -5,6 +5,7 @@ import { Arg, Authorized, Mutation, Query, Resolver, } from "type-graphql";
 import { GraphQLError } from "graphql";
 import dataSource from "../utils";
 import { User } from "../entity/User";
+import { JWT_SECRET } from "../index";
 import { UserInput } from "../validator/UserValidator";
 import { validate } from "class-validator";
 
@@ -51,7 +52,6 @@ class UserResolver {
     @Arg("password") password: string
   ): Promise<String | GraphQLError> {
     try {
-      const JWT_SECRET = process.env.JWT_SECRET_KEY as string;
       const user = await dataSource
         .getRepository(User)
         .findOne({ where: { email } });
@@ -76,7 +76,6 @@ class UserResolver {
     @Arg("token") token: string
   ): Promise<User | String | GraphQLError> {
     try {
-      const JWT_SECRET = process.env.JWT_SECRET_KEY as string;
       const decoded: any = jwt.verify(token, JWT_SECRET);
       const user = await dataSource
         .getRepository(User)
@@ -92,7 +91,6 @@ class UserResolver {
     @Arg("token") token: string
   ): Promise<String | GraphQLError> {
     try {
-      const JWT_SECRET = process.env.JWT_SECRET_KEY as string;
       const decoded: any = jwt.verify(token, JWT_SECRET);
       const user = await dataSource
         .getRepository(User)
@@ -112,7 +110,6 @@ class UserResolver {
     @Arg("token") token: string
   ): Promise<String | GraphQLError> {
     try {
-      const JWT_SECRET = process.env.JWT_SECRET_KEY as string;
       const decoded: any = jwt.verify(token, JWT_SECRET);
       const user = await dataSource
         .getRepository(User)
