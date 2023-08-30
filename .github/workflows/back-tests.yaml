@@ -32,9 +32,16 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
+      - name: Build and push back
         uses: docker/build-push-action@v4
         with:
           push: true
           context: "{{defaultContext}}:back"
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/wildcarbonback:latest
+
+      - name: Build and push front
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          context: "{{defaultContext}}:front"
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wildcarbonfront:latest
