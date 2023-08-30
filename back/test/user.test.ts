@@ -12,6 +12,7 @@ import { JWT_SECRET } from '../src';
 describe('UserResolver', () => {
   // Define server type
   let server: ApolloServer;
+  let userId: number;
 
   beforeAll(async () => {
     // Build the GraphQL schema
@@ -68,7 +69,7 @@ describe('UserResolver', () => {
     const token: any = await resolver.login(email, password);
 
     const result: any = jwt.verify(token, JWT_SECRET)
-
+    
     expect(result.email).toEqual(email);
   });
 
@@ -93,11 +94,13 @@ describe('UserResolver', () => {
 
     const result: any =  await resolver.getUserFromToken(token);
 
+    userId = result.userId;
+    
     expect(result).toBeInstanceOf(User);
   });
 
   it('Get a user', async () => {
-    const id = 1;
+    const id = userId;
 
     const resolver = new UserResolver();
     const result = await resolver.getUser(id);
@@ -113,20 +116,25 @@ describe('UserResolver', () => {
   });
 
   it('Update a user', async () => {
-    const id = 1;
+    const id = userId;
     const email = 'test@example.com';
     const firstname = 'John';
     const lastname = 'Doe';
     const totalCo2 = 22;
+    const age = "24";
+    const city = "test";
+    const about = "test";
+    const gender = "male";
+    const tel = "0123456789";
 
     const resolver = new UserResolver();
-    const result = await resolver.updateUser(id, email, firstname, lastname, totalCo2);
+    const result = await resolver.updateUser(id, email, firstname, lastname, totalCo2, age, city, about, gender, tel);
 
     expect(result).toEqual(`User ${id} updated`);
   });
 
   it('Delete a user', async () => {
-    const id = 1;
+    const id = userId;
 
     const resolver = new UserResolver();
     const result = await resolver.deleteUser(id);
