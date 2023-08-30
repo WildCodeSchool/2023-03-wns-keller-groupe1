@@ -52,8 +52,6 @@ const CreateCarbonData = () => {
         text1: "Succès",
         text2: "Une nouvelle dépense carbone a bien été créé",
       });
-      const modal: any = document.getElementById("new-carbon-modal");
-      modal.style.display = "none";
     },
     refetchQueries: [GET_USER],
   });
@@ -74,8 +72,6 @@ const CreateCarbonData = () => {
           text1: "Succès",
           text2: "La dépense carbone a bien été modifié",
         });
-        const modal: any = document.getElementById("update-carbon-modal");
-        modal.style.display = "none";
       },
       refetchQueries: [GET_USER],
     }
@@ -87,12 +83,7 @@ const CreateCarbonData = () => {
     consumption: number,
     categoryString: string,
     userId: number
-  ): Promise<void> => {
-    console.log(title, "title", typeof title);
-    console.log(consumption, "consumption", typeof consumption);
-    console.log(categoryString, "categoryString", typeof categoryString);
-    console.log(userId, "userId", typeof userId);
-
+  ): Promise<any> => {
     await createNewCarbonData({
       variables: {
         userId: userId,
@@ -105,28 +96,21 @@ const CreateCarbonData = () => {
 
   const handleUpdateFormSubmit = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    name: string | undefined,
-    co2: number | undefined,
-    category: string | undefined,
-    updateCarbonDataId: string | null,
-    setQuery: Function,
-    setCo2: Function,
-    setCategory: Function,
-    date?: Date
+    title: string,
+    consumption: number,
+    categoryString: string,
+    updateCarbonDataId: string | null
   ): Promise<void> => {
     event.preventDefault();
     await updateCarbonData({
       variables: {
-        category: category,
-        consumption: co2,
-        title: name,
+        category: categoryString,
+        consumption: consumption,
+        title: title,
         updateCarbonDataId: updateCarbonDataId,
         modifiedAt: new Date(),
       },
     });
-    setQuery("");
-    setCo2(0);
-    setCategory("");
   };
 
   return { handleFormSubmit, handleUpdateFormSubmit };
