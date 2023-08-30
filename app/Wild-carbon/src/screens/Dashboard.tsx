@@ -14,9 +14,11 @@ import CarbonContainer from "../components/CarbonContainer";
 import Button from "../components/shared/Button";
 import { carbonDataStatic } from "../helpers/helper";
 import DashboardForm from "../components/Form/DashboardForm";
+import CreateCarbonData from "../services/createCarbonData";
 
 const Dashboard: React.FC = () => {
   const route = useRoute();
+  const { handleFormSubmit, handleUpdateFormSubmit } = CreateCarbonData();
   const userData = route.params ? route.params.userData : null;
   const { loading, error, data, refetch } = useUserCarbonData(
     userData ? userData.userId : undefined
@@ -24,10 +26,13 @@ const Dashboard: React.FC = () => {
   const [dataByMonth, setDataByMonth] = useState<Record<string, number>>({});
   const [showDashboardForm, setShowDashboardForm] = useState(false);
 
-  const [expenseName, setExpenseName] = useState<string | null>(null);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [category, setCategory] = useState<string | null>(null);
-  const [carbonWeight, setCarbonWeight] = useState<number | null>(null);
+  const [expenseName, setExpenseName] = useState<string>("");
+  const [category, setCategory] = useState<string>("");
+  const [carbonWeight, setCarbonWeight] = useState<number>(0);
+  const [isUpdating, setIsUpdating] = useState<boolean>(false);
+  const [updatingExpenseId, setUpdatingExpenseId] = useState<number | null>(
+    null
+  );
 
   useEffect(() => {
     if (data) {
@@ -78,6 +83,45 @@ const Dashboard: React.FC = () => {
   } else {
     backgroundColor = Palette.primary;
   }
+
+  const createOrUpdateExpense = async () => {
+    if (expenseName && category && carbonWeight && userData?.userId) {
+      try {
+        if (isUpdating && updatingExpenseId) {
+          await handleUpdateFormSubmit(
+            { preventDefault: () => {} } as any,
+            expenseName,
+            carbonWeight,
+            category,
+            updatingExpenseId
+          );
+        } else {
+          await handleFormSubmit(
+            { preventDefault: () => {} } as any,
+            expenseName,
+            carbonWeight,
+            category,
+            userData.userId
+          );
+        }
+        resetState();
+      } catch (error) {
+        console.error("Erreur lors de l'opération", error);
+      }
+    } else {
+      console.warn("Tous les champs sont requis.");
+    }
+  };
+
+  const resetState = () => {
+    setExpenseName("");
+    setCategory("");
+    setCarbonWeight(0);
+    setShowDashboardForm(false);
+    setIsUpdating(false);
+    setUpdatingExpenseId(null);
+  };
+
   return !showDashboardForm ? (
     <View style={styles.MainContainer}>
       <View style={[styles.HeaderContainer, { backgroundColor }]}>
@@ -94,10 +138,17 @@ const Dashboard: React.FC = () => {
               <CarbonContainer
                 key={item.id}
                 title={item.title}
+                categoryString={item.categoryString}
                 modifiedAt={new Date(item.modifiedAt)}
                 id={item.id}
                 consumption={Number(item.consumption.toFixed(1))}
                 refreshData={refreshData}
+                setShowDashboardForm={setShowDashboardForm}
+                setExpenseName={setExpenseName}
+                setCategory={setCategory}
+                setCarbonWeight={setCarbonWeight}
+                setIsUpdating={setIsUpdating}
+                setUpdatingExpenseId={setUpdatingExpenseId}
               />
             ))
         ) : (
@@ -125,9 +176,13 @@ const Dashboard: React.FC = () => {
       setShowDashboardForm={setShowDashboardForm}
       showDashboardForm={showDashboardForm}
       setExpenseName={setExpenseName}
-      setSelectedDate={setSelectedDate}
+      ExpenseName={expenseName}
       setCategory={setCategory}
+      Category={category}
       setCarbonWeight={setCarbonWeight}
+      CarbonWeight={carbonWeight}
+      createOrUpdateExpense={createOrUpdateExpense}
+      resetState={resetState}
     />
   );
 };
