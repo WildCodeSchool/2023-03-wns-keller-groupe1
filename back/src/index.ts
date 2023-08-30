@@ -24,7 +24,6 @@ import {
 
 dotenv.config();
 
-export const JWT_SECRET = process.env.JWT_SECRET_KEY as string;
 export const STRIPE_SECRET = process.env.STRIPE_SECRET as string;
 
 const app = express();
