@@ -27,9 +27,9 @@ dotenv.config();
 export const JWT_SECRET = process.env.JWT_SECRET_KEY as string;
 export const STRIPE_SECRET = process.env.STRIPE_SECRET as string;
 
-if (JWT_SECRET === undefined) {
-  throw Error("JWT secret undefined");
-}
+// if (JWT_SECRET === undefined) {
+//   throw Error("JWT secret undefined");
+// }
 
 
 const app = express();
