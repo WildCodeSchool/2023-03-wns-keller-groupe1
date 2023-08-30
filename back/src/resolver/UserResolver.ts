@@ -8,8 +8,6 @@ import { User } from "../entity/User";
 import { UserInput } from "../validator/UserValidator";
 import { validate } from "class-validator";
 
-const JWT_SECRET = process.env.JWT_SECRET_KEY as string;
-
 @Resolver()
 class UserResolver {
   @Mutation(() => String)
@@ -53,6 +51,7 @@ class UserResolver {
     @Arg("password") password: string
   ): Promise<String | GraphQLError> {
     try {
+      const JWT_SECRET = process.env.JWT_SECRET_KEY as string;
       const user = await dataSource
         .getRepository(User)
         .findOne({ where: { email } });
@@ -77,6 +76,7 @@ class UserResolver {
     @Arg("token") token: string
   ): Promise<User | String | GraphQLError> {
     try {
+      const JWT_SECRET = process.env.JWT_SECRET_KEY as string;
       const decoded: any = jwt.verify(token, JWT_SECRET);
       const user = await dataSource
         .getRepository(User)
@@ -92,6 +92,7 @@ class UserResolver {
     @Arg("token") token: string
   ): Promise<String | GraphQLError> {
     try {
+      const JWT_SECRET = process.env.JWT_SECRET_KEY as string;
       const decoded: any = jwt.verify(token, JWT_SECRET);
       const user = await dataSource
         .getRepository(User)
@@ -111,6 +112,7 @@ class UserResolver {
     @Arg("token") token: string
   ): Promise<String | GraphQLError> {
     try {
+      const JWT_SECRET = process.env.JWT_SECRET_KEY as string;
       const decoded: any = jwt.verify(token, JWT_SECRET);
       const user = await dataSource
         .getRepository(User)
