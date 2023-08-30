@@ -29,6 +29,10 @@ const Dashboard: React.FC = () => {
   const [expenseName, setExpenseName] = useState<string>("");
   const [category, setCategory] = useState<string>("");
   const [carbonWeight, setCarbonWeight] = useState<number>(0);
+  const [isUpdating, setIsUpdating] = useState<boolean>(false);
+  const [updatingExpenseId, setUpdatingExpenseId] = useState<number | null>(
+    null
+  );
 
   useEffect(() => {
     if (data) {
@@ -80,18 +84,42 @@ const Dashboard: React.FC = () => {
     backgroundColor = Palette.primary;
   }
 
-  const createExpense = () => {
+  const createOrUpdateExpense = async () => {
     if (expenseName && category && carbonWeight && userData?.userId) {
-      handleFormSubmit(
-        { preventDefault: () => {} } as any,
-        expenseName,
-        carbonWeight,
-        category,
-        userData.userId
-      );
+      try {
+        if (isUpdating && updatingExpenseId) {
+          await handleUpdateFormSubmit(
+            { preventDefault: () => {} } as any,
+            expenseName,
+            carbonWeight,
+            category,
+            updatingExpenseId
+          );
+        } else {
+          await handleFormSubmit(
+            { preventDefault: () => {} } as any,
+            expenseName,
+            carbonWeight,
+            category,
+            userData.userId
+          );
+        }
+        resetState();
+      } catch (error) {
+        console.error("Erreur lors de l'opération", error);
+      }
     } else {
-      console.warn("Tous les champs sont requis pour créer une dépense.");
+      console.warn("Tous les champs sont requis.");
     }
+  };
+
+  const resetState = () => {
+    setExpenseName("");
+    setCategory("");
+    setCarbonWeight(0);
+    setShowDashboardForm(false);
+    setIsUpdating(false);
+    setUpdatingExpenseId(null);
   };
 
   return !showDashboardForm ? (
@@ -110,10 +138,17 @@ const Dashboard: React.FC = () => {
               <CarbonContainer
                 key={item.id}
                 title={item.title}
+                categoryString={item.categoryString}
                 modifiedAt={new Date(item.modifiedAt)}
                 id={item.id}
                 consumption={Number(item.consumption.toFixed(1))}
                 refreshData={refreshData}
+                setShowDashboardForm={setShowDashboardForm}
+                setExpenseName={setExpenseName}
+                setCategory={setCategory}
+                setCarbonWeight={setCarbonWeight}
+                setIsUpdating={setIsUpdating}
+                setUpdatingExpenseId={setUpdatingExpenseId}
               />
             ))
         ) : (
@@ -146,7 +181,8 @@ const Dashboard: React.FC = () => {
       Category={category}
       setCarbonWeight={setCarbonWeight}
       CarbonWeight={carbonWeight}
-      createExpense={createExpense}
+      createOrUpdateExpense={createOrUpdateExpense}
+      resetState={resetState}
     />
   );
 };

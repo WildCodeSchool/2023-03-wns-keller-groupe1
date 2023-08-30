@@ -13,18 +13,7 @@ import {
   responsiveWidth,
 } from "react-native-responsive-dimensions";
 import Button from "../shared/Button";
-
-interface DashboardFormProps {
-  setShowDashboardForm: React.Dispatch<React.SetStateAction<boolean>>;
-  showDashboardForm: boolean;
-  setExpenseName: React.Dispatch<React.SetStateAction<string>>;
-  ExpenseName: string | null;
-  setCategory: React.Dispatch<React.SetStateAction<string>>;
-  Category: string | null;
-  setCarbonWeight: React.Dispatch<React.SetStateAction<number>>;
-  CarbonWeight: number | null;
-  createExpense: () => void;
-}
+import { DashboardFormProps } from "../../interfaces/DashboardFormProps";
 
 const DashboardForm: React.FC<DashboardFormProps> = ({
   setShowDashboardForm,
@@ -35,7 +24,8 @@ const DashboardForm: React.FC<DashboardFormProps> = ({
   Category,
   setCarbonWeight,
   CarbonWeight,
-  createExpense,
+  createOrUpdateExpense,
+  resetState,
 }) => {
   const [step, setStep] = useState(1);
 
@@ -46,10 +36,10 @@ const DashboardForm: React.FC<DashboardFormProps> = ({
   ];
 
   const handleNext = () => {
-    if (step < 4) {
+    if (step < 3) {
       setStep(step + 1);
     } else {
-      createExpense();
+      createOrUpdateExpense();
     }
   };
 
@@ -57,7 +47,7 @@ const DashboardForm: React.FC<DashboardFormProps> = ({
     if (step > 1) {
       setStep(step - 1);
     } else {
-      setShowDashboardForm(!showDashboardForm);
+      resetState();
     }
   };
 
