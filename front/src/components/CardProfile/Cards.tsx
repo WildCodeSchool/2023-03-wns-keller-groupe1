@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import "./Cards.css";
 import joker from "../../assets/images/joker.png";
 
