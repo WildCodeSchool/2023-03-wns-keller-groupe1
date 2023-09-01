@@ -8,7 +8,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "../components/shared/Button";
 import FontsProps from "../styles/fontProps";
-import LoginFrom from "../components/Form/LoginForm";
+import LoginFrom from "../components/form/LoginForm";
 import { useAuth } from "../services/auth";
 
 const Login: React.FC = () => {
@@ -145,11 +145,10 @@ const styles = StyleSheet.create({
   },
   Logo: {
     width: responsiveWidth(100),
-    height: responsiveHeight(20),
+    height: responsiveWidth(100) * (2 / 3),
   },
   subtitle: {
     marginBottom: responsiveHeight(4),
-    marginTop: responsiveHeight(4),
   },
   subtitlebtn: {
     marginTop: responsiveHeight(5),

@@ -14,6 +14,7 @@ import Statistic from "../screens/Statistic";
 import Social from "../screens/Social";
 import Donation from "../screens/Donation";
 import UserDetails from "../screens/UserDetails";
+import AddFriend from "../screens/AddFriend";
 
 import { useFonts } from "expo-font";
 import { SplashScreen } from "../screens/SplashScreen";
@@ -100,7 +101,7 @@ function App() {
         }}
       />
       <Tab.Screen
-        name="Social"
+        name="Communautés"
         component={Social}
         options={{
           tabBarIcon: (props) => TabIcon({ ...props, icon: GroupIcon }),
@@ -196,6 +197,7 @@ function App() {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Main" component={MainStack} />
         <Stack.Screen name="UserDetails" component={UserDetails} />
+        <Stack.Screen name="AddFriend" component={AddFriend} />
       </Stack.Navigator>
     </NavigationContainer>
   );

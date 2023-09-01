@@ -53,6 +53,11 @@ const FontsProps = {
     fontFamily: "NotoSansJP-Bold",
     color: "#1C7B47",
   }),
+  deleteFriend: (fontSize = 14) => ({
+    fontSize: scaleFromFigma(fontSize),
+    fontFamily: "NotoSansJP-Bold",
+    color: "#FF1B1C",
+  }),
 };
 
 export default FontsProps;

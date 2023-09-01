@@ -10,15 +10,12 @@ import {
   responsiveWidth,
 } from "react-native-responsive-dimensions";
 import FontsProps from "../styles/fontProps";
-import CarbonContainer from "../components/CarbonContainer";
+import CarbonContainer from "../components/container/CarbonContainer";
 import Button from "../components/shared/Button";
 import { carbonDataStatic } from "../helpers/helper";
-import DashboardForm from "../components/Form/DashboardForm";
+import DashboardForm from "../components/form/DashboardForm";
 import CreateCarbonData from "../services/createCarbonData";
-<<<<<<< HEAD
 import axios from "axios";
-=======
->>>>>>> b31ca572bdf420071e4fce8213fecd6b77c1e038
 
 const Dashboard: React.FC = () => {
   const route = useRoute();
@@ -37,10 +34,7 @@ const Dashboard: React.FC = () => {
   const [updatingExpenseId, setUpdatingExpenseId] = useState<number | null>(
     null
   );
-<<<<<<< HEAD
   const [apiResults, setApiResults] = useState<any[]>([]);
-=======
->>>>>>> b31ca572bdf420071e4fce8213fecd6b77c1e038
 
   useEffect(() => {
     if (data) {
@@ -130,7 +124,6 @@ const Dashboard: React.FC = () => {
     setUpdatingExpenseId(null);
   };
 
-<<<<<<< HEAD
   const fetchAdemeApi = async () => {
     try {
       const response = await axios.get(
@@ -147,8 +140,6 @@ const Dashboard: React.FC = () => {
     }
   }, [expenseName]);
 
-=======
->>>>>>> b31ca572bdf420071e4fce8213fecd6b77c1e038
   return !showDashboardForm ? (
     <View style={styles.MainContainer}>
       <View style={[styles.HeaderContainer, { backgroundColor }]}>
@@ -210,11 +201,8 @@ const Dashboard: React.FC = () => {
       CarbonWeight={carbonWeight}
       createOrUpdateExpense={createOrUpdateExpense}
       resetState={resetState}
-<<<<<<< HEAD
       apiResults={apiResults}
       setApiResults={setApiResults}
-=======
->>>>>>> b31ca572bdf420071e4fce8213fecd6b77c1e038
     />
   );
 };
