@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
-import Palette from "../styles/Palette";
-import FontsProps from "../styles/fontProps";
+import Palette from "../../styles/Palette";
+import FontsProps from "../../styles/fontProps";
 import {
   responsiveHeight,
   responsiveWidth,
 } from "react-native-responsive-dimensions";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
-import { CarbonContainerProps } from "../interfaces/CarbonContainerProps";
-import DeleteCarbonData from "../services/deleteCarbonData";
+import { CarbonContainerProps } from "../../interfaces/CarbonContainerProps";
+import DeleteCarbonData from "../../services/deleteCarbonData";
 
 const CarbonContainer: React.FC<CarbonContainerProps> = ({
   title,

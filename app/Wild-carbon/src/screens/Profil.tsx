@@ -50,7 +50,7 @@ const Profil: React.FC = () => {
     <>
       <View style={styles.TopView}>
         <Text style={FontsProps.subtitleLogin()}>
-          {globalState.user.lastname}
+          {globalState.user.firstname}
         </Text>
       </View>
 

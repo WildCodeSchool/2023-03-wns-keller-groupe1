@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
   headerTitleStyle: {
     color: Palette.white,
-    fontSize: responsiveWidth(8),
+    fontSize: responsiveWidth(6),
     fontFamily: "NotoSansJP-Bold",
   },
   headerView: {

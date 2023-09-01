@@ -13,18 +13,28 @@ const Button = ({
   onPress = () => {},
   titleStyle = {},
   disabled = false,
+  whiteBtn = false,
 }) => (
   <TouchableOpacity
     style={[
       styles.button,
       style,
+      whiteBtn && styles.whiteButton,
       disabled && { backgroundColor: Palette.disabled },
-      !disabled && { backgroundColor: Palette.primary },
+      !disabled && !whiteBtn && { backgroundColor: Palette.primary },
     ]}
     onPress={onPress}
     disabled={disabled}
   >
-    <Text style={[FontsProps.btnBig(), titleStyle]}>{title}</Text>
+    <Text
+      style={[
+        FontsProps.btnBig(),
+        titleStyle,
+        whiteBtn && { color: Palette.primary },
+      ]}
+    >
+      {title}
+    </Text>
   </TouchableOpacity>
 );
 
@@ -37,6 +47,11 @@ const styles = StyleSheet.create({
     width: responsiveWidth(80),
   },
   text: {},
+  whiteButton: {
+    backgroundColor: "transparent",
+    borderColor: Palette.primary,
+    borderWidth: 1,
+  },
 });
 
 export default Button;
