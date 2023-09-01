@@ -9,6 +9,7 @@ import chart1Black from "../../assets/icons/chart1Black.png";
 import chart2Black from "../../assets/icons/chart2Black.png";
 import chart1White from "../../assets/icons/chart1White.png";
 import chart2White from "../../assets/icons/chart2White.png";
+import { getParsedUserId } from "../../utils/getParsedUserId";
 
 const Statistic = () => {
   const [globalState, setGlobalState] = useGlobalState();
@@ -21,17 +22,8 @@ const Statistic = () => {
   const [currentMonth, setCurrentMonth] = useState<string>("");
   const [selectedMonth, setSelectedMonth] = useState<string>(currentMonth);
   const [selectedYear, setSelectedYear] = useState<string>("");
-
-  let parsedUserId;
-
-  if (sessionStorage.getItem("user_id")) {
-    const userId = sessionStorage.getItem("user_id");
-    if (userId) {
-      parsedUserId = parseInt(userId);
-    }
-  }
   
-  const { error, data } = useUserCarbonData(parsedUserId);
+  const { error, data } = useUserCarbonData(getParsedUserId());
 
   useEffect(() => {
     const currentDate = new Date();

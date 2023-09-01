@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import LogoWhiteRbg from "../../assets/images/LogoWhiteRbg.png";
 import LoginRegisterForm from "../../components/Form/LoginRegisterForm";
 import styles from "./Login.module.css";
-import { useNavigate } from "react-router-dom";
 import { useGlobalState } from "../../GlobalStateContext";
 import { useAuth } from "../../services/auth";
 

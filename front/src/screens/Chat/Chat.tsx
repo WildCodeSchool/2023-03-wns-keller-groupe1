@@ -1,7 +1,7 @@
 import { gql, useSubscription, useQuery, useMutation } from "@apollo/client";
-import ChatBar from "./ChatBar";
-import ChatBody from "./ChatBody";
-import ChatFooter from "./ChatFooter";
+import ChatBar from "../../components/chat/ChatBar";
+import ChatBody from "../../components/chat/ChatBody";
+import ChatFooter from "../../components/chat/ChatFooter";
 import "./Chat.css"
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
