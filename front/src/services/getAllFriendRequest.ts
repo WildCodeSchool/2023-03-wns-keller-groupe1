@@ -20,7 +20,7 @@ const GET_ALL_FRIEND_REQUESTS = gql`
   }
 `;
 
-export const useGetAllFriendRequests = (userId : number) => {
+export const useGetAllFriendRequests = (userId : number|undefined) => {
   const { data, error, loading ,refetch } = useQuery(GET_ALL_FRIEND_REQUESTS, {
     variables: { userId },
     onError: (error) => {
