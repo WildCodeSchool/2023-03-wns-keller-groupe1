@@ -11,7 +11,7 @@ export const GET_FRIENDS = gql`
   }
 `;
 
-export const useGetUserFriendList = (userId: number) => {
+export const useGetUserFriendList = (userId: number|undefined) => {
   const { data, error, loading , refetch} = useQuery(GET_FRIENDS, {
     variables: { userId },
   });
