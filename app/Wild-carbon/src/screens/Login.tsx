@@ -10,6 +10,8 @@ import Button from "../components/shared/Button";
 import FontsProps from "../styles/fontProps";
 import LoginFrom from "../components/form/LoginForm";
 import { useAuth } from "../services/auth";
+import Palette from "../styles/Palette";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -75,7 +77,7 @@ const Login: React.FC = () => {
   return (
     <SafeAreaView style={styles.Container}>
       <Image source={images.LogoGreen} style={styles.Logo} />
-      <Text style={[FontsProps.subtitleLogin(), styles.subtitle]}>
+      <Text style={[FontsProps.bold(18, Palette.text.green), styles.subtitle]}>
         {IsConnexionScreen ? "Connectez vous" : "Inscrivez-vous"}
       </Text>
       <LoginFrom
@@ -124,7 +126,9 @@ const Login: React.FC = () => {
           }
         }}
       >
-        <Text style={[FontsProps.subtitle(), styles.subtitlebtn]}>
+        <Text
+          style={[FontsProps.bold(18, Palette.text.green), styles.subtitlebtn]}
+        >
           {IsConnexionScreen
             ? "S'inscrire"
             : isSignUpPhaseOne

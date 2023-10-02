@@ -46,7 +46,7 @@ const CarbonContainer: React.FC<CarbonContainerProps> = ({
               : title}
           </Text>
           <Text
-            style={[FontsProps.regularSmall(), styles.Text, { marginLeft: 5 }]}
+            style={[FontsProps.regular(13), styles.Text, { marginLeft: 5 }]}
           >
             {format(modifiedAt, "d MMMM yyyy", { locale: fr })}
           </Text>

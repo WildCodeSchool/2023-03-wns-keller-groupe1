@@ -143,7 +143,9 @@ const Dashboard: React.FC = () => {
   return !showDashboardForm ? (
     <View style={styles.MainContainer}>
       <View style={[styles.HeaderContainer, { backgroundColor }]}>
-        <Text style={[FontsProps.title(), styles.HeaderText]}>
+        <Text
+          style={[FontsProps.bold(22, Palette.text.white), styles.HeaderText]}
+        >
           {currentMonth} -
           {` ${(dataByMonth[currentMonth] || 0).toFixed(1)} Kg CO2`}
         </Text>
@@ -171,10 +173,20 @@ const Dashboard: React.FC = () => {
             ))
         ) : (
           <>
-            <Text style={[FontsProps.subtitle(), styles.TextContainer]}>
+            <Text
+              style={[
+                FontsProps.bold(18, Palette.text.green),
+                styles.TextContainer,
+              ]}
+            >
               Vous n'avez pas encore créé de dépenses carbone.
             </Text>
-            <Text style={[FontsProps.subtitle(), styles.TextContainer]}>
+            <Text
+              style={[
+                FontsProps.bold(18, Palette.text.green),
+                styles.TextContainer,
+              ]}
+            >
               Commencez dès maintenant !
             </Text>
           </>

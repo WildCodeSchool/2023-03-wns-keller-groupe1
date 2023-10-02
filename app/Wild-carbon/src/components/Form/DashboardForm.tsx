@@ -62,7 +62,9 @@ const DashboardForm: React.FC<DashboardFormProps> = ({
   return (
     <View style={styles.MainContainer}>
       <View style={styles.HeaderContainer}>
-        <Text style={[FontsProps.questionDashboard(), styles.HeaderText]}>
+        <Text
+          style={[FontsProps.bold(22, Palette.green[4]), styles.HeaderText]}
+        >
           {questions[step - 1]}
         </Text>
       </View>
@@ -72,7 +74,7 @@ const DashboardForm: React.FC<DashboardFormProps> = ({
           onBlur={() => setIsFocused(false)}
           style={[
             styles.input,
-            FontsProps.regularLarge(),
+            FontsProps.regular(19),
             isFocused ? styles.focusedInput : {},
           ]}
           onChangeText={(text) =>
@@ -130,7 +132,12 @@ const DashboardForm: React.FC<DashboardFormProps> = ({
       <View style={styles.FooterContainer}>
         <Button title={"SUIVANT"} onPress={handleNext} />
         <TouchableOpacity onPress={handleBack}>
-          <Text style={[FontsProps.subtitle(), styles.subtitlebtn]}>
+          <Text
+            style={[
+              FontsProps.bold(18, Palette.text.green),
+              styles.subtitlebtn,
+            ]}
+          >
             {step === 1 ? "Annuler" : "Retour"}
           </Text>
         </TouchableOpacity>

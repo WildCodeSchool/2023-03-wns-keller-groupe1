@@ -1845,11 +1845,7 @@
 
 "@react-native-community/datetimepicker@6.7.3":
   version "6.7.3"
-<<<<<<< HEAD
   resolved "https://registry.npmjs.org/@react-native-community/datetimepicker/-/datetimepicker-6.7.3.tgz"
-=======
-  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-6.7.3.tgz#e6d75a42729265d8404d1d668c86926564abca2f"
->>>>>>> b31ca572bdf420071e4fce8213fecd6b77c1e038
   integrity sha512-fXWbEdHMLW/e8cts3snEsbOTbnFXfUHeO2pkiDFX3fWpFoDtUrRWvn50xbY13IJUUKHDhoJ+mj24nMRVIXfX1A==
   dependencies:
     invariant "^2.2.4"
@@ -1991,6 +1987,30 @@
   dependencies:
     "@sinonjs/commons" "^3.0.0"
 
+"@types/d3-path@^1":
+  version "1.0.9"
+  resolved "https://registry.npmjs.org/@types/d3-path/-/d3-path-1.0.9.tgz"
+  integrity sha512-NaIeSIBiFgSC6IGUBjZWcscUJEq7vpVu7KthHN8eieTV9d9MqkSOZLH4chq1PmcKy06PNe3axLeKmRIyxJ+PZQ==
+
+"@types/d3-scale@^1":
+  version "1.0.19"
+  resolved "https://registry.npmjs.org/@types/d3-scale/-/d3-scale-1.0.19.tgz"
+  integrity sha512-Rvx9TqN/FZyRaZMd3hWWTDJzbGOhPZahtrhZxKvTSpq/cvUYggj+pO4aQdtlF11Vyo1D6ZNXltBgtg8TuU2aGw==
+  dependencies:
+    "@types/d3-time" "^1"
+
+"@types/d3-shape@^1":
+  version "1.3.9"
+  resolved "https://registry.npmjs.org/@types/d3-shape/-/d3-shape-1.3.9.tgz"
+  integrity sha512-NX8FSlYqN4MPjiOwJAu5a3y6iEj7lS8nb8zP5dQpHOWh24vMJLTXno7c7wm72SfTFNAalfvZVsatMUrEa686gg==
+  dependencies:
+    "@types/d3-path" "^1"
+
+"@types/d3-time@^1":
+  version "1.1.2"
+  resolved "https://registry.npmjs.org/@types/d3-time/-/d3-time-1.1.2.tgz"
+  integrity sha512-CHxXBqjSFt/w7OiGIy84L2nbzNwWhBaK6xyeAAWqKLgKlHY38vg33BMFMTCT8YOYeinNIQIQPjGvZLO8Z9M8WA==
+
 "@types/hammerjs@^2.0.36":
   version "2.0.41"
   resolved "https://registry.npmjs.org/@types/hammerjs/-/hammerjs-2.0.41.tgz"
@@ -2025,7 +2045,18 @@
   resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.5.tgz"
   integrity sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==
 
-"@types/react-native@^0.72.2":
+"@types/react-native-svg-charts@^5.0.13":
+  version "5.0.13"
+  resolved "https://registry.npmjs.org/@types/react-native-svg-charts/-/react-native-svg-charts-5.0.13.tgz"
+  integrity sha512-v08qdZANZqPsJx5ChVxEohrzkvoSznjKsE+/XtYp7Kf34bZn+3n+mTs3oELDqYaqzQ+BERtimAZTmxu9pj00pA==
+  dependencies:
+    "@types/d3-scale" "^1"
+    "@types/d3-shape" "^1"
+    "@types/react" "*"
+    "@types/react-native" "*"
+    react-native-svg "^6.2.1"
+
+"@types/react-native@*", "@types/react-native@^0.72.2":
   version "0.72.2"
   resolved "https://registry.npmjs.org/@types/react-native/-/react-native-0.72.2.tgz"
   integrity sha512-/eEjr04Zqo7mTMszuSdrLx90+j5nWhDMMOgtnKZfAYyV3RwmlpSb7F17ilmMMxZWJY81n/JZ4e6wdhMJFpjrCg==
@@ -2828,7 +2859,7 @@ collection-visit@^1.0.0:
     map-visit "^1.0.0"
     object-visit "^1.0.0"
 
-color-convert@^1.9.0:
+color-convert@^1.9.0, color-convert@^1.9.1:
   version "1.9.3"
   resolved "https://registry.npmjs.org/color-convert/-/color-convert-1.9.3.tgz"
   integrity sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==
@@ -2852,13 +2883,21 @@ color-name@~1.1.4:
   resolved "https://registry.npmjs.org/color-name/-/color-name-1.1.4.tgz"
   integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
 
-color-string@^1.9.0:
+color-string@^1.5.2, color-string@^1.9.0:
   version "1.9.1"
   resolved "https://registry.npmjs.org/color-string/-/color-string-1.9.1.tgz"
   integrity sha512-shrVawQFojnZv6xM40anx4CkoDP+fZsw/ZerEMsW/pyzsRbElpsL/DBVW7q3ExxwusdNXI3lXpuhEZkzs8p5Eg==
   dependencies:
     color-name "^1.0.0"
     simple-swizzle "^0.2.2"
+
+color@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npmjs.org/color/-/color-2.0.1.tgz"
+  integrity sha512-ubUCVVKfT7r2w2D3qtHakj8mbmKms+tThR8gI8zEYCbUBl8/voqFGt3kgBqGwXAopgXybnkuOq+qMYCRrp4cXw==
+  dependencies:
+    color-convert "^1.9.1"
+    color-string "^1.5.2"
 
 color@^4.2.3:
   version "4.2.3"
@@ -4696,7 +4735,7 @@ lodash.throttle@^4.1.1:
   resolved "https://registry.npmjs.org/lodash.throttle/-/lodash.throttle-4.1.1.tgz"
   integrity sha512-wIkUCfVKpVsWo3JSZlc+8MB5it+2AN5W8J7YVMST30UrvcQNZ1Okbj+rbVniijTWE6FGYy4XJq/rHkas8qJMLQ==
 
-lodash@^4.17.13, lodash@^4.17.21, lodash@^4.17.4:
+lodash@^4.16.6, lodash@^4.17.13, lodash@^4.17.21, lodash@^4.17.4:
   version "4.17.21"
   resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -5783,6 +5822,16 @@ path-type@^4.0.0:
   resolved "https://registry.npmjs.org/path-type/-/path-type-4.0.0.tgz"
   integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
 
+paths-js@^0.4.10:
+  version "0.4.11"
+  resolved "https://registry.npmjs.org/paths-js/-/paths-js-0.4.11.tgz"
+  integrity sha512-3mqcLomDBXOo7Fo+UlaenG6f71bk1ZezPQy2JCmYHy2W2k5VKpP+Jbin9H0bjXynelTbglCqdFhSEkeIkKTYUA==
+
+pegjs@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.npmjs.org/pegjs/-/pegjs-0.10.0.tgz"
+  integrity sha512-qI5+oFNEGi3L5HAxDwN2LA4Gg7irF70Zs25edhjld9QemOgp0CbvMtbFcMvFtEo1OityPrcCzkQFB8JP/hxgow==
+
 picocolors@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/picocolors/-/picocolors-1.0.0.tgz"
@@ -5830,6 +5879,11 @@ pngjs@^3.3.0:
   version "3.4.0"
   resolved "https://registry.npmjs.org/pngjs/-/pngjs-3.4.0.tgz"
   integrity sha512-NCrCHhWmnQklfH4MtJMRjZ2a8c80qXeMlQMv2uVp9ISJMTt562SbGd6n2oq0PaPgKm7Z6pL9E2UlLIhC+SHL3w==
+
+point-in-polygon@^1.0.1:
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/point-in-polygon/-/point-in-polygon-1.1.0.tgz"
+  integrity sha512-3ojrFwjnnw8Q9242TzgXuTD+eKiutbzyslcq1ydfu82Db2y+Ogbmyrkpv0Hgj31qwT3lbS9+QAAO/pIQM35XRw==
 
 posix-character-classes@^0.1.0:
   version "0.1.1"
@@ -6009,6 +6063,15 @@ react-is@^18.0.0:
   resolved "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
+react-native-chart-kit@^6.12.0:
+  version "6.12.0"
+  resolved "https://registry.npmjs.org/react-native-chart-kit/-/react-native-chart-kit-6.12.0.tgz"
+  integrity sha512-nZLGyCFzZ7zmX0KjYeeSV1HKuPhl1wOMlTAqa0JhlyW62qV/1ZPXHgT8o9s8mkFaGxdqbspOeuaa6I9jUQDgnA==
+  dependencies:
+    lodash "^4.17.13"
+    paths-js "^0.4.10"
+    point-in-polygon "^1.0.1"
+
 react-native-codegen@^0.71.5:
   version "0.71.5"
   resolved "https://registry.npmjs.org/react-native-codegen/-/react-native-codegen-0.71.5.tgz"
@@ -6059,11 +6122,20 @@ react-native-safe-area-view@^0.14.9:
 
 react-native-svg@13.4.0:
   version "13.4.0"
-  resolved "https://registry.npmjs.org/react-native-svg/-/react-native-svg-13.4.0.tgz"
+  resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-13.4.0.tgz#82399ba0956c454144618aa581e2d748dd3f010a"
   integrity sha512-B3TwK+H0+JuRhYPzF21AgqMt4fjhCwDZ9QUtwNstT5XcslJBXC0FoTkdZo8IEb1Sv4suSqhZwlAY6lwOv3tHag==
   dependencies:
     css-select "^5.1.0"
     css-tree "^1.1.3"
+
+react-native-svg@^6.2.1:
+  version "6.5.3"
+  resolved "https://registry.npmjs.org/react-native-svg/-/react-native-svg-6.5.3.tgz"
+  integrity sha512-bKyKHrSvOK09MqsFkQiD4NZp7nM4uf+MoEtWKPfOste8g/3ilc+ZXQDc95iur7xgi0GURHHCXZbz2i8g0cX8sg==
+  dependencies:
+    color "^2.0.1"
+    lodash "^4.16.6"
+    pegjs "^0.10.0"
 
 react-native-toast-message@^2.1.6:
   version "2.1.6"

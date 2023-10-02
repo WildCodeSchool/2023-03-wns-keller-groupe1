@@ -46,14 +46,19 @@ const AddFriend: React.FC = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.TopView}>
-        <Text style={[FontsProps.questionDashboard(), styles.headerTitleStyle]}>
+        <Text
+          style={[
+            FontsProps.bold(22, Palette.text.green),
+            styles.headerTitleStyle,
+          ]}
+        >
           Quel est le pseudonyme de votre ami ?
         </Text>
       </View>
       <TextInput
         style={[
           styles.input,
-          FontsProps.regularLarge(),
+          FontsProps.regular(19),
           isFocused ? styles.focusedInput : {},
         ]}
         placeholder="Pseudonyme"

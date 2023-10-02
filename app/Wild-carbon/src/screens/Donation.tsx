@@ -19,6 +19,7 @@ import FontsProps from "../styles/fontProps";
 import { images } from "../assets";
 import Button from "../components/shared/Button";
 import { useFetchDonations } from "../services/getDonations";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const Donation: React.FC = () => {
   const totalDonations = useFetchDonations();
@@ -26,17 +27,19 @@ const Donation: React.FC = () => {
   return (
     <ScrollView>
       <View style={styles.TopView}>
-        <Text style={FontsProps.subtitleLogin()}>Soutenez Wild Carbon</Text>
+        <Text style={FontsProps.bold(21, Palette.primary)}>
+          Soutenez Wild Carbon
+        </Text>
         <Image source={images.GreenLeaf} style={styles.Logo} />
       </View>
       <View style={styles.MainContainer}>
-        <Text style={FontsProps.regularSmall()}>
+        <Text style={FontsProps.regular(13)}>
           Wild-Carbon est une application gratuite vous permettant de suivre
           votre empreinte carbone. Pour maintenir notre plateforme et continuer
           à développer de nouvelles fonctionnalités, nous avons besoin de votre
           soutien.
         </Text>
-        <Text style={FontsProps.regularSmall()}>
+        <Text style={FontsProps.regular(13)}>
           Votre contribution financière, quel qu'en soit le montant, aidera à
           assurer la pérennité de Wild-Carbon et à intensifier notre combat
           contre le changement climatique.
@@ -45,7 +48,12 @@ const Donation: React.FC = () => {
 
       <View style={styles.FooterContainer}>
         <Image source={images.DonationCard} style={styles.DonationCard} />
-        <Text style={[FontsProps.title(), styles.TotalDonationsText]}>
+        <Text
+          style={[
+            FontsProps.bold(22, Palette.text.white),
+            styles.TotalDonationsText,
+          ]}
+        >
           {new Intl.NumberFormat("fr-FR", {
             style: "currency",
             currency: "EUR",
