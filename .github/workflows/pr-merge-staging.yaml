@@ -1,4 +1,4 @@
-name: create-docker-image-workflow
+name: create-docker-image-staging-workflow
 
 on: 
   pull_request:
@@ -6,7 +6,8 @@ on:
 
 jobs:
   docker:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true &&
+      github.event.pull_request.base.ref == 'staging'
     runs-on: ubuntu-latest
     steps:
       - name: Set up QEMU
@@ -26,11 +27,11 @@ jobs:
         with:
           push: true
           context: "{{defaultContext}}:back"
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wildcarbonback:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wildcarbonbackstaging:latest
 
       - name: Build and push front
         uses: docker/build-push-action@v4
         with:
           push: true
           context: "{{defaultContext}}:front"
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wildcarbonfront:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wildcarbonfrontstaging:latest
