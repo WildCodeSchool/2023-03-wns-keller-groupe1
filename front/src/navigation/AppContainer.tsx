@@ -8,16 +8,13 @@ import {
 import HomePage from "../screens/Dashboard/HomePage";
 import Login from "../screens/UserConnexion/Login";
 import Statistic from "../screens/Statistic/Statistic";
-import { useGlobalState } from "../GlobalStateContext";
 import Social from "../screens/Social/Social";
-import { useEffect } from "react";
 import SideBar from "../components/SideBar/SideBar";
 import * as React from "react";
 import Success from "../screens/Payment/Success";
 import { gql, useQuery } from "@apollo/client";
 import NotFound from "../screens/Error/404";
 import DonationPage from "../screens/Donation/DonationPage";
-import Contact from "../screens/Contact/Contact";
 import Profile from "../screens/Profile/Profile";
 import Chat from "../screens/Chat/Chat";
 

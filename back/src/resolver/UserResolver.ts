@@ -1,6 +1,6 @@
 import * as argon2 from "argon2";
 import * as jwt from "jsonwebtoken";
-import { Like } from 'typeorm';
+import { ILike, Like } from 'typeorm';
 import { Arg, Authorized, Mutation, Query, Resolver, } from "type-graphql";
 import { GraphQLError } from "graphql";
 import dataSource from "../utils";
@@ -152,8 +152,8 @@ class UserResolver {
   ): Promise<User[]> {
     const users = await dataSource.getRepository(User).find({
       where: [
-        { firstname: Like(`%${name}%`) },
-        { lastname: Like(`%${name}%`) }
+        { firstname: ILike(`%${name}%`) },
+        { lastname: ILike(`%${name}%`) }
       ],
       relations: [
         "groups",

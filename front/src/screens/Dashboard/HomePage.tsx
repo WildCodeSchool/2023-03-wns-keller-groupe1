@@ -8,7 +8,7 @@ import StatsSection from "../../components/dashboard/StatsSection";
 import CommunitySection from "../../components/dashboard/CommunitySection";
 import NewDonationForm from "../../components/Form/NewDonationForm";
 import UpdateCarbonDataForm from "../../components/Form/UpdateCarbonDataForm";
-import Chat from "../Chat/Chat";
+import { getParsedUserId } from "../../utils/getParsedUserId";
 
 const HomePage = () => {
   const [name, setName] = useState<string|undefined>();
@@ -17,17 +17,8 @@ const HomePage = () => {
   const [updateCarbonDataId, setUpdateCarbonDataId] = useState<string|null>("");
   const [query, setQuery] = useState("");
   const { handleFormSubmit, handleUpdateFormSubmit } = CreateCarbonData();
-
-  let parsedUserId;
-
-  if (sessionStorage.getItem("user_id")) {
-    const userId = sessionStorage.getItem("user_id");
-    if (userId) {
-      parsedUserId = parseInt(userId);
-    }
-  }
   
-  const { loading, error, data } = useUserCarbonData(parsedUserId);
+  const { loading, error, data } = useUserCarbonData(getParsedUserId());
 
   const modalDonationTest: any = document.getElementById("new-donation-modal");
   const handleModalDonation = () => {

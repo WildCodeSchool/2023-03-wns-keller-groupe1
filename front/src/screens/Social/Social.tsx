@@ -1,7 +1,6 @@
 import styles from "./social.module.css";
 import { ReactComponent as CrossIcon } from "../../assets/icons/cross.svg";
 import { ReactComponent as VectorIcon } from "../../assets/icons/Vector.svg";
-import { useGlobalState } from "../../GlobalStateContext";
 import { useEffect, useState } from "react";
 import { GetUsersByName } from "../../services/getUsersByName";
 import { toast } from "react-toastify";
@@ -10,15 +9,15 @@ import { useGetAllFriendRequests } from "../../services/getAllFriendRequest";
 import { useAcceptFriendRequest } from "../../services/acceptFriendRequest";
 import { useGetUserFriendList } from "../../services/getUserFriendList";
 import { useDeleteFriendRequests } from "../../services/deleteFriendRequest";
+import { getParsedUserId } from "../../utils/getParsedUserId";
 
 const Social = () => {
-  const [globalState, setGlobalState] = useGlobalState();
   const { getUsersByName, data } = GetUsersByName();
   const [searchTerm, setSearchTerm] = useState("");
   const { sendFriendRequest } = useSendFriendRequest();
   const { acceptFriendRequest } = useAcceptFriendRequest();
-  const { friendRequests, refetch: refetchFriendRequests } = useGetAllFriendRequests(globalState?.user?.userId);
-  const { userFriendsLists, refetch: refetchUserFriendsLists } = useGetUserFriendList(globalState?.user?.userId);
+  const { friendRequests, refetch: refetchFriendRequests } = useGetAllFriendRequests(getParsedUserId());
+  const { userFriendsLists, refetch: refetchUserFriendsLists } = useGetUserFriendList(getParsedUserId());
   const { deleteFriendRequest } = useDeleteFriendRequests()
   
 
@@ -31,7 +30,7 @@ const Social = () => {
   const handleButtonClick = (user: any) => {
     setSearchTerm("");
     sendFriendRequest({
-      variables: { userId: globalState?.user?.userId, friendId: user.userId },
+      variables: { userId: getParsedUserId(), friendId: user.userId },
     });
   };
   const handleAcceptRequest = (
