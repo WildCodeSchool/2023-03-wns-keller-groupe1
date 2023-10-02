@@ -26,7 +26,7 @@ const LoginFrom: React.FC<LoginFormProps> = ({
   return (
     <View style={styles.Container}>
       <View style={styles.inputContainer}>
-        <Text style={[FontsProps.regularLarge(), styles.subtitle]}>
+        <Text style={[FontsProps.regular(19), styles.subtitle]}>
           {IsConnexionScreen || !isSignUpPhaseOne ? "Email" : "Nom"}
         </Text>
         <View style={styles.inputView}>
@@ -52,7 +52,7 @@ const LoginFrom: React.FC<LoginFormProps> = ({
         </View>
       </View>
       <View style={styles.inputContainer}>
-        <Text style={[FontsProps.regularLarge(), styles.subtitle]}>
+        <Text style={[FontsProps.regular(19), styles.subtitle]}>
           {IsConnexionScreen
             ? "Mot de passe"
             : isSignUpPhaseOne
@@ -77,7 +77,6 @@ const LoginFrom: React.FC<LoginFormProps> = ({
             }
             style={[styles.input, FontsProps.regular()]}
             selectionColor={Palette.green[1]}
-
           />
 
           {(IsConnexionScreen || !isSignUpPhaseOne

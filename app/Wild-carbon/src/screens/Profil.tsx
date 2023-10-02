@@ -49,7 +49,7 @@ const Profil: React.FC = () => {
   return (
     <>
       <View style={styles.TopView}>
-        <Text style={FontsProps.subtitleLogin()}>
+        <Text style={FontsProps.bold(21, Palette.primary)}>
           {globalState.user.firstname}
         </Text>
       </View>

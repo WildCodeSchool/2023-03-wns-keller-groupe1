@@ -51,7 +51,7 @@ const Social: React.FC = () => {
         {pendingFriendRequests && pendingFriendRequests.length > 0 && (
           <View>
             <View style={styles.TitleContainer}>
-              <Text style={FontsProps.questionDashboard()}>
+              <Text style={FontsProps.bold(22, Palette.text.green)}>
                 Demandes d’amis :
               </Text>
             </View>
@@ -66,13 +66,15 @@ const Social: React.FC = () => {
           </View>
         )}
         <View style={styles.TitleContainer}>
-          <Text style={FontsProps.questionDashboard()}>Vos groupe :</Text>
+          <Text style={FontsProps.bold(22, Palette.text.green)}>
+            Vos groupe :
+          </Text>
         </View>
 
         {userFriendsLists && userFriendsLists.length > 0 && (
           <View>
             <View style={styles.TitleContainer}>
-              <Text style={FontsProps.questionDashboard()}>
+              <Text style={FontsProps.bold(22, Palette.text.green)}>
                 Votre liste d’amis :
               </Text>
             </View>

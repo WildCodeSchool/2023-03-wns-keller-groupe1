@@ -37,7 +37,9 @@ const UserDetails: React.FC = () => {
           <TouchableOpacity style={styles.headerIcon} onPress={() => goBack()}>
             <ArrowLeft width="24" height="24" color={Palette.primary} />
           </TouchableOpacity>
-          <Text style={FontsProps.subtitleLogin()}>Mes informations</Text>
+          <Text style={FontsProps.bold(21, Palette.primary)}>
+            Mes informations
+          </Text>
         </View>
 
         <Text>UserDetails</Text>

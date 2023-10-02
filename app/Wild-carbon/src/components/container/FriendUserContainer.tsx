@@ -56,7 +56,7 @@ const FriendUserContainer: React.FC<FriendUserContainerProps> = ({
           style={styles.TouchableDeleteUser}
           onPress={() => console.log("ok")}
         >
-          <Text style={FontsProps.deleteFriend()}>
+          <Text style={FontsProps.bold(14, Palette.red[1])}>
             Retirer de la liste d'amis
           </Text>
         </TouchableOpacity>

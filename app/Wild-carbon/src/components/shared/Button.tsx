@@ -28,7 +28,7 @@ const Button = ({
   >
     <Text
       style={[
-        FontsProps.btnBig(),
+        FontsProps.bold(18, Palette.white),
         titleStyle,
         whiteBtn && { color: Palette.primary },
       ]}
