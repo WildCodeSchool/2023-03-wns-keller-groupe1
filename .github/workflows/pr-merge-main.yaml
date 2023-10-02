@@ -1,4 +1,4 @@
-name: create-docker-image-staging-workflow
+name: create-docker-image-main-workflow
 
 on: 
   pull_request:
