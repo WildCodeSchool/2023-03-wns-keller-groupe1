@@ -26,7 +26,6 @@ import { useGetUserFriendList } from "../services/getUserFriendList";
 const Social: React.FC = () => {
   const navigation = useNavigation();
   const [globalState, setGlobalState] = useGlobalState();
-
   const {
     friendRequests,
     refetch: refetchFriendRequests,

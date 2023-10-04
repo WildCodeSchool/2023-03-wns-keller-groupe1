@@ -14,6 +14,7 @@ import {
 } from "react-native-responsive-dimensions";
 import Button from "../shared/Button";
 import { DashboardFormProps } from "../../interfaces/DashboardFormProps";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 const DashboardForm: React.FC<DashboardFormProps> = ({
   setShowDashboardForm,
@@ -28,18 +29,22 @@ const DashboardForm: React.FC<DashboardFormProps> = ({
   resetState,
   apiResults,
   setApiResults,
+  selectedDate,
+  setSelectedDate,
 }) => {
   const [step, setStep] = useState(1);
   const [isFocused, setIsFocused] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const questions = [
     "Quel est le nom de votre dépense ?",
     "Quelle est la catégorie concernée ?",
+    "Sélectionnez la date ?",
     "Poid carbon en kg Co2 ?",
   ];
 
   const handleNext = () => {
-    if (step < 3) {
+    if (step < 4) {
       setStep(step + 1);
     } else {
       createOrUpdateExpense();
@@ -59,6 +64,12 @@ const DashboardForm: React.FC<DashboardFormProps> = ({
     return parts[parts.length - 1].trim();
   };
 
+  const onChangeDate = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShowDatePicker(false);
+    setSelectedDate(currentDate);
+  };
+
   return (
     <View style={styles.MainContainer}>
       <View style={styles.HeaderContainer}>
@@ -69,30 +80,32 @@ const DashboardForm: React.FC<DashboardFormProps> = ({
         </Text>
       </View>
       <View style={styles.BodyContainer}>
-        <TextInput
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-          style={[
-            styles.input,
-            FontsProps.regular(19),
-            isFocused ? styles.focusedInput : {},
-          ]}
-          onChangeText={(text) =>
-            step === 1
-              ? setExpenseName(text)
-              : step === 2
-              ? setCategory(text)
-              : setCarbonWeight(Number(text))
-          }
-          value={
-            step === 1
-              ? ExpenseName
-              : step === 2
-              ? Category
-              : String(CarbonWeight)
-          }
-          keyboardType={step === 3 ? "numeric" : "default"}
-        />
+        {step !== 3 && (
+          <TextInput
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            style={[
+              styles.input,
+              FontsProps.regular(19),
+              isFocused ? styles.focusedInput : {},
+            ]}
+            onChangeText={(text) =>
+              step === 1
+                ? setExpenseName(text)
+                : step === 2
+                ? setCategory(text)
+                : setCarbonWeight(Number(text))
+            }
+            value={
+              step === 1
+                ? ExpenseName
+                : step === 2
+                ? Category
+                : String(CarbonWeight)
+            }
+            keyboardType={step === 3 ? "numeric" : "default"}
+          />
+        )}
 
         {step === 1 && (
           <View style={styles.suggestionsContainer}>
@@ -127,6 +140,27 @@ const DashboardForm: React.FC<DashboardFormProps> = ({
               </TouchableOpacity>
             ))}
           </View>
+        )}
+        {step === 3 && (
+          <>
+            <TextInput
+              onFocus={() => setShowDatePicker(true)}
+              value={selectedDate.toLocaleDateString("fr-FR")}
+              style={[
+                styles.input2,
+                FontsProps.regular(19),
+                isFocused ? styles.focusedInput : {},
+              ]}
+            />
+            {showDatePicker && (
+              <DateTimePicker
+                value={selectedDate}
+                mode={"date"}
+                display="default"
+                onChange={onChangeDate}
+              />
+            )}
+          </>
         )}
       </View>
       <View style={styles.FooterContainer}>
@@ -184,6 +218,14 @@ const styles = StyleSheet.create({
     width: responsiveWidth(70),
     paddingVertical: 0,
     paddingTop: responsiveHeight(1),
+  },
+  input2: {
+    borderBottomWidth: 1,
+    borderBottomColor: Palette.black,
+    width: responsiveWidth(70),
+    paddingVertical: 0,
+    paddingTop: responsiveHeight(1),
+    textAlign: "center",
   },
   suggestionsContainer: {
     width: responsiveWidth(70),

@@ -13,6 +13,11 @@ const FontsProps = {
     fontFamily: "NotoSansJP-Bold",
     color: color,
   }),
+  thin: (fontSize = 16, color = color || "#111111") => ({
+    fontSize: scaleFromFigma(fontSize),
+    fontFamily: "NotoSansJP-Thin",
+    color: color,
+  }),
 };
 
 export default FontsProps;
