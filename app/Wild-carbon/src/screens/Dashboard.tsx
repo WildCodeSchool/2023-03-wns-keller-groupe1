@@ -29,6 +29,7 @@ const Dashboard: React.FC = () => {
 
   const [expenseName, setExpenseName] = useState<string>("");
   const [category, setCategory] = useState<string>("");
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [carbonWeight, setCarbonWeight] = useState<number>(0);
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [updatingExpenseId, setUpdatingExpenseId] = useState<number | null>(
@@ -67,13 +68,16 @@ const Dashboard: React.FC = () => {
       console.error(error);
     }
   }, [refetch]);
-
+  const sortedData = [...data].sort((a, b) =>
+    compareDesc(new Date(a.createdAt), new Date(b.createdAt))
+  );
   const currentMonth = format(new Date(), "MMMM yyyy", { locale: fr });
-  const currentMonthDataArray = data?.filter(
+  const currentMonthDataArray = sortedData?.filter(
     (item) =>
       format(new Date(item.createdAt), "MMMM yyyy", { locale: fr }) ===
       currentMonth
   );
+
   const emissionPercentage =
     (dataByMonth[currentMonth] / carbonDataStatic.emissions_CO2_mensuelles_fr) *
     100;
@@ -103,7 +107,8 @@ const Dashboard: React.FC = () => {
             expenseName,
             carbonWeight,
             category,
-            userData.userId
+            userData.userId,
+            selectedDate
           );
         }
         resetState();
@@ -215,6 +220,8 @@ const Dashboard: React.FC = () => {
       resetState={resetState}
       apiResults={apiResults}
       setApiResults={setApiResults}
+      selectedDate={selectedDate}
+      setSelectedDate={setSelectedDate}
     />
   );
 };
