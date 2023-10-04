@@ -8,12 +8,15 @@ import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { createClient } from 'graphql-ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 
+const currentOrigin = window.origin;
+const originWithoutProtocol = currentOrigin.replace(/^https?:\/\//, '');
+
 const httpLink = new HttpLink({
-  uri: 'http://localhost:4000/'
+  uri: process.env.NODE_ENV === 'production' ? `${window.origin}/graphql` : 'http://localhost:4000/'
 });
 
 const wsLink = new GraphQLWsLink(createClient({
-  url: 'ws://localhost:4000/',
+  url: process.env.NODE_ENV === 'production' ? `${originWithoutProtocol}/graphql` : 'ws://localhost:4000/'
 }));
 
 const splitLink = split(
@@ -32,8 +35,6 @@ const client = new ApolloClient({
   link: splitLink,
   cache: new InMemoryCache()
 });
-
-
 
 ReactDOM.render(
   <GlobalStateProvider>
