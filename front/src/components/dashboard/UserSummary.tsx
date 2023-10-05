@@ -5,76 +5,96 @@ import update from "../../assets/icons/update.svg";
 import DeleteCarbonData from "../../services/deleteCarbonData";
 import { useEffect, useState } from "react";
 
-const UserSummary = ({ 
-    data,
-    setQuery,
-    setName,
-    setCategory,
-    setCo2,
-    setUpdateCarbonDataId
-  }: any) => {
+const UserSummary = ({
+  data,
+  setQuery,
+  setName,
+  setCategory,
+  setCo2,
+  setUpdateCarbonDataId,
+}: any) => {
   const { handleFormSubmitDelete } = DeleteCarbonData();
-  const [dataByMonth, setDataByMonth] = useState<{ [key: string]: number }>({});
+  const [dataByMonth, setDataByMonth] = useState<{
+    [key: string]: ICarbonData[];
+  }>({});
 
-  const date = new Date();
-  const month = date.toLocaleString('default', { month: 'long' });
-  const capitalizedMonth = month.charAt(0).toUpperCase() + month.slice(1);
-  const year = date.getFullYear();
-  const currentDate = `${capitalizedMonth} ${year}`;
+  const updateCarbonDataModal: any = document.getElementById(
+    "update-carbon-modal"
+  );
 
   const newCarbonDataModal: any = document.getElementById("new-carbon-modal");
+
   const handleModal = () => {
     newCarbonDataModal.style.display = "block";
-  }
+  };
 
-  const updateCarbonDataModal: any = document.getElementById("update-carbon-modal");
   const handleModalUpdate = (data: ICarbonData) => {
     updateCarbonDataModal.style.display = "block";
     setCategory(data.categoryString);
     setCo2(data.consumption);
     setQuery(data.title);
     setName(data.title);
-    setUpdateCarbonDataId(data.id)
-  }
+    setUpdateCarbonDataId(data.id);
+  };
 
   useEffect(() => {
-    const dataByMonthTemp: { [key: string]: number } = {};
+    const date = new Date();
+    const currentMonth = date.getMonth();
+    const currentYear = date.getFullYear();
 
-    if (data != null) {
-      data.forEach((item: ICarbonData) => {
-        const createdAt = new Date(item.createdAt);
-        const month = createdAt.toLocaleString("fr-FR", { month: "long" });
-        const year = createdAt.getFullYear();
-        const key = `${month} ${year}`;
-  
-        if (dataByMonthTemp[key]) {
-          dataByMonthTemp[key] += item.consumption;
-        } else {
-          dataByMonthTemp[key] = item.consumption;
-        }
-      });
-  
-      const sortedDataByMonth = Object.entries(dataByMonthTemp)
-        .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime())
-        .slice(0, 3)
-        .reduce((acc, [key, val]) => ({ ...acc, [key]: val }), {});
-  
-      setDataByMonth(sortedDataByMonth);
-    }
-    
+    const dataFilteredByMonth = data.filter((item: ICarbonData) => {
+      const itemDate = new Date(item.createdAt);
+      return (
+        itemDate.getMonth() === currentMonth &&
+        itemDate.getFullYear() === currentYear
+      );
+    });
+
+    setDataByMonth({ [`${currentMonth}-${currentYear}`]: dataFilteredByMonth });
   }, [data]);
 
-  const userConsumptionData = Number(Object.values(dataByMonth));
+  const date = new Date();
+  const currentMonth = date.getMonth();
+  const currentYear = date.getFullYear();
+  const currentDate = `${currentMonth}-${currentYear}`;
+
+  const userConsumptionData = dataByMonth[currentDate] || [];
+
+  const date2 = new Date();
+  const month2 = date.toLocaleString("fr-FR", { month: "long" });
+  const year2 = date.getFullYear();
+  const currentDate2 = `${month2} ${year2}`;
 
   return (
     <>
       <div className={styles.userSummaryContainer}>
-        <div style={{display: "flex", justifyContent: "space-between", padding: "20px", backgroundColor: "#f6f6f6"}}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            padding: "20px",
+            backgroundColor: "#f6f6f6",
+          }}
+        >
           <h1 className={styles.title}>Dashboard</h1>
-          <h2 className={styles.totalCo2}>{userConsumptionData.toFixed(2)} Kg Co2</h2>
+
+          <h2 className={styles.totalCo2}>
+            {userConsumptionData
+              .reduce((total, item) => total + item.consumption, 0)
+              .toFixed(2)}{" "}
+            Kg Co2
+          </h2>
         </div>
-        <div style={{padding: "20px", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
-          <h4 className={styles.subtitle}>{currentDate}</h4>
+        <div
+          style={{
+            padding: "20px",
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+          }}
+        >
+          <h4 className={styles.subtitle}>{currentDate2}</h4>
           <div className={styles.tableContainer}>
             <table className={styles.table}>
               <thead className={styles.tableHeader}>
@@ -86,45 +106,62 @@ const UserSummary = ({
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody>     
-                {data && data.toReversed().map((data: ICarbonData, index: string) => {
+              <tbody>
+                {userConsumptionData.map((data: ICarbonData, index: number) => {
                   const myDate = new Date(data.createdAt);
-                  const formattedDate = myDate.toLocaleDateString();                 
+                  const formattedDate = myDate.toLocaleDateString();
                   return (
-                    <tr key={index} style={{textAlign: "center"}}>
-                      <td className={styles.tableCell} style={{textAlign: "start"}}>{data.title}</td>
-                      <td className={styles.tableCell}>{data.categoryString}</td>
-                      <td className={styles.co2Text}>{data.consumption.toFixed(2)}</td>
+                    <tr key={index} style={{ textAlign: "center" }}>
+                      <td
+                        className={styles.tableCell}
+                        style={{ textAlign: "start" }}
+                      >
+                        {data.title}
+                      </td>
+                      <td className={styles.tableCell}>
+                        {data.categoryString}
+                      </td>
+                      <td className={styles.co2Text}>
+                        {data.consumption.toFixed(2)}
+                      </td>
                       <td className={styles.tableCell}>{formattedDate}</td>
-                      <td>                
-                        <img 
-                          src={update} 
-                          alt="update" 
-                          style={{cursor: "pointer"}}
+                      <td>
+                        <img
+                          src={update}
+                          alt="update"
+                          style={{ cursor: "pointer" }}
                           onClick={() => handleModalUpdate(data)}
-                        />   
-                        <img 
-                          src={trashRed} 
-                          alt="trash can" 
-                          style={{paddingBottom: "3px", paddingLeft: "6xp", cursor: "pointer"}}
+                        />
+                        <img
+                          src={trashRed}
+                          alt="trash can"
+                          style={{
+                            paddingBottom: "3px",
+                            paddingLeft: "6px",
+                            cursor: "pointer",
+                          }}
                           onClick={() => handleFormSubmitDelete(data.id)}
                         />
                       </td>
                     </tr>
-                  )
-                })}         
+                  );
+                })}
               </tbody>
             </table>
           </div>
           <div className={styles.formGroupSubmit}>
-            <button id="button-modal" className={styles.submitButton} onClick={() => handleModal()}>
+            <button
+              id="button-modal"
+              className={styles.submitButton}
+              onClick={() => handleModal()}
+            >
               Ajouter une dépense
             </button>
           </div>
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
 export default UserSummary;
