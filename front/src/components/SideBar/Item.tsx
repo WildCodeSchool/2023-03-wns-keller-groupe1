@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import "./Item.css";
 
-function Item({ icon, name, to }: any) {
+function Item({ icon, name, to, iconColor }: any) {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -36,11 +36,14 @@ function Item({ icon, name, to }: any) {
         duration: 0.1,
       }}
     >
-      <motion.div className="icon">{icon}</motion.div>
-      <motion.span variants={subheading}>{name}</motion.span>
+      <motion.div className="icon" style={{ color: iconColor }}>
+        {icon}
+      </motion.div>
+      <motion.span className="name" variants={subheading}>
+        {name}
+      </motion.span>
     </motion.div>
   );
 }
 
 export default Item;
-
