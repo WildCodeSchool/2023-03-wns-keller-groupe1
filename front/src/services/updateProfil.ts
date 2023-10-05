@@ -36,7 +36,7 @@ export const useUpdateUsers = () => {
       toast.error(`Error update echec${error.message}`);
     },
     onCompleted: () => {
-      toast.success("Friend request deleted!");
+      toast.success("Profil mis à jour");
     },
   });
   return { updateUser };

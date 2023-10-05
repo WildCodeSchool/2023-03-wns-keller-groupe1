@@ -1,26 +1,22 @@
-import DarkMode from "../theme/DarkMode";
-import { useNavigate } from "react-router-dom";
 import "./SideBar.css";
 import { motion } from "framer-motion";
-import {
-  AttachMoneyRounded,
-  BarChartRounded,
-  ContactPhone,
-  DashboardRounded,
-  QueryStats,
-  Settings,
-  SettingsAccessibility,
-  TocRounded,
-  Chat
-} from "@mui/icons-material";
+import { TocRounded } from "@mui/icons-material";
 import Item from "./Item";
 import { useState } from "react";
 import logo from "../../assets/images/LeafWitheRbg.png";
+import {
+  ChartIcon,
+  GroupIcon,
+  DonationIcon,
+  ProfileIcon,
+  MessageIcon,
+} from "../../assets/index";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function App() {
   const [open, setOpen] = useState(true);
+  const location = useLocation();
 
-  // for collpsing sidebar
   const handleToggle = () => {
     setOpen(!open);
   };
@@ -74,14 +70,12 @@ function App() {
       animate={`${open}`}
       className="sidebar_container"
     >
-      {/* sidebar div */}
       <motion.div
         className="sidebar"
         initial={`${open}`}
         animate={`${open}`}
         variants={sidebarVariants}
       >
-        {/* lines_icon */}
         <motion.div
           whileHover={{
             scale: 1.2,
@@ -89,7 +83,6 @@ function App() {
             backgroundColor: "rgba(255, 255, 255, 0.3)",
             backdropFilter: "blur(3.5px)",
             WebkitBackdropFilter: "blur(3.5px)",
-            // border: "1px solid rgba( 255, 255, 255, 0.18 )",
             transition: {
               delay: 0.3,
               duration: 0.3,
@@ -100,7 +93,6 @@ function App() {
         >
           <TocRounded />
         </motion.div>
-        {/* profile */}
         <motion.div
           layout
           initial={`${open}`}
@@ -115,42 +107,84 @@ function App() {
             WebkitBackdropFilter: "blur(5.5px)",
             cursor: "pointer",
           }}
+          onClick={() => navigate("/dashboard")}
         >
           <img src={logo} alt="profile_img" />
         </motion.div>
-        {/* groups */}
+
         <div className="groups">
           <div className="group">
             <motion.h3
               animate={{ opacity: open ? 1 : 0, height: open ? "auto" : 0 }}
-            ></motion.h3>{" "}
+            ></motion.h3>
             <Item
-              icon={<DashboardRounded />}
-              name="Dashboard"
-              to="/dashboard"
+              icon={
+                <ChartIcon
+                  width={24}
+                  height={24}
+                  color={
+                    location.pathname === "/statistic" ? "#1C7B47" : "#AAAAAA"
+                  }
+                />
+              }
+              name="Statistiques"
+              to="/statistic"
             />
-            <Item icon={<QueryStats />} name="Statistiques" to="/statistic" />
-            <Item icon={<BarChartRounded />} name="Communauté" to="/social" />
+            <Item
+              icon={
+                <GroupIcon
+                  width={24}
+                  height={24}
+                  color={
+                    location.pathname === "/social" ? "#1C7B47" : "#AAAAAA"
+                  }
+                />
+              }
+              name="Communauté"
+              to="/social"
+            />
           </div>
-        </div>
-        <div className="group">
+
           <motion.h3
             animate={{ opacity: open ? 1 : 0, height: open ? "auto" : 0 }}
           ></motion.h3>
-          <Item icon={<SettingsAccessibility />} name="Profile" to="/profile" />
           <Item
-            icon={<AttachMoneyRounded />}
+            icon={
+              <DonationIcon
+                width={24}
+                height={24}
+                color={
+                  location.pathname === "/donations" ? "#1C7B47" : "#AAAAAA"
+                }
+              />
+            }
             name="Donations"
             to="/donations"
           />
+
           <Item
-            icon={<Chat />}
+            icon={
+              <MessageIcon
+                width={24}
+                height={24}
+                color={location.pathname === "/chat" ? "#1C7B47" : "#AAAAAA"}
+              />
+            }
             name="Chat"
             to="/chat"
           />
-          <Item icon={<Settings />} name="Settings" to="/Settings" />
+          <Item
+            icon={
+              <ProfileIcon
+                width={24}
+                height={24}
+                color={location.pathname === "/profile" ? "#1C7B47" : "#AAAAAA"}
+              />
+            }
+            name="Profile"
+            to="/profile"
+          />
         </div>
-        <DarkMode />
       </motion.div>
     </motion.div>
   );
