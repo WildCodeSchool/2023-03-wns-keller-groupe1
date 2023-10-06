@@ -10,12 +10,14 @@ export const CREATE_CARBON_DATA = gql`
     $category: String!
     $consumption: Float!
     $title: String!
+    $createdAt: String!
   ) {
     createCarbonData(
       userId: $userId
       category: $category
       consumption: $consumption
       title: $title
+      createdAt: $createdAt
     )
   }
 `;
@@ -82,7 +84,8 @@ const CreateCarbonData = () => {
     title: string,
     consumption: number,
     categoryString: string,
-    userId: number
+    userId: number,
+    selectedDate: Date
   ): Promise<any> => {
     await createNewCarbonData({
       variables: {
@@ -90,6 +93,7 @@ const CreateCarbonData = () => {
         category: categoryString,
         consumption: consumption,
         title: title,
+        createdAt: selectedDate.toISOString(),
       },
     });
   };

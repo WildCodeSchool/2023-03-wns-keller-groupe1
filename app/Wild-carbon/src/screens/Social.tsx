@@ -26,7 +26,6 @@ import { useGetUserFriendList } from "../services/getUserFriendList";
 const Social: React.FC = () => {
   const navigation = useNavigation();
   const [globalState, setGlobalState] = useGlobalState();
-
   const {
     friendRequests,
     refetch: refetchFriendRequests,
@@ -65,13 +64,8 @@ const Social: React.FC = () => {
             ))}
           </View>
         )}
-        <View style={styles.TitleContainer}>
-          <Text style={FontsProps.bold(22, Palette.text.green)}>
-            Vos groupe :
-          </Text>
-        </View>
 
-        {userFriendsLists && userFriendsLists.length > 0 && (
+        {userFriendsLists && userFriendsLists.length > 0 ? (
           <View>
             <View style={styles.TitleContainer}>
               <Text style={FontsProps.bold(22, Palette.text.green)}>
@@ -87,30 +81,24 @@ const Social: React.FC = () => {
               />
             ))}
           </View>
+        ) : (
+          <View style={styles.TitleContainer}>
+            <Text style={FontsProps.bold(18, Palette.text.green)}>
+              Vous n'avez pas d'amis.
+            </Text>
+          </View>
         )}
       </View>
       <View style={styles.BottomContainer}>
-        <View style={styles.BtnContainer}>
-          <Button
-            title="Crée un groupe"
-            onPress={() => console.log("ok")}
-            style={{
-              width: responsiveWidth(43),
-            }}
-            whiteBtn
-          />
-        </View>
-        <View style={styles.BtnContainer}>
-          <Button
-            title="Ajoutez un ami"
-            onPress={() =>
-              navigation.navigate("AddFriend", {
-                currentFriends: userFriendsLists,
-              })
-            }
-            style={{ width: responsiveWidth(43) }}
-          />
-        </View>
+        <Button
+          title="Ajoutez un ami"
+          onPress={() =>
+            navigation.navigate("AddFriend", {
+              currentFriends: userFriendsLists,
+            })
+          }
+          style={{ width: responsiveWidth(90), height: responsiveHeight(7) }}
+        />
       </View>
     </ScrollView>
   );
@@ -132,12 +120,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     height: responsiveHeight(15),
     width: responsiveWidth(100),
-  },
-  BtnContainer: {
-    width: responsiveWidth(50),
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    marginTop: responsiveHeight(5),
   },
 });
 

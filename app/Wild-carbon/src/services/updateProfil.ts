@@ -1,27 +1,14 @@
 import { gql, useMutation } from "@apollo/client";
-
-import { toast } from "react-toastify";
+import Toast from "react-native-toast-message";
 
 const UPDATE_USER = gql`
   mutation Mutation(
-    $tel: String!
-    $gender: String!
-    $about: String!
-    $city: String!
-    $age: String!
-    $totalCo2: Float!
     $lastname: String!
     $firstname: String!
     $email: String!
     $userId: Float!
   ) {
     updateUser(
-      tel: $tel
-      gender: $gender
-      about: $about
-      city: $city
-      age: $age
-      totalCo2: $totalCo2
       lastname: $lastname
       firstname: $firstname
       email: $email
@@ -33,11 +20,20 @@ const UPDATE_USER = gql`
 export const useUpdateUsers = () => {
   const [updateUser, { data, error, loading }] = useMutation(UPDATE_USER, {
     onError: (error) => {
-      toast.error(`Error update echec${error.message}`);
+      console.log(error);
+      Toast.show({
+        type: "error",
+        text1: `Échec de la mise à jour : ${error.message}`,
+      });
     },
     onCompleted: () => {
-      toast.success("Profil mis à jour");
+      console.log("Mise à jour réussie");
+      Toast.show({
+        type: "success",
+        text1: "Mise à jour réussie!",
+      });
     },
   });
+
   return { updateUser };
 };

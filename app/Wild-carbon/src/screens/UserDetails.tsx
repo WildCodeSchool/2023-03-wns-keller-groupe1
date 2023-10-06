@@ -18,18 +18,47 @@ import FontsProps from "../styles/fontProps";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "react-native";
 import { ArrowLeft } from "../assets/index";
+import { TextInput } from "react-native-gesture-handler";
+import Button from "../components/shared/Button";
+import { useUpdateUsers } from "../services/updateProfil";
 
 const UserDetails: React.FC = () => {
   const navigation = useNavigation();
+  const { updateUser } = useUpdateUsers();
+  const [globalState, setGlobalState] = useGlobalState();
+  const [isEditabled, setIsEditabled] = React.useState(false);
+  const [lastname, setLastname] = React.useState(
+    globalState?.user?.lastname || ""
+  );
+  const [firstname, setFirstname] = React.useState(
+    globalState?.user?.firstname || ""
+  );
+  const [email, setEmail] = React.useState(globalState?.user?.email || "");
 
   const goBack = () => {
     navigation.goBack();
   };
 
+  const handleConfirm = () => {
+    const updatedInfo = {
+      lastname: lastname,
+      firstname: firstname,
+      email: email,
+      userId: globalState?.user?.userId,
+    };
+
+    updateUser({
+      variables: updatedInfo,
+    });
+
+    setIsEditabled(false);
+    setGlobalState({ ...globalState, user: updatedInfo });
+  };
+
   return (
     <>
       <StatusBar backgroundColor={Palette.green[4]} barStyle="light-content" />
-      <SafeAreaView>
+      <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.TopView}>
           <Text style={styles.headerTitleStyle}>Profil</Text>
         </View>
@@ -42,8 +71,46 @@ const UserDetails: React.FC = () => {
           </Text>
         </View>
 
-        <Text>UserDetails</Text>
+        <View style={styles.containerInput}>
+          <Text style={FontsProps.thin(18, Palette.black)}>Nom</Text>
+          <TextInput
+            style={styles.TextInput}
+            value={lastname}
+            onChangeText={setLastname}
+            editable={isEditabled}
+          ></TextInput>
+        </View>
+        <View style={styles.containerInput}>
+          <Text style={FontsProps.thin(18, Palette.black)}>Prénom</Text>
+          <TextInput
+            style={styles.TextInput}
+            value={firstname}
+            onChangeText={setFirstname}
+            editable={isEditabled}
+          ></TextInput>
+        </View>
+        <View style={styles.containerInput}>
+          <Text style={FontsProps.thin(18, Palette.black)}>Email</Text>
+          <TextInput
+            style={styles.TextInput}
+            value={email}
+            onChangeText={setEmail}
+            editable={isEditabled}
+          ></TextInput>
+        </View>
       </SafeAreaView>
+      <Button
+        title={isEditabled ? "Confirmer" : "Modifier"}
+        onPress={() =>
+          isEditabled ? handleConfirm() : setIsEditabled(!isEditabled)
+        }
+        style={{
+          positon: "absolute",
+          bottom: responsiveHeight(5),
+          alignSelf: "center",
+          height: responsiveHeight(7.5),
+        }}
+      />
     </>
   );
 };
@@ -72,6 +139,19 @@ const styles = StyleSheet.create({
   headerIcon: {
     position: "absolute",
     left: responsiveWidth(10),
+  },
+  containerInput: {
+    justifyContent: "space-around",
+    marginTop: responsiveHeight(2),
+    paddingHorizontal: responsiveWidth(10),
+  },
+  TextInput: {
+    width: responsiveWidth(60),
+    height: responsiveHeight(5),
+    paddingLeft: responsiveWidth(2),
+    borderRadius: 6,
+    borderColor: Palette.grey[1],
+    borderWidth: 1,
   },
 });
 

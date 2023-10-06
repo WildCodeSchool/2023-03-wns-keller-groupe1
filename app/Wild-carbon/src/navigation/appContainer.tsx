@@ -35,6 +35,7 @@ function App() {
   const [fontsLoaded] = useFonts({
     "NotoSansJP-Regular": require("../assets/fonts/NotoSansJP-Regular.ttf"),
     "NotoSansJP-Bold": require("../assets/fonts/NotoSansJP-Bold.ttf"),
+    "NotoSansJP-Thin": require("../assets/fonts/NotoSansJP-Thin.ttf"),
   });
 
   const Stack = createStackNavigator();

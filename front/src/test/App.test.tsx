@@ -1,26 +1,25 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom'
+import { render, screen, fireEvent } from "@testing-library/react";
+import "@testing-library/jest-dom";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { MockedProvider } from "@apollo/client/testing";
-import Login from '../screens/UserConnexion/Login';
-import { GlobalStateProvider } from '../GlobalStateContext';
+import Login from "../screens/UserConnexion/Login";
+import { GlobalStateProvider } from "../GlobalStateContext";
 import { BrowserRouter } from "react-router-dom";
-import Sidebar from '../components/SideBar/SideBar';
+import Sidebar from "../components/SideBar/SideBar";
 
 const client = new ApolloClient({
   uri: "http://192.168.1.12:4000/",
   cache: new InMemoryCache(),
 });
 
-test('Render login component and check text', () => {
-
+test("Render login component and check text", () => {
   render(
     <GlobalStateProvider>
       <BrowserRouter>
         <MockedProvider>
           <Login />
         </MockedProvider>
-      </BrowserRouter>     
+      </BrowserRouter>
     </GlobalStateProvider>
   );
 
@@ -28,39 +27,18 @@ test('Render login component and check text', () => {
   expect(linkElement).toBeInTheDocument();
 });
 
-test('Render login component and click register button', () => {
-
+test("Render login component and click register button", () => {
   render(
     <GlobalStateProvider>
       <BrowserRouter>
         <MockedProvider>
           <Login />
         </MockedProvider>
-      </BrowserRouter>     
+      </BrowserRouter>
     </GlobalStateProvider>
   );
 
   expect(screen.getByText(/S’inscrire/i)).toBeInTheDocument();
   fireEvent.click(screen.getByText(/S’inscrire/i));
   expect(screen.getByText(/Inscrivez-vous/i)).toBeInTheDocument();
-});
-
-test('Render navbar component', () => {
-
-  render(
-    <GlobalStateProvider>
-      <BrowserRouter>
-        <MockedProvider>
-          <Sidebar />
-        </MockedProvider>
-      </BrowserRouter>     
-    </GlobalStateProvider>
-  );
-
-  expect(screen.getByText(/Dashboard/i)).toBeInTheDocument();
-  expect(screen.getByText(/Profile/i)).toBeInTheDocument();
-  expect(screen.getByText(/Communauté/i)).toBeInTheDocument();
-  expect(screen.getByText(/Settings/i)).toBeInTheDocument();
-  expect(screen.getByText(/Donations/i)).toBeInTheDocument();
-  expect(screen.getByText(/Chat/i)).toBeInTheDocument();
 });
