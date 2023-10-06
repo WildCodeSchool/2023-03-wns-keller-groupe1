@@ -99,7 +99,7 @@ const start = async (): Promise<void> => {
   const PORT = 4000;
 
   httpServer.listen(PORT, () => {
-    console.log(`Server is now running on http://localhost:${PORT}${server.graphqlPath}`);
+    console.log(`Server is now running http://localhost:${PORT}${server.graphqlPath}`);
   });
 };
 
