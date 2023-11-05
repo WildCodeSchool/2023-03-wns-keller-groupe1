@@ -11,6 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState<string>("");
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
+  const [pseudo, setPseudo] = useState<string>("");
   const [globalState, setGlobalState] = useGlobalState();
   const { handleFormSubmit } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
@@ -34,6 +35,8 @@ const Login = () => {
             setFirstName={setFirstName}
             lastName={lastName}
             setLastName={setLastName}
+            pseudo={pseudo}
+            setPseudo={setPseudo}
             handleFormSubmit={(e) =>
               handleFormSubmit(
                 e,
@@ -42,7 +45,7 @@ const Login = () => {
                 password,
                 firstName,
                 lastName,
-                setIsLoading,
+                setIsLoading
               )
             }
             isLoading={isLoading}

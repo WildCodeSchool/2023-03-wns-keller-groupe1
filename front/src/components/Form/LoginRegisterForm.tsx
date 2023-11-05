@@ -16,6 +16,8 @@ const LoginRegisterForm = ({
   setLastName,
   handleFormSubmit,
   isLoading,
+  pseudo,
+  setPseudo,
   setIsLoading,
 }: LoginRegisterFormProps) => {
   const isValidEmail = (email: string): boolean => {
@@ -25,8 +27,7 @@ const LoginRegisterForm = ({
   };
 
   const isValidPassword = (password: string): boolean => {
-    const re: RegExp =
-    /^.{3,}$/
+    const re: RegExp = /^.{3,}$/;
     return re.test(password);
   };
 
@@ -44,7 +45,8 @@ const LoginRegisterForm = ({
       isValidEmail(email) &&
       isValidPassword(password) &&
       firstName &&
-      lastName
+      lastName &&
+      pseudo
     ) {
       setBtnDisabled(false);
     } else if (
@@ -69,6 +71,27 @@ const LoginRegisterForm = ({
         <div className={styles.formLogin}>
           {isRegister && (
             <>
+              <div className={styles.formGroupLogin}>
+                <p>Pseudonyme</p>
+                <div className={styles.formGroupLoginInputIcon}>
+                  <input
+                    className={styles.formInputLogin}
+                    type="text"
+                    name="Pseudonyme"
+                    id="Pseudonyme"
+                    placeholder="Votre pseudonyme"
+                    onChange={handleInputChange(setPseudo)}
+                    required
+                  />
+                  {pseudo && (
+                    <img
+                      src={checkRegister}
+                      alt="checkRegister"
+                      className={styles.checkRegister}
+                    />
+                  )}
+                </div>
+              </div>
               <div className={styles.formGroupLogin}>
                 <p>Nom</p>
                 <div className={styles.formGroupLoginInputIcon}>
@@ -159,11 +182,6 @@ const LoginRegisterForm = ({
             <div className={styles.spinner}></div>
           ) : (
             <>
-              {!isRegister && (
-                <div className={styles.formGroupLoginPassword}>
-                  <p>Mot de passe oublié</p>
-                </div>
-              )}
               <div className={styles.formGroupConnection}>
                 <button
                   className={styles.connectionButton}
