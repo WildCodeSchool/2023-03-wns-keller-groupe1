@@ -23,6 +23,7 @@
   font-size: 1.4vw;
   line-height: 35px;
   margin: 6% 0 4% 0;
+  color: #d9d9d9;
 }
 
 .formGroupLoginInputIcon {
@@ -40,7 +41,7 @@
 .formInputLogin {
   width: 90%;
   border: none;
-  border-bottom: 1px solid #111111;
+  border-bottom: 1px solid #d9d9d9;
   outline: none;
   background-color: transparent;
   padding-bottom: 1%;
@@ -49,7 +50,7 @@
   font-weight: 400;
   font-size: 1vw;
   line-height: 22px;
-  color: #111111;
+  color: #d9d9d9;
 }
 
 .formInputLogin:focus {
@@ -98,12 +99,15 @@
 
 .connectionButton:hover {
   background-color: #1c7b47;
-  color: grey;
+}
+.connectionButton:disabled {
+  background-color: #202737;
+  cursor: not-allowed;
 }
 
 .loadingButton {
   background-color: #1c7b47;
-  color: grey;
+
   border-radius: 20px;
   border: none;
   padding: 3% 0;
@@ -143,13 +147,8 @@
   color: #25a55f;
 }
 
-.connectionButton:disabled {
-  background-color: grey;
-  cursor: not-allowed;
-}
-
 .connectionButton:disabled:hover {
-  background-color: grey;
+  background-color: #202737;
   color: #fff;
   cursor: not-allowed;
 }

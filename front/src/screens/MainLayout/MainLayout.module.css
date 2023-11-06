@@ -1,0 +1,205 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  background-color: #161d2d;
+}
+.mainContentsup {
+  display: flex;
+  flex-direction: row;
+}
+.mainContent {
+  background-color: #111828;
+  width: 88vw;
+  height: 90vh;
+  border-radius: 20px;
+}
+.header {
+  width: 100%;
+  height: 10vh;
+  background-color: #161d2d;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+.title {
+  color: #1c7b47;
+  font-size: 36px;
+  font-weight: bold;
+  font-family: "Noto Sans JP", sans-serif;
+  padding-right: 3vw;
+}
+img {
+  width: calc(7.2vw * 1.4);
+  height: calc(1.6vw * 1.4);
+}
+
+/* Réinitialisation CSS de base */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 affichage pour les éléments HTML 'block' par défaut */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+/* Groupement de contenu */
+body {
+  line-height: 1;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+/* Les citations */
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+
+/* Les tableaux */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Réinitialisation spécifique des éléments du formulaire */
+input,
+button,
+textarea,
+select {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: middle;
+}
+
+/* Réinitialisation des boutons et des champs de saisie pour enlever les styles par défaut des navigateurs */
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: none;
+  border: none;
+}
+
+/* Pour enlever les décorations de lien par défaut */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Pour enlever les bordures des iframes */
+iframe {
+  border: none;
+}

@@ -16,10 +16,11 @@ const Social = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { sendFriendRequest } = useSendFriendRequest();
   const { acceptFriendRequest } = useAcceptFriendRequest();
-  const { friendRequests, refetch: refetchFriendRequests } = useGetAllFriendRequests(getParsedUserId());
-  const { userFriendsLists, refetch: refetchUserFriendsLists } = useGetUserFriendList(getParsedUserId());
-  const { deleteFriendRequest } = useDeleteFriendRequests()
-  
+  const { friendRequests, refetch: refetchFriendRequests } =
+    useGetAllFriendRequests(getParsedUserId());
+  const { userFriendsLists, refetch: refetchUserFriendsLists } =
+    useGetUserFriendList(getParsedUserId());
+  const { deleteFriendRequest } = useDeleteFriendRequests();
 
   useEffect(() => {
     if (searchTerm.length > 1) {
@@ -39,7 +40,7 @@ const Social = () => {
     user2Id: number
   ) => {
     acceptFriendRequest({
-      variables: { id: id, user1Id: user1Id, user2Id: user2Id }
+      variables: { id: id, user1Id: user1Id, user2Id: user2Id },
     })
       .then(() => {
         refetchFriendRequests();
@@ -53,7 +54,7 @@ const Social = () => {
 
   const handleDeleteRequest = (id: number) => {
     deleteFriendRequest({
-      variables: { deleteFriendRequestId: id }
+      variables: { deleteFriendRequestId: id },
     })
       .then(() => {
         refetchFriendRequests();
@@ -62,7 +63,7 @@ const Social = () => {
       .catch((error) => {
         console.error(error);
       });
-  }
+  };
   return (
     <div className={styles.container}>
       <section className={styles.all_sections}>
@@ -95,19 +96,21 @@ const Social = () => {
               0 && (
               <div className={styles.friends_request}>
                 <h3>Demande d'amis :</h3>
-                  <div className={styles.cards}>
-                    {friendRequests
-                      .filter((request: any) => !request.accepted)
-                      .map((request: any, index: any) => (
+                <div className={styles.cards}>
+                  {friendRequests
+                    .filter((request: any) => !request.accepted)
+                    .map((request: any, index: any) => (
                       <div key={index} className={styles.card}>
                         <h2>
-                        {request.userSender.firstname}{" "}
-                        {request.userSender.userId}
-                      </h2>
-                      <h2>{request.userSender.lastname}</h2>
+                          {request.userSender.firstname}{" "}
+                          {request.userSender.userId}
+                        </h2>
+                        <h2>{request.userSender.lastname}</h2>
                         <div className={styles.answer_friend}>
                           <span className={styles.icons}>
-                            <CrossIcon onClick={() => handleDeleteRequest(request.id,)} />
+                            <CrossIcon
+                              onClick={() => handleDeleteRequest(request.id)}
+                            />
                           </span>
                           <span className={styles.icons}>
                             <VectorIcon
@@ -123,7 +126,7 @@ const Social = () => {
                         </div>
                       </div>
                     ))}
-                  </div>
+                </div>
               </div>
             )}
             <div className={styles.friends_list}>
