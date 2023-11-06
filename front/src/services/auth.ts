@@ -37,24 +37,7 @@ const GET_USER_FROM_TOKEN = gql`
 `;
 
 export const useAuth = () => {
-  const {
-    isLogged,
-    setIsLogged,
-    user,
-    setUser,
-    isMonthChart,
-    setIsMonthChart,
-    isBarChart,
-    setIsBarChart,
-    dropdownOptions,
-    setDropdownOptions,
-    initialData,
-    setInitialData,
-    selectedValue,
-    setSelectedValue,
-    totalCo2,
-    setTotalCo2,
-  } = useGlobalState();
+  const { setIsLogged, setUser } = useGlobalState();
 
   const navigate = useNavigate();
 

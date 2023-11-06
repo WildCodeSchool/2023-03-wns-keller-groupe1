@@ -13,5 +13,22 @@
 }
 .containerSocial {
   width: 25%;
-  background-color: red;
+  background-color: #161d2d;
+  border-radius: 20px;
+}
+.containerSocialTop {
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: #202737 2px solid;
+  font-family: "Noto Sans JP", sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+  color: #e6e6e6;
+}
+.containerSocialBottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
