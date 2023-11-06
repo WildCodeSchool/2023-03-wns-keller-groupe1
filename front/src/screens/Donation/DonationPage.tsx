@@ -9,32 +9,44 @@ const DonationPage = () => {
       <div className="MainContainer">
         <div className="donationContainer">
           <div className="header">
-            <h1 className="mainTitle">
-              Création d'une forêt urbaine et humaine en France
-            </h1>
+            <h1 className="mainTitle">Soutenez Wild Carbon</h1>
           </div>
           <div className="textContainer">
             <div className="summary">
-              <p>Le projet de création d'une forêt urbaine et humaine dans la région des Bouches-du-Rhône vise à promouvoir la biodiversité, lutter contre la pollution atmosphérique et sensibiliser la population à l'importance de la nature en créant une forêt dense et diversifiée dans un espace urbain vacant ou un parc existant.</p>
+              <p>
+                Wild-Carbon est une application gratuite vous permettant de
+                suivre votre empreinte carbone. Pour maintenir notre plateforme
+                et continuer à développer de nouvelles fonctionnalités, nous
+                avons besoin de votre soutien.
+              </p>
             </div>
             <div className="summary">
-              <p>L'Office national des forêts (ONF) est un organisme public qui intervient dans différents lieux urbains pour répondre aux besoins de tous. Il s'occupe notamment de boisements et forêts urbaines, parcs et jardins publics, friches industrielles, délaissés urbains, ripisylves et zones humides ou encore corridors écologiques.</p>        
-            </div>         
+              <p>
+                Votre contribution financière, quel qu'en soit le montant,
+                aidera à assurer la pérennité de Wild-Carbon et à intensifier
+                notre combat contre le changement climatique.
+              </p>
+            </div>
           </div>
-          <div style={{width: "100%"}}>
-            <ProgressBar/>
+          <div style={{ width: "100%" }}>
+            <ProgressBar />
           </div>
           <div className="buttonContainer">
             <div className="center">
-              <button className="donateButton" onClick={() => handleFormSubmit(sessionStorage.getItem("user_id"))}>
+              <button
+                className="donateButton"
+                onClick={() =>
+                  handleFormSubmit(sessionStorage.getItem("user_id"))
+                }
+              >
                 Contribuer au Projet
-              </button> 
-            </div>      
-          </div>               
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
 export default DonationPage;
