@@ -1,5 +1,4 @@
 import React, { ReactNode } from "react";
-import SideBar from "../../components/SideBar/SideBar";
 import styles from "./MainLayout.module.css";
 import { MainLayoutProps } from "../../interface/shared/MainLayoutProps";
 import NavBar from "../../navigation/NavBar";
@@ -12,8 +11,10 @@ function MainLayout({ children, title }: MainLayoutProps) {
         <img src={greenLogo} alt="logo" className={styles.img} />
         <h1 className={styles.title}>{title}</h1>
       </div>
-      <NavBar activeTitle={title} />
-      {/* <main className={styles.mainContent}>{children}</main> */}
+      <div className={styles.mainContentsup}>
+        <NavBar activeTitle={title} />
+        <div className={styles.mainContent}>{children}</div>
+      </div>
     </div>
   );
 }

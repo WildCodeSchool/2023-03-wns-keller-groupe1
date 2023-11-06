@@ -1,9 +1,17 @@
 .container {
   width: 100vw;
   height: 100vh;
+  background-color: #161d2d;
+}
+.mainContentsup {
+  display: flex;
+  flex-direction: row;
 }
 .mainContent {
-  width: 50%;
+  background-color: #111828;
+  width: 88vw;
+  height: 90vh;
+  border-radius: 20px;
 }
 .header {
   width: 100%;

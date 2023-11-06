@@ -10,7 +10,6 @@ import HomePage from "../screens/Dashboard/HomePage";
 import Login from "../screens/UserConnexion/Login";
 import Statistic from "../screens/Statistic/Statistic";
 import Social from "../screens/Social/Social";
-import SideBar from "../components/SideBar/SideBar";
 import Success from "../screens/Payment/Success";
 import { gql, useQuery } from "@apollo/client";
 import NotFound from "../screens/Error/404";
