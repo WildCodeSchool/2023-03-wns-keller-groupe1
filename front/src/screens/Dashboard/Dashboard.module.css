@@ -1,0 +1,17 @@
+.Maincontainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  padding: 2vw;
+  height: 100%;
+}
+.MaincontainerLeft {
+  width: 70%;
+  height: 100%;
+}
+.containerSocial {
+  width: 25%;
+  background-color: red;
+}

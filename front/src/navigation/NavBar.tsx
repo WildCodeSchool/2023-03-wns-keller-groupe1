@@ -9,7 +9,8 @@ import {
   HomeIcon,
 } from "../assets/index";
 import Button from "../components/shared/Button";
-
+import { useNavigate } from "react-router-dom";
+import { useGlobalState } from "../GlobalStateContext";
 interface NavBarProps {
   activeTitle: string;
 }
@@ -20,6 +21,14 @@ const NavBar: React.FC<NavBarProps> = ({ activeTitle }) => {
     opacity: isActive ? 1 : 0.7,
     color: isActive ? "#1c7b47" : "#e6e6e6",
   });
+
+  const { logout } = useGlobalState();
+  const navigate = useNavigate(); // Créez une instance de navigate
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login"); // Redirige vers la page de connexion après la déconnexion
+  };
 
   return (
     <div className={styles.container}>
@@ -112,7 +121,7 @@ const NavBar: React.FC<NavBarProps> = ({ activeTitle }) => {
           text="Se déconnecter"
           backgroundColor="#FF1B1C"
           onClick={() => {
-            console.log("Cliquez!");
+            handleLogout();
           }}
         />
       </div>

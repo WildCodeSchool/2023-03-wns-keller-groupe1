@@ -11,7 +11,23 @@ import {
 } from "react-native-responsive-dimensions";
 import Palette from "../styles/Palette";
 const Statistic: React.FC = () => {
-  const [globalState, setGlobalState] = useGlobalState();
+  const {
+    isLogged,
+    user,
+    isMonthChart,
+    setIsMonthChart,
+    isBarChart,
+    setIsBarChart,
+    dropdownOptions,
+    setDropdownOptions,
+    initialData,
+    setInitialData,
+    selectedValue,
+    setSelectedValue,
+    totalCo2,
+    setTotalCo2,
+  } = useGlobalState();
+
   const userId = globalState.user.userId;
 
   const { loading, error, data, refetch } = useUserCarbonData(userId);

@@ -4,7 +4,6 @@ import CreateCarbonData from "../../services/createCarbonData";
 import styles from "./HomePage.module.css";
 import UserSummary from "../../components/dashboard/UserSummary";
 import { useUserCarbonData } from "../../services/getUserCarbonData";
-import StatsSection from "../../components/dashboard/StatsSection";
 import CommunitySection from "../../components/dashboard/CommunitySection";
 import NewDonationForm from "../../components/Form/NewDonationForm";
 import UpdateCarbonDataForm from "../../components/Form/UpdateCarbonDataForm";
@@ -68,9 +67,7 @@ const HomePage = () => {
           />
         </div>
         <div className={styles.bottomSectionContainer}>
-          <div className={styles.bottomSection}>
-            <StatsSection data={data} />
-          </div>
+          <div className={styles.bottomSection}></div>
           <div className={styles.bottomSection}>
             <CommunitySection />
           </div>

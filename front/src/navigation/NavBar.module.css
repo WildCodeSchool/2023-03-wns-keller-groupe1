@@ -46,7 +46,7 @@ ul {
 }
 
 .navLink svg {
-  margin-right: 10px; /* Adjust space between icon and title */
+  margin-right: 10px;
 }
 
 .navLink:hover {

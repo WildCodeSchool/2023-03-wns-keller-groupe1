@@ -26,10 +26,26 @@ import { useGlobalState } from "../../GlobalStateContext";
 
 const AddFriend: React.FC = () => {
   const navigation = useNavigation();
-  const [globalState, setGlobalState] = useGlobalState();
+  const {
+    isLogged,
+    user,
+    isMonthChart,
+    setIsMonthChart,
+    isBarChart,
+    setIsBarChart,
+    dropdownOptions,
+    setDropdownOptions,
+    initialData,
+    setInitialData,
+    selectedValue,
+    setSelectedValue,
+    totalCo2,
+    setTotalCo2,
+  } = useGlobalState();
+
   const route = useRoute();
   const currentFriends = route.params?.currentFriends || [];
-  const userId = globalState?.user?.userId;
+  const userId = user?.userId;
   const [isFocused, setIsFocused] = useState(false);
   const { getUsersByName, data, error, loading } = GetUsersByName();
 

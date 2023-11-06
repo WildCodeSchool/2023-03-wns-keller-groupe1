@@ -18,6 +18,7 @@ import Profile from "../screens/Profile/Profile";
 import Chat from "../screens/Chat/Chat";
 import MainLayout from "../screens/MainLayout/MainLayout";
 import { MainLayoutProps } from "../interface/shared/MainLayoutProps";
+import Dashboard from "../screens/Dashboard/Dashboard";
 
 export const VERIFY_TOKEN = gql`
   query Query($token: String!) {
@@ -37,7 +38,7 @@ function App() {
         />
         <Route
           path="/dashboard"
-          element={<PrivateRoute title="Dashboard" children={<HomePage />} />}
+          element={<PrivateRoute title="Dashboard" children={<Dashboard />} />}
         />
         <Route
           path="/statistic"

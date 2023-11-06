@@ -23,8 +23,24 @@ const DATA_PROFILE = gql`
 `;
 
 export default function Profile() {
-  const [globalState, setGlobalState] = useGlobalState();
-  const userId = globalState?.user?.userId;
+  const {
+    isLogged,
+    user,
+    isMonthChart,
+    setIsMonthChart,
+    isBarChart,
+    setIsBarChart,
+    dropdownOptions,
+    setDropdownOptions,
+    initialData,
+    setInitialData,
+    selectedValue,
+    setSelectedValue,
+    totalCo2,
+    setTotalCo2,
+  } = useGlobalState();
+
+  const userId = user?.userId;
   const [name, setName] = useState<String>("");
   const [age, setAge] = useState<Number>();
   const [about, setAbout] = useState<String>("");

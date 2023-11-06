@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useMemo } from "react";
-import Chart from "../../components/chart/chart";
+import Chart from "../../components/statistics/chart/chart";
 import styles from "./Statistic.module.css";
 import { useGlobalState } from "../../GlobalStateContext";
 import { ICarbonData } from "../../interface/CarbonData";
 import { useUserCarbonData } from "../../services/getUserCarbonData";
-import BarChart from "../../components/chart/VerticalBarChart";
+import BarChart from "../../components/statistics/chart/VerticalBarChart";
 import chart1Black from "../../assets/icons/chart1Black.png";
 import chart2Black from "../../assets/icons/chart2Black.png";
 import chart1White from "../../assets/icons/chart1White.png";
@@ -12,7 +12,23 @@ import chart2White from "../../assets/icons/chart2White.png";
 import { getParsedUserId } from "../../utils/getParsedUserId";
 
 const Statistic = () => {
-  const [globalState, setGlobalState] = useGlobalState();
+  const {
+    isLogged,
+    user,
+    isMonthChart,
+    setIsMonthChart,
+    isBarChart,
+    setIsBarChart,
+    dropdownOptions,
+    setDropdownOptions,
+    initialData,
+    setInitialData,
+    selectedValue,
+    setSelectedValue,
+    totalCo2,
+    setTotalCo2,
+  } = useGlobalState();
+
   const [LineChartSelected, setLineChartSelected] = useState<boolean>(false);
   const [OptionMonthSelected, setOptionMonthSelected] = useState<boolean>(true);
   const [months, setMonths] = useState<Array<{ month: string; year: string }>>(
@@ -22,7 +38,7 @@ const Statistic = () => {
   const [currentMonth, setCurrentMonth] = useState<string>("");
   const [selectedMonth, setSelectedMonth] = useState<string>(currentMonth);
   const [selectedYear, setSelectedYear] = useState<string>("");
-  
+
   const { error, data } = useUserCarbonData(getParsedUserId());
 
   useEffect(() => {
@@ -165,15 +181,17 @@ const Statistic = () => {
           <div style={{ width: "70%", height: "60vh", display: "flex" }}>
             {typeof data != "undefined" ? (
               LineChartSelected ? (
-                <Chart
-                  data={{ data: filteredData as ICarbonData[] }}
-                  OptionMonthSelected={OptionMonthSelected}
-                />
+                // <Chart
+                //   data={{ data: filteredData as ICarbonData[] }}
+                //   OptionMonthSelected={OptionMonthSelected}
+                // />
+                <></>
               ) : (
-                <BarChart
-                  data={{ data: filteredData as ICarbonData[] }}
-                  OptionMonthSelected={OptionMonthSelected}
-                />
+                // <BarChart
+                //   data={{ data: filteredData as ICarbonData[] }}
+                //   OptionMonthSelected={OptionMonthSelected}
+                // />
+                <></>
               )
             ) : (
               <div>Chargement...</div>
