@@ -56,13 +56,25 @@ const CarbonExpenseList: React.FC<CarbonExpenseListProps> = ({
 }) => {
   console.log("initialData", initialData);
   console.log("selectedValue", selectedValue);
-  const [selectedMonth, selectedYear] = selectedValue.split(" ");
+  // Séparer les valeurs sélectionnées par un espace
+  const selectedParts = selectedValue.split(" ");
+  const selectedYear =
+    selectedParts.length === 1 ? selectedParts[0] : selectedParts[1];
+  const selectedMonth = selectedParts.length === 2 ? selectedParts[0] : null;
 
   const yearlyData: YearlyData | undefined = initialData[selectedYear];
-  const filteredData: CarbonDataContainerProps["data"][] = yearlyData
-    ? yearlyData[selectedMonth] || []
-    : [];
 
+  // Gérer le cas où seulement l'année est sélectionnée
+  let filteredData: CarbonDataContainerProps["data"][];
+  if (selectedMonth) {
+    // Un mois spécifique a été sélectionné
+    filteredData = yearlyData ? yearlyData[selectedMonth] || [] : [];
+  } else {
+    // Seulement l'année a été sélectionnée, rassembler toutes les données de l'année
+    filteredData = yearlyData
+      ? Object.values(yearlyData).flat() // Utiliser .flat() pour aplatir le tableau de tableaux
+      : [];
+  }
   console.log("filteredData", filteredData);
   return (
     <div className={Styles.Maincontainer}>
