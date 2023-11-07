@@ -47,7 +47,9 @@ const Dashboard = () => {
     }
   }, [userFriendsLists, loadingFriends, errorFriends, setUserFriends]);
   setUserCarbonData(userCarbonData);
-  console.log(userFriendsLists, "userFriendsLists");
+
+  console.log("initialData", initialData);
+  console.log(selectedValue);
   return (
     <div className={Styles.Maincontainer}>
       <div className={Styles.MaincontainerLeft}>
@@ -63,7 +65,10 @@ const Dashboard = () => {
           totalCo2={totalCo2}
         />
         <div className={Styles.containerCarbon}>
-          <CarbonExpenseList />
+          <CarbonExpenseList
+            initialData={initialData}
+            selectedValue={selectedValue}
+          />
         </div>
       </div>
       <div className={Styles.containerSocial}>
