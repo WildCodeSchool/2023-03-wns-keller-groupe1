@@ -1,0 +1,73 @@
+.Maincontainer {
+  width: 100%;
+  height: 100%;
+  background-color: #161d2d;
+  border-radius: 20px;
+  margin-top: 1.5vw;
+  padding: 0.5vw 0;
+}
+.TopContainer {
+  display: flex;
+  flex-direction: row;
+  border-bottom: #232e40 2px solid;
+  padding: 0 2vw 0.5vw 2vw;
+}
+.TopContainer p {
+  color: #d9d9d9;
+  font-size: 20px;
+  font-family: "Noto Sans JP", sans-serif;
+}
+.numberlist {
+  width: 48px;
+  height: 36px;
+  margin-bottom: 10px;
+}
+.firstContainer {
+  width: 10%;
+  display: flex;
+}
+.secondContainer {
+  width: 30%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 1vw;
+}
+.thirdContainer {
+  width: 30%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 1vw;
+}
+.fourContainer {
+  width: 15%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.fiveContainer {
+  width: 15%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.Midcontainer {
+  padding: 0.5vw 1.2vw;
+}
+.CarbonDataContainer {
+  background-color: #202737;
+  padding: 1vw;
+  border-radius: 20px;
+  margin-top: 1vw;
+  display: flex;
+  flex-direction: row;
+}
+.CarbonDataContainer p {
+  color: #d9d9d9;
+  font-size: 16px;
+  font-family: "Noto Sans JP", sans-serif;
+}
+.NameText {
+  font-weight: bold;
+}

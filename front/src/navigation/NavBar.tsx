@@ -9,6 +9,9 @@ import {
   HomeIcon,
 } from "../assets/index";
 import Button from "../components/shared/Button";
+import { useNavigate } from "react-router-dom";
+import { useGlobalState } from "../GlobalStateContext";
+import greenLogo from "../assets/images/green-logo.png";
 
 interface NavBarProps {
   activeTitle: string;
@@ -21,8 +24,18 @@ const NavBar: React.FC<NavBarProps> = ({ activeTitle }) => {
     color: isActive ? "#1c7b47" : "#e6e6e6",
   });
 
+  const { logout } = useGlobalState();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
   return (
     <div className={styles.container}>
+      <img src={greenLogo} alt="logo" className={styles.img} />
+
       <div className={styles.midcontainer}>
         <nav className={styles.navcontainer}>
           <ul>
@@ -112,7 +125,7 @@ const NavBar: React.FC<NavBarProps> = ({ activeTitle }) => {
           text="Se déconnecter"
           backgroundColor="#FF1B1C"
           onClick={() => {
-            console.log("Cliquez!");
+            handleLogout();
           }}
         />
       </div>

@@ -20,8 +20,24 @@ export default function CardUpdate({
   city,
 }: any) {
   const { updateUser } = useUpdateUsers();
-  const [globalState, setGlobalState] = useGlobalState();
-  const userId = globalState?.user?.userId;
+  const {
+    isLogged,
+    user,
+    isMonthChart,
+    setIsMonthChart,
+    isBarChart,
+    setIsBarChart,
+    dropdownOptions,
+    setDropdownOptions,
+    initialData,
+    setInitialData,
+    selectedValue,
+    setSelectedValue,
+    totalCo2,
+    setTotalCo2,
+  } = useGlobalState();
+
+  const userId = user?.userId;
   console.log(userId);
 
   const handleSubmit = () => {
@@ -49,7 +65,8 @@ export default function CardUpdate({
         </div>
       </div>
       <div className="lower-update-container">
-        <input className="input-1"
+        <input
+          className="input-1"
           type="text"
           placeholder="fullname"
           value={name}
@@ -57,7 +74,8 @@ export default function CardUpdate({
             return setName(e.target.value), e.preventDefault();
           }}
         />
-        <input className="input-1"
+        <input
+          className="input-1"
           type="text"
           placeholder="gender"
           value={gender}
@@ -65,7 +83,8 @@ export default function CardUpdate({
             return setGender(e.target.value), e.preventDefault();
           }}
         />
-        <input className="input-1"
+        <input
+          className="input-1"
           type="number"
           placeholder="age"
           value={age}
@@ -73,7 +92,8 @@ export default function CardUpdate({
             return setAge(e.target.value), e.preventDefault();
           }}
         />
-        <input className="input-1"
+        <input
+          className="input-1"
           type="text"
           placeholder="phone"
           value={tel}
@@ -81,7 +101,8 @@ export default function CardUpdate({
             return setTel(e.target.value), e.preventDefault();
           }}
         />
-        <input className="input-1"
+        <input
+          className="input-1"
           type="text"
           placeholder="mail"
           value={email}
@@ -89,7 +110,8 @@ export default function CardUpdate({
             return setEmail(e.target.value), e.preventDefault();
           }}
         />
-        <input className="input-1"
+        <input
+          className="input-1"
           type="text"
           placeholder="city"
           value={city}
@@ -97,7 +119,8 @@ export default function CardUpdate({
             return setCity(e.target.value), e.preventDefault();
           }}
         />
-        <input className="input-1"
+        <input
+          className="input-1"
           type="text"
           placeholder="Bio"
           value={about}

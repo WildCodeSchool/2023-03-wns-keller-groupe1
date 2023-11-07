@@ -2,10 +2,7 @@ import { useState } from "react";
 import NewCarbonDataForm from "../../components/Form/NewCarbonDataForm";
 import CreateCarbonData from "../../services/createCarbonData";
 import styles from "./HomePage.module.css";
-import UserSummary from "../../components/dashboard/UserSummary";
 import { useUserCarbonData } from "../../services/getUserCarbonData";
-import StatsSection from "../../components/dashboard/StatsSection";
-import CommunitySection from "../../components/dashboard/CommunitySection";
 import NewDonationForm from "../../components/Form/NewDonationForm";
 import UpdateCarbonDataForm from "../../components/Form/UpdateCarbonDataForm";
 import { getParsedUserId } from "../../utils/getParsedUserId";
@@ -57,24 +54,6 @@ const HomePage = () => {
   return (
     <>
       <div className={styles.MainContainer}>
-        <div>
-          <UserSummary
-            data={data}
-            setQuery={setQuery}
-            setName={setName}
-            setCategory={setCategory}
-            setCo2={setCo2}
-            setUpdateCarbonDataId={setUpdateCarbonDataId}
-          />
-        </div>
-        <div className={styles.bottomSectionContainer}>
-          <div className={styles.bottomSection}>
-            <StatsSection data={data} />
-          </div>
-          <div className={styles.bottomSection}>
-            <CommunitySection />
-          </div>
-        </div>
         <button
           className={styles.donateButton}
           onClick={() => handleModalDonation()}

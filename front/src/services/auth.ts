@@ -37,7 +37,8 @@ const GET_USER_FROM_TOKEN = gql`
 `;
 
 export const useAuth = () => {
-  const [globalState, setGlobalState] = useGlobalState();
+  const { setIsLogged, setUser } = useGlobalState();
+
   const navigate = useNavigate();
 
   const [createNewUser, { loading, error }] = useMutation(CREATE_USER, {
@@ -55,9 +56,10 @@ export const useAuth = () => {
       toast.error(`Error getting user data: ${error.message}`);
     },
     onCompleted: (data) => {
-      setGlobalState({ isLogged: true, user: data.getUserFromToken });  
+      setUser(data.getUserFromToken);
+      setIsLogged(true);
       sessionStorage.setItem("user_id", data.getUserFromToken.userId);
-      sessionStorage.setItem("firstname", data.getUserFromToken.firstname);  
+      sessionStorage.setItem("firstname", data.getUserFromToken.firstname);
       navigate("/dashboard");
     },
   });
