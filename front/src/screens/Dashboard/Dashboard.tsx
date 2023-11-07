@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Styles from "./Dashboard.module.css";
 import Statistics from "../../components/statistics/Statistics";
 import FriendsContainer from "../../components/shared/FriendsContainer";
+import CarbonExpenseList from "../../components/dashboard/CarbonExpenseList";
 import { useGlobalState } from "../../GlobalStateContext";
 import { useUserCarbonData } from "../../services/getUserCarbonData";
 import { useGetUserFriendList } from "../../services/getUserFriendList";
@@ -61,7 +62,9 @@ const Dashboard = () => {
           initialData={initialData}
           totalCo2={totalCo2}
         />
-        <div className={Styles.containerCarbon}>containerCarbon</div>
+        <div className={Styles.containerCarbon}>
+          <CarbonExpenseList />
+        </div>
       </div>
       <div className={Styles.containerSocial}>
         <div className={Styles.containerSocialTop}>

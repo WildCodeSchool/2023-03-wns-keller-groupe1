@@ -11,6 +11,8 @@ import {
 import Button from "../components/shared/Button";
 import { useNavigate } from "react-router-dom";
 import { useGlobalState } from "../GlobalStateContext";
+import greenLogo from "../assets/images/green-logo.png";
+
 interface NavBarProps {
   activeTitle: string;
 }
@@ -23,15 +25,17 @@ const NavBar: React.FC<NavBarProps> = ({ activeTitle }) => {
   });
 
   const { logout } = useGlobalState();
-  const navigate = useNavigate(); // Créez une instance de navigate
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
-    navigate("/login"); // Redirige vers la page de connexion après la déconnexion
+    navigate("/login");
   };
 
   return (
     <div className={styles.container}>
+      <img src={greenLogo} alt="logo" className={styles.img} />
+
       <div className={styles.midcontainer}>
         <nav className={styles.navcontainer}>
           <ul>

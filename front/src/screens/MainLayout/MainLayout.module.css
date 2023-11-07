@@ -1,6 +1,5 @@
 .container {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
   background-color: #161d2d;
 }
 .mainContentsup {
@@ -10,8 +9,9 @@
 .mainContent {
   background-color: #111828;
   width: 88vw;
-  height: 90vh;
+  height: 100%;
   border-radius: 20px;
+  margin-left: 12vw;
 }
 .header {
   width: 100%;
@@ -28,10 +28,6 @@
   font-weight: bold;
   font-family: "Noto Sans JP", sans-serif;
   padding-right: 3vw;
-}
-img {
-  width: calc(7.2vw * 1.4);
-  height: calc(1.6vw * 1.4);
 }
 
 /* Réinitialisation CSS de base */
