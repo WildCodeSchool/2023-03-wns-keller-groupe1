@@ -24,6 +24,7 @@
     "@types/node": "^16.18.16",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
+    "axios": "^1.6.0",
     "chart.js": "^4.3.0",
     "formik": "^2.4.2",
     "framer-motion": "^10.12.18",
@@ -64,5 +65,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0"
   }
 }

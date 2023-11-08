@@ -8,6 +8,7 @@ type ButtonProps = {
   textColor?: string;
   borderRadius?: string;
   onClick?: () => void;
+  disabled?: boolean;
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -18,6 +19,7 @@ const Button: React.FC<ButtonProps> = ({
   textColor = "#D9D9D9",
   borderRadius = "20px",
   onClick = () => {},
+  disabled = false,
 }) => {
   const staticStyles = {
     display: "inline-block",
@@ -33,7 +35,7 @@ const Button: React.FC<ButtonProps> = ({
   const dynamicStyles = {
     width,
     height,
-    backgroundColor,
+    backgroundColor: disabled ? "#AAAAAA" : backgroundColor,
     color: textColor,
     opacity: hover ? 0.8 : 1,
   };
@@ -44,6 +46,7 @@ const Button: React.FC<ButtonProps> = ({
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       onClick={onClick}
+      disabled={disabled}
     >
       {text}
     </button>

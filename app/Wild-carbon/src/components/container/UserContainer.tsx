@@ -33,7 +33,6 @@ interface UserProps {
 const UserContainer: React.FC<UserProps> = ({ user }) => {
   const { sendFriendRequest } = useSendFriendRequest();
   const [requestSent, setRequestSent] = useState(false);
-  const { user } = useGlobalState();
   const handleSendRequest = async () => {
     try {
       await sendFriendRequest({

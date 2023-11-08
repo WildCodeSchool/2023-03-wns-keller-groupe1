@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Styles from "./CarbonExpenseList.module.css";
 import numberlist from "../../assets/images/numberlist.png";
+import Button from "../shared/Button";
+import FormAddCarbonData from "./FormAddCarbonData";
+import CreateCarbonData from "../../services/createCarbonData";
+import axios from "axios";
+import { Type } from "react-toastify/dist/utils";
+import arrowbot from "../../assets/images/arrowbot.png";
+import DeleteCarbonData from "../../services/deleteCarbonData";
 
 interface CarbonDataContainerProps {
   data: {
@@ -8,8 +15,10 @@ interface CarbonDataContainerProps {
     categoryString: string;
     consumption: number;
     createdAt: string;
+    id: number;
   };
   index: number;
+  onDelete?: (id: number) => Promise<void>;
 }
 interface YearlyData {
   [key: string]: CarbonDataContainerProps["data"][];
@@ -18,45 +27,64 @@ interface YearlyData {
 interface CarbonExpenseListProps {
   initialData: { [key: string]: YearlyData };
   selectedValue: string;
+  userId: number;
 }
 
 const CarbonDataContainer: React.FC<CarbonDataContainerProps> = ({
   data,
   index,
+  onDelete,
 }) => {
+  const [showOptions, setShowOptions] = useState(false);
+
+  const toggleOptions = () => {
+    setShowOptions(!showOptions);
+  };
+  console.log(data, "data");
   return (
-    <div className={Styles.CarbonDataContainer}>
-      <div className={Styles.firstContainer}>
-        <p style={{ color: "#AAAAAA", fontSize: "20px" }}>{index + 1}</p>
+    <div className={Styles.MainCarbonDataContainer}>
+      <div className={Styles.CarbonDataContainer}>
+        <div className={Styles.firstContainer}>
+          <p style={{ color: "#AAAAAA", fontSize: "20px" }}>{index + 1}</p>
+        </div>
+        <div className={Styles.secondContainer}>
+          <p className={Styles.NameText}>{data.title}</p>
+        </div>
+        <div className={Styles.thirdContainer}>
+          <p>{data.categoryString}</p>
+        </div>
+        <div className={Styles.fourContainer}>
+          <p>{data.consumption}</p>
+        </div>
+        <div className={Styles.fiveContainer2}>
+          <p>{new Date(data.createdAt).toLocaleDateString()}</p>
+        </div>
+        <div className={Styles.sixContainer2} onClick={toggleOptions}>
+          {!showOptions ? (
+            <img src={arrowbot} alt="arrowbot" className={Styles.arrowbot} />
+          ) : (
+            <img src={arrowbot} alt="arrowbot" className={Styles.arrowbot2} />
+          )}
+        </div>
       </div>
-      <div className={Styles.secondContainer}>
-        <p className={Styles.NameText}>{data.title}</p>
-      </div>
-      <div className={Styles.thirdContainer}>
-        <p>{data.categoryString}</p>
-      </div>
-      <div className={Styles.fourContainer}>
-        <p>{data.consumption}</p>
-      </div>
-      <div className={Styles.fiveContainer}>
-        <p>{new Date(data.createdAt).toLocaleDateString()}</p>
-      </div>
+      {showOptions && (
+        <div className={Styles.CarbonDataContainerbot}>
+          {data.id && (
+            <p className={Styles.pSup} onClick={() => onDelete?.(data.id)}>
+              Supprimer
+            </p>
+          )}
+        </div>
+      )}
     </div>
   );
 };
 
-interface CarbonExpenseListProps {
-  initialData: { [key: string]: YearlyData };
-  selectedValue: string;
-}
-
 const CarbonExpenseList: React.FC<CarbonExpenseListProps> = ({
   initialData,
   selectedValue,
+  userId,
 }) => {
-  console.log("initialData", initialData);
-  console.log("selectedValue", selectedValue);
-  // Séparer les valeurs sélectionnées par un espace
   const selectedParts = selectedValue.split(" ");
   const selectedYear =
     selectedParts.length === 1 ? selectedParts[0] : selectedParts[1];
@@ -64,18 +92,74 @@ const CarbonExpenseList: React.FC<CarbonExpenseListProps> = ({
 
   const yearlyData: YearlyData | undefined = initialData[selectedYear];
 
-  // Gérer le cas où seulement l'année est sélectionnée
   let filteredData: CarbonDataContainerProps["data"][];
   if (selectedMonth) {
-    // Un mois spécifique a été sélectionné
     filteredData = yearlyData ? yearlyData[selectedMonth] || [] : [];
   } else {
-    // Seulement l'année a été sélectionnée, rassembler toutes les données de l'année
-    filteredData = yearlyData
-      ? Object.values(yearlyData).flat() // Utiliser .flat() pour aplatir le tableau de tableaux
-      : [];
+    filteredData = yearlyData ? Object.values(yearlyData).flat() : [];
   }
-  console.log("filteredData", filteredData);
+
+  const { handleFormSubmit, handleUpdateFormSubmit } = CreateCarbonData();
+
+  const [expenseName, setExpenseName] = useState<string>("");
+  const [category, setCategory] = useState<string>("");
+  const [selectedDate, setSelectedDate] = useState(() => {
+    const today = new Date();
+    return today.toISOString().split("T")[0];
+  });
+
+  const [carbonWeight, setCarbonWeight] = useState<number>(0);
+
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [apiResults, setApiResults] = useState<any[]>([]);
+  const [showEditForm, setShowEditForm] = useState(false);
+  const fetchAdemeApi = async () => {
+    try {
+      const response = await axios.get(
+        `https://data.ademe.fr/data-fair/api/v1/datasets/base-carboner/lines?q=${expenseName}&q_mode=complete`
+      );
+      setApiResults(response.data.results);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des données:", error);
+    }
+  };
+  useEffect(() => {
+    if (expenseName) {
+      fetchAdemeApi();
+    }
+  }, [expenseName]);
+
+  const handleAddExpenseClick = () => {
+    if (!showEditForm) {
+      setShowEditForm((prevShowEditForm) => !prevShowEditForm);
+      return;
+    }
+
+    if (expenseName && category && carbonWeight > 0) {
+      const selectedDateObject = new Date(
+        selectedDate.split("/").reverse().join("-")
+      );
+      handleFormSubmit(
+        expenseName,
+        carbonWeight,
+        category,
+        userId,
+        selectedDateObject
+      ).catch(console.error);
+      setExpenseName("");
+      setCategory("");
+      setCarbonWeight(0);
+      setSelectedDate(
+        new Date().toISOString().split("T")[0].split("-").reverse().join("/")
+      );
+      setShowEditForm(false);
+    }
+  };
+
+  const isButtonDisabled = !expenseName || !category || carbonWeight <= 0;
+
+  const { handleFormSubmitDelete } = DeleteCarbonData();
+
   return (
     <div className={Styles.Maincontainer}>
       <div className={Styles.TopContainer}>
@@ -102,9 +186,41 @@ const CarbonExpenseList: React.FC<CarbonExpenseListProps> = ({
       <div className={Styles.Midcontainer}>
         {filteredData.map(
           (dataItem: CarbonDataContainerProps["data"], index: number) => (
-            <CarbonDataContainer key={index} data={dataItem} index={index} />
+            <CarbonDataContainer
+              key={index}
+              data={dataItem}
+              index={index}
+              onDelete={handleFormSubmitDelete}
+            />
           )
         )}
+      </div>
+      {showEditForm && (
+        <FormAddCarbonData
+          userId={userId}
+          expenseName={expenseName}
+          setExpenseName={setExpenseName}
+          category={category}
+          setCategory={setCategory}
+          carbonWeight={carbonWeight}
+          setCarbonWeight={setCarbonWeight}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+          handleFormSubmit={handleFormSubmit}
+          showEditForm={showEditForm}
+          setShowEditForm={setShowEditForm}
+          apiResults={apiResults}
+          showSuggestions={showSuggestions}
+          setShowSuggestions={setShowSuggestions}
+        />
+      )}
+      <div className={Styles.BottomContainer}>
+        <Button
+          text={showEditForm ? "Valider" : "Ajouter une dépense"}
+          width="30%"
+          onClick={() => handleAddExpenseClick()}
+          disabled={showEditForm ? isButtonDisabled : false}
+        />
       </div>
     </div>
   );

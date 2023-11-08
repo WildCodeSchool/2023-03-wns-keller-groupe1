@@ -8,7 +8,7 @@ import { GlobalStateProvider } from "./GlobalStateContext";
 
 // il faut votre  Adresse IPv4 si vous utiliser pas un emulateur
 const client = new ApolloClient({
-  uri: "http://10.0.2.2:4000/",
+  uri: "http://192.168.156.161:4000/",
   cache: new InMemoryCache(),
 });
 

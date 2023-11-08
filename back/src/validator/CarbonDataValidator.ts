@@ -1,5 +1,5 @@
-import { MaxLength } from "class-validator";
 import { Field, Float, InputType, Int } from "type-graphql";
+import { MaxLength } from "class-validator";
 
 @InputType()
 export class CarbonDataInput {
@@ -22,4 +22,7 @@ export class CarbonDataInput {
   @Field({ nullable: true })
   @MaxLength(255)
   categoryString: string = "";
+
+  @Field(() => String, { nullable: true })
+  createdAt: string;
 }

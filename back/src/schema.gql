@@ -46,7 +46,7 @@ type Mutation {
   checkoutDonation(userid: Float!): String!
   checkoutSuccess(sessionId: String!, userid: Float!): String!
   createBankDetails(stripeDetails: String!, userId: Float!): String!
-  createCarbonData(category: String!, consumption: Float!, title: String!, userId: Float!): String!
+  createCarbonData(category: String!, consumption: Float!, createdAt: String!, title: String!, userId: Float!): String!
   createCategory(title: String!): String!
   createUser(email: String!, firstname: String!, lastname: String!, password: String!): String!
   createUserGroupe(title: String!, userId: Float!): String!

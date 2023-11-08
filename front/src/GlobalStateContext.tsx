@@ -140,6 +140,7 @@ export const GlobalStateProvider = ({ children }: IGlobalStateContextProps) => {
       });
 
       if (options.length > 0) {
+        options.reverse();
         const selected = options[0];
         setSelectedValue(selected);
         calculateTotalCo2(selected);

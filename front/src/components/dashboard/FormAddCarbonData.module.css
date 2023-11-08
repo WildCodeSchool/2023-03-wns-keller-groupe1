@@ -1,0 +1,86 @@
+.CarbonDataContainer {
+  /* background-color: #202737; */
+  padding: 1vw;
+  border-radius: 20px;
+  margin-top: 1vw;
+  display: flex;
+  flex-direction: row;
+}
+.CarbonDataContainer p {
+  color: #d9d9d9;
+  font-size: 16px;
+  font-family: "Noto Sans JP", sans-serif;
+}
+.FormAddCarbonDataContainer {
+  padding: 0.5vw 1.2vw;
+  display: flex;
+  flex-direction: row;
+}
+.firstContainer {
+  width: 10%;
+  display: flex;
+}
+.secondContainer {
+  width: 30%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.thirdContainer {
+  width: 30%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 1vw;
+}
+.fourContainer {
+  width: 15%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.fiveContainer {
+  width: 20%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.inputCarbon {
+  width: 90%;
+  background-color: #202737;
+  padding: 1vw;
+  border-radius: 20px;
+  border: none;
+  color: #d9d9d9;
+  font-family: "Noto Sans JP", sans-serif;
+}
+.suggestionsDropdown {
+  position: absolute;
+  background-color: #202737; /* Couleur de fond pour le menu déroulant */
+  width: 15%;
+  max-height: 200px; /* Vous pouvez ajuster selon vos besoins */
+  overflow-y: auto; /* Pour le défilement si plus de 5 éléments */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Une légère ombre pour le style */
+  z-index: 10; /* Pour s'assurer que la liste est au-dessus des autres éléments */
+  margin-top: 20vh;
+}
+
+.suggestionItem {
+  color: #d9d9d9;
+  font-size: 16px;
+  font-family: "Noto Sans JP", sans-serif;
+  padding: 10px; /* Ajuster pour le style */
+  cursor: pointer; /* Pour montrer que l'élément est cliquable */
+}
+
+.suggestionItem:hover {
+  background-color: #2a2f45; /* Changement de fond au survol */
+}
+input[type="date"] {
+  color: #d9d9d9; /* Couleur du texte */
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  color: #d9d9d9; /* Icône transparente */
+  margin-left: 0.3em;
+}

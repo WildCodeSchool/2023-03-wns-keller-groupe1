@@ -16,8 +16,6 @@ const LoginRegisterForm = ({
   setLastName,
   handleFormSubmit,
   isLoading,
-  pseudo,
-  setPseudo,
   setIsLoading,
 }: LoginRegisterFormProps) => {
   const isValidEmail = (email: string): boolean => {
@@ -45,8 +43,7 @@ const LoginRegisterForm = ({
       isValidEmail(email) &&
       isValidPassword(password) &&
       firstName &&
-      lastName &&
-      pseudo
+      lastName
     ) {
       setBtnDisabled(false);
     } else if (
@@ -71,27 +68,6 @@ const LoginRegisterForm = ({
         <div className={styles.formLogin}>
           {isRegister && (
             <>
-              <div className={styles.formGroupLogin}>
-                <p>Pseudonyme</p>
-                <div className={styles.formGroupLoginInputIcon}>
-                  <input
-                    className={styles.formInputLogin}
-                    type="text"
-                    name="Pseudonyme"
-                    id="Pseudonyme"
-                    placeholder="Votre pseudonyme"
-                    onChange={handleInputChange(setPseudo)}
-                    required
-                  />
-                  {pseudo && (
-                    <img
-                      src={checkRegister}
-                      alt="checkRegister"
-                      className={styles.checkRegister}
-                    />
-                  )}
-                </div>
-              </div>
               <div className={styles.formGroupLogin}>
                 <p>Nom</p>
                 <div className={styles.formGroupLoginInputIcon}>

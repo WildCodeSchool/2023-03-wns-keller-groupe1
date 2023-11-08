@@ -6,114 +6,110 @@ import { GET_USER } from "./getUserCarbonData";
 
 export const CREATE_CARBON_DATA = gql`
   mutation CreateCarbonData(
-		$userId: Float!, 
-		$category: String!, 
-		$consumption: Float!, 
-		$title: String!
-	) {
+    $userId: Float!
+    $category: String!
+    $consumption: Float!
+    $title: String!
+    $createdAt: String!
+  ) {
     createCarbonData(
-			userId: $userId, 
-			category: $category, 
-			consumption: $consumption, 
-			title: $title
-		)
+      userId: $userId
+      category: $category
+      consumption: $consumption
+      title: $title
+      createdAt: $createdAt
+    )
   }
 `;
 
-export const UPDATE_CARBON_DATA = gql `
-	mutation UpdateCarbonData( 
-		$consumption: Float!, 
-		$category: String!,
-		$title: String!, 
-		$updateCarbonDataId: Float!
-	) {
-		updateCarbonData(
-			consumption: $consumption,
-			category: $category,
-			title: $title, 
-			id: $updateCarbonDataId)
-	}
+export const UPDATE_CARBON_DATA = gql`
+  mutation UpdateCarbonData(
+    $consumption: Float!
+    $category: String!
+    $title: String!
+    $updateCarbonDataId: Float!
+  ) {
+    updateCarbonData(
+      consumption: $consumption
+      category: $category
+      title: $title
+      id: $updateCarbonDataId
+    )
+  }
 `;
 
 const CreateCarbonData = () => {
-	// const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-	const [createNewCarbonData, carbonData] = useMutation(CREATE_CARBON_DATA, {
-		onError: (error) => {
-      toast.error(`Error creating carbon data: ${error.message}`);
+  const [createNewCarbonData, carbonData] = useMutation(CREATE_CARBON_DATA, {
+    onError: (error) => {
+      // toast.error(`Error creating carbon data: ${error.message}`);
     },
-		onCompleted: (data) => {
+    onCompleted: (data) => {
       toast.success("Une nouvelle dépense carbone a bien été créé");
-			const modal: any = document.getElementById("new-carbon-modal");
-			modal.style.display = "none";	
     },
-		refetchQueries: [GET_USER]
-	})
+    refetchQueries: [GET_USER],
+  });
 
-	const [updateCarbonData, updatedCarbonData] = useMutation(UPDATE_CARBON_DATA, {
-		onError: (error) => {
-      toast.error(`Error updating carbon data: ${error.message}`);
-    },
-		onCompleted: (data) => {
-      toast.success("La dépense carbone a bien été modifié");
-			const modal: any = document.getElementById("update-carbon-modal");
-			modal.style.display = "none";	
-    },
-		refetchQueries: [GET_USER]
-	})
+  const [updateCarbonData, updatedCarbonData] = useMutation(
+    UPDATE_CARBON_DATA,
+    {
+      onError: (error) => {
+        // toast.error(`Error updating carbon data: ${error.message}`);
+      },
+      onCompleted: (data) => {
+        toast.success("La dépense carbone a bien été modifié");
+        const modal: any = document.getElementById("update-carbon-modal");
+        modal.style.display = "none";
+      },
+      refetchQueries: [GET_USER],
+    }
+  );
 
-	const handleFormSubmit = async (
-		event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-		name: string|undefined,
-		co2: number|undefined,
-		category: string|undefined,
-		userId: string|null,
-		setQuery: Function,
-		setCo2: Function,
-		setCategory: Function
-	): Promise<void>  => {
-		event.preventDefault();
-		if (userId) {
-			const parsedUserId = parseInt(userId);
-			await createNewCarbonData({
-				variables: {
-					userId: parsedUserId,
-					category: category,
-					consumption: co2,
-					title: name
-				}
-			})
-			setQuery("");
-			setCo2(0);
-			setCategory("");
-		}
-	}
+  const handleFormSubmit = async (
+    name: string | undefined,
+    co2: number | undefined,
+    category: string | undefined,
+    userId: number | null,
 
-	const handleUpdateFormSubmit = async (
-		event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-		name: string|undefined,
-		co2: number|undefined,
-		category: string|undefined,
-		updateCarbonDataId: string|null,
-		setQuery: Function,
-		setCo2: Function,
-		setCategory: Function
-	): Promise<void>  => {
-		event.preventDefault();
-		await updateCarbonData({
-			variables: {
-				category: category,
-				consumption: co2,
-				title: name,
-				updateCarbonDataId: updateCarbonDataId
-			}
-		})
-		setQuery("");
-		setCo2(0);
-		setCategory("");	
-	}
+    selectedDate: Date
+  ): Promise<void> => {
+    await createNewCarbonData({
+      variables: {
+        userId: userId,
+        category: category,
+        consumption: co2,
+        title: name,
+        createdAt: selectedDate.toISOString(),
+      },
+    });
+  };
 
-	return { handleFormSubmit, handleUpdateFormSubmit };
-}
+  const handleUpdateFormSubmit = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    name: string | undefined,
+    co2: number | undefined,
+    category: string | undefined,
+    updateCarbonDataId: string | null,
+    setQuery: Function,
+    setCo2: Function,
+    setCategory: Function
+  ): Promise<void> => {
+    event.preventDefault();
+    await updateCarbonData({
+      variables: {
+        category: category,
+        consumption: co2,
+        title: name,
+        updateCarbonDataId: updateCarbonDataId,
+      },
+    });
+    setQuery("");
+    setCo2(0);
+    setCategory("");
+  };
+
+  return { handleFormSubmit, handleUpdateFormSubmit };
+};
 
 export default CreateCarbonData;

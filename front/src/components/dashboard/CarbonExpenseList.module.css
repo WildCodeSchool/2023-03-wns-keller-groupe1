@@ -52,14 +52,38 @@
   flex-direction: row;
   align-items: center;
 }
+.fiveContainer2 {
+  width: 10%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.sixContainer2 {
+  width: 5%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.arrowbot {
+  width: 20px;
+  height: 10px;
+}
+.arrowbot2 {
+  width: 20px;
+  height: 10px;
+  transform: rotate(180deg);
+}
 .Midcontainer {
   padding: 0.5vw 1.2vw;
 }
-.CarbonDataContainer {
+.MainCarbonDataContainer {
   background-color: #202737;
   padding: 1vw;
   border-radius: 20px;
   margin-top: 1vw;
+}
+.CarbonDataContainer {
   display: flex;
   flex-direction: row;
 }
@@ -70,4 +94,28 @@
 }
 .NameText {
   font-weight: bold;
+}
+.BottomContainer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin-top: 1vw;
+  margin-right: 1.2vw;
+}
+.pSup {
+  color: #ff1b1c;
+  font-size: 16px;
+  font-family: "Noto Sans JP", sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+.pSup:hover {
+  opacity: 0.7;
+}
+.CarbonDataContainerbot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 0.5vw 1.2vw 0 1.2vw;
 }
