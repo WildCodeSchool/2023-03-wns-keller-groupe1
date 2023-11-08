@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Styles from "./Statistics.module.css";
 import BarChart from "./chart/VerticalBarChart";
 import { ICarbonData } from "../../interface/CarbonData";
+import Chart from "./chart/chart";
 
 type StatisticsProps = {
   selectedValue: string;
@@ -26,6 +27,9 @@ const Statistics: React.FC<StatisticsProps> = ({
   initialData,
   totalCo2,
 }) => {
+  console.log(selectedValue, "selectedValue");
+  console.log(isMonthChart, "isMonthChart");
+  console.log(initialData, "initialData");
   return (
     <div className={Styles.Maincontainer}>
       <div className={Styles.Topcontainer}>
@@ -122,7 +126,13 @@ const Statistics: React.FC<StatisticsProps> = ({
             isMonthChart={isMonthChart}
             selectedValue={selectedValue}
           />
-        ) : null}
+        ) : (
+          <Chart
+            initialData={initialData}
+            selectedValue={selectedValue}
+            isMonthChart={isMonthChart}
+          />
+        )}
       </div>
     </div>
   );

@@ -65,7 +65,7 @@ type Mutation {
   subscribeToDynamicTopic(topic: String!, username: String!): Boolean!
   unsubscribeFromDynamicTopic(topic: String!, username: String!): Boolean!
   updateBankDetails(id: Float!, stripeDetails: String!): String!
-  updateCarbonData(category: String!, consumption: Float!, id: Float!, title: String!): String!
+  updateCarbonData(category: String!, consumption: Float!, createdAt: String, id: Float!, title: String!): String!
   updateCategory(categoryId: Float!, title: String!): String!
   updateDonation(amount: Float!, id: Float!): String!
   updateUser(about: String!, age: String!, city: String!, email: String!, firstname: String!, gender: String!, lastname: String!, tel: String!, totalCo2: Float!, userId: Float!): String!

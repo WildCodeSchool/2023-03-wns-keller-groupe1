@@ -61,12 +61,8 @@ const FormAddCarbonData: React.FC<FormAddCarbonDataProps> = ({
   };
 
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // Conserver le format de la date au format YYYY-MM-DD pour l'input type date
     setSelectedDate(event.target.value);
   };
-  const displayDate = selectedDate
-    ? selectedDate.split("-").reverse().join("/")
-    : "";
 
   const selectSuggestion = (suggestion: any) => {
     const mainCategory = suggestion.Code_de_la_catégorie.split(" > ")[0];
