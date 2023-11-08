@@ -24,6 +24,7 @@ ChartJS.register(
 interface DataItem {
   title: string;
   consumption: number;
+  createdAt: string;
 }
 
 interface DataStructure {
@@ -36,6 +37,7 @@ interface ChartProps {
   initialData: DataStructure;
   selectedValue: string;
   isMonthChart: boolean;
+  dropdownOptions: string[];
 }
 
 interface ChartDataFormat {
@@ -45,9 +47,10 @@ interface ChartDataFormat {
 
 interface ChartDataSet {
   label: string;
-  data: number[]; // Assurez-vous que c'est bien un tableau de nombres
+  data: number[];
   borderColor: string;
   backgroundColor: string;
+  pointBackgroundColor?: string | string[]; // Ajouté ici
 }
 
 interface ChartState {
@@ -55,40 +58,15 @@ interface ChartState {
   datasets: ChartDataSet[];
 }
 
+interface DailyConsumption {
+  [key: string]: number;
+}
 const Chart: React.FC<ChartProps> = ({
   initialData,
   selectedValue,
   isMonthChart,
+  dropdownOptions,
 }) => {
-  function calculateTotalConsumption(
-    data: DataStructure,
-    selectedValue: string
-  ): number | ChartDataFormat[] {
-    let totalConsumption = 0;
-    let chartData: ChartDataFormat[] = [];
-
-    // Si selectedValue est une année
-    if (selectedValue.length === 4) {
-      const year = selectedValue;
-      for (let month in data[year]) {
-        data[year][month].forEach((item) => {
-          totalConsumption += item.consumption;
-        });
-      }
-      return totalConsumption;
-    }
-    // Si selectedValue est un mois spécifique
-    else {
-      const [year, month] = selectedValue.split(" ");
-      if (data[year] && data[year][month.toLowerCase()]) {
-        data[year][month.toLowerCase()].forEach((item) => {
-          chartData.push({ name: item.title, consumption: item.consumption });
-        });
-      }
-      return selectedValue.length === 4 ? totalConsumption : chartData;
-    }
-  }
-
   const [chartData, setChartData] = useState<ChartState>({
     labels: [],
     datasets: [
@@ -113,17 +91,39 @@ const Chart: React.FC<ChartProps> = ({
         },
       ],
     };
-
+    console.log("before : ", selectedValue, dropdownOptions, isMonthChart);
     if (isMonthChart) {
-      // isMonthChart true, on extrait les données du mois sélectionné
-      const [year, month] = selectedValue.split(" ");
-      const monthData = initialData[year]?.[month.toLowerCase()];
+      const dailyConsumption: DailyConsumption = {};
+      const dailyNames: { [key: string]: string[] } = {}; // Pour stocker les noms des dépenses chaque jour
+      const [month, year] = selectedValue.split(" ");
 
+      const monthData = initialData[year]?.[month.toLowerCase()];
       if (monthData) {
         monthData.forEach((item) => {
-          newChartData.labels.push(item.title);
-          newChartData.datasets[0].data.push(item.consumption);
+          const day = new Date(item.createdAt).getDate().toString();
+          if (!dailyConsumption[day]) {
+            dailyConsumption[day] = 0;
+            dailyNames[day] = [];
+          }
+          dailyConsumption[day] += item.consumption;
+          dailyNames[day].push(item.title); // Ajouter le nom à la liste pour le jour
         });
+
+        let cumulativeConsumption = 0; // Pour stocker la consommation cumulée
+        Object.keys(dailyConsumption)
+          .sort((a, b) => parseInt(a) - parseInt(b))
+          .forEach((day) => {
+            cumulativeConsumption += dailyConsumption[day];
+            newChartData.labels.push(day);
+            newChartData.datasets[0].data.push(cumulativeConsumption);
+            // Ajouter une étiquette avec les noms cumulés des dépenses pour le jour
+            newChartData.datasets[0].pointBackgroundColor =
+              newChartData.datasets[0].data.map((value, index) => {
+                const currentDay = newChartData.labels[index];
+                const names = dailyNames[currentDay];
+                return names.join(" + ");
+              });
+          });
       }
     } else {
       let cumulativeConsumption = 0; // Pour stocker la consommation cumulée
@@ -147,6 +147,26 @@ const Chart: React.FC<ChartProps> = ({
 
     setChartData(newChartData);
   }, [initialData, isMonthChart, selectedValue]);
+  const dailyNames: { [key: string]: string[] } = {};
+
+  const options = {
+    responsive: true,
+    plugins: {
+      tooltip: {
+        callbacks: {
+          // Cette fonction est utilisée pour personnaliser le texte affiché dans le tooltip.
+          // Vous pouvez l'ajuster pour afficher les informations que vous souhaitez.
+          afterLabel: function (context: any) {
+            // Vous pouvez remplacer `any` par le type correct si vous le connaissez.
+            const day = context.label;
+            const names = dailyNames[day]; // Assurez-vous que dailyNames est accessible dans cette portée
+            return names ? names.join(" + ") : "";
+          },
+        },
+      },
+    },
+    // ... Autres options
+  };
 
   return <Line options={{ responsive: true }} data={chartData} />;
 };

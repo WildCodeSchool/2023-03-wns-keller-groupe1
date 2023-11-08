@@ -30,6 +30,8 @@ const Statistics: React.FC<StatisticsProps> = ({
   console.log(selectedValue, "selectedValue");
   console.log(isMonthChart, "isMonthChart");
   console.log(initialData, "initialData");
+  console.log(dropdownOptions, "dropdownOptions");
+
   return (
     <div className={Styles.Maincontainer}>
       <div className={Styles.Topcontainer}>
@@ -77,7 +79,10 @@ const Statistics: React.FC<StatisticsProps> = ({
                   ? Styles.ButtonPickerType
                   : Styles.ButtonPickerTypeActive
               }
-              onClick={() => setIsMonthChart(true)}
+              onClick={() => {
+                setSelectedValue(dropdownOptions[0]);
+                setIsMonthChart(true);
+              }}
             >
               Mois
             </button>
@@ -131,6 +136,7 @@ const Statistics: React.FC<StatisticsProps> = ({
             initialData={initialData}
             selectedValue={selectedValue}
             isMonthChart={isMonthChart}
+            dropdownOptions={dropdownOptions}
           />
         )}
       </div>

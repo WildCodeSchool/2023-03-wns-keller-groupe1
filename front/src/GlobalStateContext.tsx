@@ -51,8 +51,8 @@ export const useGlobalState = () => {
 export const GlobalStateProvider = ({ children }: IGlobalStateContextProps) => {
   const [isLogged, setIsLogged] = React.useState(false);
   const [user, setUser] = React.useState<any>(null);
-  const [isMonthChart, setIsMonthChart] = React.useState(true);
-  const [isBarChart, setIsBarChart] = React.useState(true);
+  const [isMonthChart, setIsMonthChart] = React.useState(false);
+  const [isBarChart, setIsBarChart] = React.useState(false);
   const [dropdownOptions, setDropdownOptions] = React.useState<string[]>([]);
   const [initialData, setInitialData] = React.useState<any>([]);
   const [selectedValue, setSelectedValue] = React.useState("");
@@ -65,8 +65,8 @@ export const GlobalStateProvider = ({ children }: IGlobalStateContextProps) => {
   const logout = () => {
     setIsLogged(false);
     setUser(null);
-    setIsMonthChart(true);
-    setIsBarChart(true);
+    setIsMonthChart(false);
+    setIsBarChart(false);
     setDropdownOptions([]);
     setInitialData([]);
     setSelectedValue("");
