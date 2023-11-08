@@ -14,7 +14,8 @@ class CarbonDataResolver {
     @Arg("title") title: string,
     @Arg("consumption") consumption: number,
     @Arg("category") categoryString: string,
-    @Arg("userId") userId: number
+    @Arg("userId") userId: number,
+    @Arg("createdAt", () => String) createdAt: string
   ): Promise<String | GraphQLError | any> {
     try {
       const args = new CarbonDataInput();
@@ -32,7 +33,7 @@ class CarbonDataResolver {
       carbonData.title = title;
       carbonData.consumption = consumption;
       carbonData.modifiedAt = new Date();
-      carbonData.createdAt = new Date();
+      carbonData.createdAt = new Date(createdAt);
       carbonData.categoryString = categoryString;
       carbonData.user = await dataSource
         .getRepository(User)

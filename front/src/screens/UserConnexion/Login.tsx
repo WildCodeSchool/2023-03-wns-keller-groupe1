@@ -11,7 +11,6 @@ const Login = () => {
   const [password, setPassword] = useState<string>("");
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
-  const [pseudo, setPseudo] = useState<string>("");
   const {
     isLogged,
     user,
@@ -53,8 +52,6 @@ const Login = () => {
             setFirstName={setFirstName}
             lastName={lastName}
             setLastName={setLastName}
-            pseudo={pseudo}
-            setPseudo={setPseudo}
             handleFormSubmit={(e) =>
               handleFormSubmit(
                 e,

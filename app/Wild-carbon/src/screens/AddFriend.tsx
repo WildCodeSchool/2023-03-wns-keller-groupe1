@@ -68,7 +68,7 @@ const AddFriend: React.FC = () => {
             styles.headerTitleStyle,
           ]}
         >
-          Quel est le pseudonyme de votre ami ?
+          Recherchez votre amis ...
         </Text>
       </View>
       <TextInput

@@ -40,6 +40,7 @@ const GET_USER_FROM_TOKEN = gql`
 
 export const useAuth = () => {
   const navigation = useNavigation();
+
   const {
     isLogged,
     user,
@@ -72,6 +73,7 @@ export const useAuth = () => {
       navigation.navigate("Login");
     },
   });
+  const [globalState, setGlobalState] = useGlobalState();
 
   const [login] = useLazyQuery(LOGIN, {
     onError: (error) => {

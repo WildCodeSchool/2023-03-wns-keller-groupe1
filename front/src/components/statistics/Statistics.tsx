@@ -26,8 +26,6 @@ const Statistics: React.FC<StatisticsProps> = ({
   initialData,
   totalCo2,
 }) => {
-  const [formattedData, setFormattedData] = useState<ICarbonData[]>([]);
-
   return (
     <div className={Styles.Maincontainer}>
       <div className={Styles.Topcontainer}>
@@ -63,7 +61,7 @@ const Statistics: React.FC<StatisticsProps> = ({
                 fontFamily: "Noto Sans JP",
               }}
             >
-              {totalCo2} KG CO2
+              {totalCo2.toFixed(1)} KG CO2
             </p>
           </div>
         </div>

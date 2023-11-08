@@ -6,7 +6,6 @@ import {
   Navigate,
 } from "react-router-dom";
 import React, { ReactNode } from "react";
-import HomePage from "../screens/Dashboard/HomePage";
 import Login from "../screens/UserConnexion/Login";
 import Statistic from "../screens/Statistic/Statistic";
 import Social from "../screens/Social/Social";
@@ -15,7 +14,6 @@ import { gql, useQuery } from "@apollo/client";
 import NotFound from "../screens/Error/404";
 import DonationPage from "../screens/Donation/DonationPage";
 import Profile from "../screens/Profile/Profile";
-import Chat from "../screens/Chat/Chat";
 import MainLayout from "../screens/MainLayout/MainLayout";
 import { MainLayoutProps } from "../interface/shared/MainLayoutProps";
 import Dashboard from "../screens/Dashboard/Dashboard";
@@ -63,11 +61,6 @@ function App() {
             />
           }
         />
-        <Route
-          path="/chat"
-          element={<PrivateRoute title="TODO" children={<Chat />} />}
-        />
-        <Route path="*" element={<NotFound />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -10,8 +10,6 @@ export interface LoginRegisterFormProps {
   lastName: string;
   setLastName: React.Dispatch<React.SetStateAction<string>>;
   handleFormSubmit: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  pseudo: string;
-  setPseudo: React.Dispatch<React.SetStateAction<string>>;
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }

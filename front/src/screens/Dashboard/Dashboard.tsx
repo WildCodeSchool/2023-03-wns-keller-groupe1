@@ -68,6 +68,7 @@ const Dashboard = () => {
           <CarbonExpenseList
             initialData={initialData}
             selectedValue={selectedValue}
+            userId={userId}
           />
         </div>
       </div>
