@@ -127,26 +127,9 @@ describe("UserResolver", () => {
     const email = "test@example.com";
     const firstname = "John";
     const lastname = "Doe";
-    const totalCo2 = 22;
-    const age = "24";
-    const city = "test";
-    const about = "test";
-    const gender = "male";
-    const tel = "0123456789";
 
     const resolver = new UserResolver();
-    const result = await resolver.updateUser(
-      id,
-      email,
-      firstname,
-      lastname,
-      totalCo2,
-      age,
-      city,
-      about,
-      gender,
-      tel
-    );
+    const result = await resolver.updateUser(id, email, firstname, lastname);
 
     expect(result).toEqual(`User ${id} updated`);
   });
