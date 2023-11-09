@@ -9,6 +9,7 @@
 .mainContent {
   background-color: #111828;
   width: 88vw;
+  min-height: 90vh;
   height: 100%;
   border-radius: 20px;
   margin-left: 12vw;

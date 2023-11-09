@@ -68,7 +68,7 @@ type Mutation {
   updateCarbonData(category: String!, consumption: Float!, createdAt: String, id: Float!, title: String!): String!
   updateCategory(categoryId: Float!, title: String!): String!
   updateDonation(amount: Float!, id: Float!): String!
-  updateUser(about: String!, age: String!, city: String!, email: String!, firstname: String!, gender: String!, lastname: String!, tel: String!, totalCo2: Float!, userId: Float!): String!
+  updateUser(email: String!, firstname: String!, lastname: String!, userId: Float!): String!
   updateUserGroupe(id: Float!, title: String!): String!
 }
 
