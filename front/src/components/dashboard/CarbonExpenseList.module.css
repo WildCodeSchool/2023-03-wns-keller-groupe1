@@ -113,9 +113,21 @@
 .pSup:hover {
   opacity: 0.7;
 }
+.pMod {
+  color: #1c7b47;
+  font-size: 16px;
+  font-family: "Noto Sans JP", sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  margin-right: 1vw;
+}
+.pMod:hover {
+  opacity: 0.7;
+}
 .CarbonDataContainerbot {
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
-  padding: 0.5vw 1.2vw 0 1.2vw;
+  padding: 1.2vw 1.2vw 0 1.2vw;
 }

@@ -24,16 +24,18 @@ export const CREATE_CARBON_DATA = gql`
 
 export const UPDATE_CARBON_DATA = gql`
   mutation UpdateCarbonData(
+    $id: Float!
+    $title: String!
     $consumption: Float!
     $category: String!
-    $title: String!
-    $updateCarbonDataId: Float!
+    $createdAt: String!
   ) {
     updateCarbonData(
+      id: $id
+      title: $title
       consumption: $consumption
       category: $category
-      title: $title
-      id: $updateCarbonDataId
+      createdAt: $createdAt
     )
   }
 `;
@@ -86,27 +88,26 @@ const CreateCarbonData = () => {
   };
 
   const handleUpdateFormSubmit = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     name: string | undefined,
     co2: number | undefined,
     category: string | undefined,
-    updateCarbonDataId: string | null,
-    setQuery: Function,
-    setCo2: Function,
-    setCategory: Function
+    id: number | null,
+    createdAt: string
   ): Promise<void> => {
-    event.preventDefault();
+    if (!id) {
+      toast.error("L'ID de la dépense carbone est requis pour la mise à jour.");
+      return;
+    }
+
     await updateCarbonData({
       variables: {
-        category: category,
-        consumption: co2,
+        id,
         title: name,
-        updateCarbonDataId: updateCarbonDataId,
+        consumption: co2,
+        category: category,
+        createdAt,
       },
     });
-    setQuery("");
-    setCo2(0);
-    setCategory("");
   };
 
   return { handleFormSubmit, handleUpdateFormSubmit };

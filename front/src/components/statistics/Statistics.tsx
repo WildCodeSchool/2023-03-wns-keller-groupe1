@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Styles from "./Statistics.module.css";
 import BarChart from "./chart/VerticalBarChart";
 import { ICarbonData } from "../../interface/CarbonData";
+import Chart from "./chart/chart";
 
 type StatisticsProps = {
   selectedValue: string;
@@ -26,6 +27,11 @@ const Statistics: React.FC<StatisticsProps> = ({
   initialData,
   totalCo2,
 }) => {
+  console.log(selectedValue, "selectedValue");
+  console.log(isMonthChart, "isMonthChart");
+  console.log(initialData, "initialData");
+  console.log(dropdownOptions, "dropdownOptions");
+
   return (
     <div className={Styles.Maincontainer}>
       <div className={Styles.Topcontainer}>
@@ -73,7 +79,10 @@ const Statistics: React.FC<StatisticsProps> = ({
                   ? Styles.ButtonPickerType
                   : Styles.ButtonPickerTypeActive
               }
-              onClick={() => setIsMonthChart(true)}
+              onClick={() => {
+                setSelectedValue(dropdownOptions[0]);
+                setIsMonthChart(true);
+              }}
             >
               Mois
             </button>
@@ -122,7 +131,14 @@ const Statistics: React.FC<StatisticsProps> = ({
             isMonthChart={isMonthChart}
             selectedValue={selectedValue}
           />
-        ) : null}
+        ) : (
+          <Chart
+            initialData={initialData}
+            selectedValue={selectedValue}
+            isMonthChart={isMonthChart}
+            dropdownOptions={dropdownOptions}
+          />
+        )}
       </div>
     </div>
   );

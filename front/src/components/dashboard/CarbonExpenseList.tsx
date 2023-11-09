@@ -19,6 +19,13 @@ interface CarbonDataContainerProps {
   };
   index: number;
   onDelete?: (id: number) => Promise<void>;
+  setShowEditForm?: React.Dispatch<React.SetStateAction<boolean>>;
+  setExpenseName?: React.Dispatch<React.SetStateAction<string>>;
+  setCategory?: React.Dispatch<React.SetStateAction<string>>;
+  setCarbonWeight?: React.Dispatch<React.SetStateAction<number>>;
+  setSelectedDate?: React.Dispatch<React.SetStateAction<string>>;
+  setUpdateCarbonDataId?: React.Dispatch<React.SetStateAction<number | null>>;
+  setIsUpdate?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 interface YearlyData {
   [key: string]: CarbonDataContainerProps["data"][];
@@ -34,13 +41,25 @@ const CarbonDataContainer: React.FC<CarbonDataContainerProps> = ({
   data,
   index,
   onDelete,
+  setShowEditForm,
+  setExpenseName,
+  setCategory,
+  setCarbonWeight,
+  setSelectedDate,
+  setUpdateCarbonDataId,
+  setIsUpdate,
 }) => {
   const [showOptions, setShowOptions] = useState(false);
 
   const toggleOptions = () => {
     setShowOptions(!showOptions);
   };
-  console.log(data, "data");
+
+  const formatDateToISO = (dateStr: any) => {
+    const date = new Date(dateStr);
+    return date.toISOString().split("T")[0];
+  };
+
   return (
     <div className={Styles.MainCarbonDataContainer}>
       <div className={Styles.CarbonDataContainer}>
@@ -70,9 +89,26 @@ const CarbonDataContainer: React.FC<CarbonDataContainerProps> = ({
       {showOptions && (
         <div className={Styles.CarbonDataContainerbot}>
           {data.id && (
-            <p className={Styles.pSup} onClick={() => onDelete?.(data.id)}>
-              Supprimer
-            </p>
+            <>
+              <p
+                className={Styles.pMod}
+                onClick={() => {
+                  setIsUpdate && setIsUpdate(true);
+                  setExpenseName && setExpenseName(data.title);
+                  setCategory && setCategory(data.categoryString);
+                  setCarbonWeight && setCarbonWeight(data.consumption);
+                  setSelectedDate &&
+                    setSelectedDate(formatDateToISO(data.createdAt));
+                  setUpdateCarbonDataId && setUpdateCarbonDataId(data.id);
+                  setShowEditForm && setShowEditForm(true);
+                }}
+              >
+                Modifier
+              </p>
+              <p className={Styles.pSup} onClick={() => onDelete?.(data.id)}>
+                Supprimer
+              </p>
+            </>
           )}
         </div>
       )}
@@ -100,6 +136,7 @@ const CarbonExpenseList: React.FC<CarbonExpenseListProps> = ({
   }
 
   const { handleFormSubmit, handleUpdateFormSubmit } = CreateCarbonData();
+  const { handleFormSubmitDelete } = DeleteCarbonData();
 
   const [expenseName, setExpenseName] = useState<string>("");
   const [category, setCategory] = useState<string>("");
@@ -111,6 +148,10 @@ const CarbonExpenseList: React.FC<CarbonExpenseListProps> = ({
   const [carbonWeight, setCarbonWeight] = useState<number>(0);
 
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [updateCarbonDataId, setUpdateCarbonDataId] = useState<number | null>(
+    0
+  );
+  const [isUpdate, setIsUpdate] = useState<boolean>(false);
   const [apiResults, setApiResults] = useState<any[]>([]);
   const [showEditForm, setShowEditForm] = useState(false);
   const fetchAdemeApi = async () => {
@@ -139,13 +180,25 @@ const CarbonExpenseList: React.FC<CarbonExpenseListProps> = ({
       const selectedDateObject = new Date(
         selectedDate.split("/").reverse().join("-")
       );
-      handleFormSubmit(
-        expenseName,
-        carbonWeight,
-        category,
-        userId,
-        selectedDateObject
-      ).catch(console.error);
+
+      if (isUpdate && updateCarbonDataId) {
+        handleUpdateFormSubmit(
+          expenseName,
+          carbonWeight,
+          category,
+          updateCarbonDataId,
+          selectedDateObject.toISOString()
+        ).catch(console.error);
+      } else {
+        handleFormSubmit(
+          expenseName,
+          carbonWeight,
+          category,
+          userId,
+          selectedDateObject
+        ).catch(console.error);
+      }
+
       setExpenseName("");
       setCategory("");
       setCarbonWeight(0);
@@ -153,12 +206,11 @@ const CarbonExpenseList: React.FC<CarbonExpenseListProps> = ({
         new Date().toISOString().split("T")[0].split("-").reverse().join("/")
       );
       setShowEditForm(false);
+      setIsUpdate(false);
     }
   };
 
   const isButtonDisabled = !expenseName || !category || carbonWeight <= 0;
-
-  const { handleFormSubmitDelete } = DeleteCarbonData();
 
   return (
     <div className={Styles.Maincontainer}>
@@ -191,6 +243,13 @@ const CarbonExpenseList: React.FC<CarbonExpenseListProps> = ({
               data={dataItem}
               index={index}
               onDelete={handleFormSubmitDelete}
+              setShowEditForm={setShowEditForm}
+              setExpenseName={setExpenseName}
+              setCategory={setCategory}
+              setCarbonWeight={setCarbonWeight}
+              setSelectedDate={setSelectedDate}
+              setUpdateCarbonDataId={setUpdateCarbonDataId}
+              setIsUpdate={setIsUpdate}
             />
           )
         )}

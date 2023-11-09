@@ -1,0 +1,86 @@
+.profileContainer {
+  width: 100%;
+  padding: 2vw;
+  background-color: #111828;
+  border-radius: 20px;
+}
+.MainContainer {
+  width: 90%;
+  background-color: #161d2d;
+  border-radius: 20px;
+}
+.TopContainer {
+  height: 15vh;
+  border-bottom: #232e40 2px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pTop {
+  color: #e6e6e6;
+  text-align: center;
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.MidContainer {
+  padding: 2vw;
+  height: 40vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.InputContainer {
+}
+
+.pInputContainer {
+  color: #e6e6e6;
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.InputProfil {
+  background-color: #202737;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  padding: 0.5vw;
+  color: #e6e6e6;
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 16px;
+  width: 15vw;
+}
+.BotContainer {
+  display: flex;
+  flex-direction: row;
+  padding: 2vw 16vw;
+  justify-content: space-around;
+}
+.pBotContainer {
+  color: #25a55f;
+  text-align: center;
+  font-family: Noto Sans JP;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: uppercase;
+  width: 40%;
+}
+.AboutLink {
+  text-decoration: none; /* enlève le soulignement par défaut */
+  color: inherit; /* prend la couleur de texte par défaut, ou spécifiez une couleur */
+  cursor: pointer; /* change le curseur pour indiquer un lien cliquable */
+  /* autres styles selon vos besoins */
+}
+
+.AboutLink:hover {
+  opacity: 0.7; /* réduit l'opacité lors du survol */
+}

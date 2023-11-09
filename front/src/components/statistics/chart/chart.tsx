@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
-import { ChartProps } from "../../../interface/ChartProps";
-import { carbonDataStatic } from "../../../helper/helper";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -23,104 +21,171 @@ ChartJS.register(
   Legend
 );
 
-const Chart: React.FC<ChartProps> = ({ data, OptionMonthSelected }) => {
-  // const [dataByPeriod, setDataByPeriod] = useState<{ [key: string]: number }>(
-  //   {}
-  // );
+interface DataItem {
+  title: string;
+  consumption: number;
+  createdAt: string;
+}
 
-  // useEffect(() => {
-  //   let totalConsumption = 0;
-  //   const dataByPeriod: { [key: string]: number } = {};
-  //   const sortedData = [...data.data].sort(
-  //     (a, b) => a.createdAt.getTime() - b.createdAt.getTime()
-  //   );
+interface DataStructure {
+  [key: string]: {
+    [key: string]: DataItem[];
+  };
+}
 
-  //   sortedData.forEach((item) => {
-  //     const createdAt = item.createdAt;
-  //     const period = OptionMonthSelected
-  //       ? createdAt.toLocaleString("fr-FR", { day: "2-digit", month: "long" })
-  //       : createdAt.toLocaleString("fr-FR", { month: "long" });
+interface ChartProps {
+  initialData: DataStructure;
+  selectedValue: string;
+  isMonthChart: boolean;
+  dropdownOptions: string[];
+}
 
-  //     totalConsumption += item.consumption;
+interface ChartDataFormat {
+  name: string;
+  consumption: number;
+}
 
-  //     dataByPeriod[period] = totalConsumption;
-  //   });
+interface ChartDataSet {
+  label: string;
+  data: number[];
+  borderColor: string;
+  backgroundColor: string;
+  pointBackgroundColor?: string | string[];
+}
 
-  //   setDataByPeriod(dataByPeriod);
-  // }, [data, OptionMonthSelected]);
+interface ChartState {
+  labels: string[];
+  datasets: ChartDataSet[];
+}
 
-  // const labels = Object.keys(dataByPeriod);
-  // const userConsumptionData = Object.values(dataByPeriod);
+interface DailyConsumption {
+  [key: string]: number;
+}
+const Chart: React.FC<ChartProps> = ({
+  initialData,
+  selectedValue,
+  isMonthChart,
+  dropdownOptions,
+}) => {
+  const [chartData, setChartData] = useState<ChartState>({
+    labels: [],
+    datasets: [
+      {
+        label: "Consommation CO2",
+        data: [],
+        backgroundColor: "rgb(37, 165, 95)",
+        borderColor: "rgba(37, 165, 95 ,0.5)",
+      },
+    ],
+  });
 
-  // const chartData = {
-  //   labels,
-  //   datasets: [
-  //     {
-  //       label: "Moyenne des Français",
-  //       data: Array(labels.length).fill(
-  //         OptionMonthSelected
-  //           ? carbonDataStatic.emissions_CO2_mensuelles_fr
-  //           : carbonDataStatic.emissions_CO2_mensuelles_fr * 12
-  //       ),
-  //       borderColor: "rgb(28, 68, 142)",
-  //       backgroundColor: "rgba(28, 68, 142,0.5)",
-  //       fill: false,
-  //       pointRadius: 0,
-  //     },
-  //     {
-  //       label: "Votre consommation en kg de CO2",
-  //       data: userConsumptionData,
-  //       borderColor: "rgb(37, 165, 95)",
-  //       backgroundColor: "rgba(37, 165, 95 ,0.5)",
-  //       fill: false,
-  //       pointRadius: 5,
-  //     },
-  //     {
-  //       label: "Objectif Accords de Paris",
-  //       data: Array(labels.length).fill(
-  //         OptionMonthSelected
-  //           ? carbonDataStatic.emissions_CO2_accord_paris_mensuelles
-  //           : carbonDataStatic.emissions_CO2_accord_paris_mensuelles * 12
-  //       ),
-  //       borderColor: "rgb(175, 27, 63)",
-  //       backgroundColor: "rgba(175, 27, 63,0.5)",
-  //       fill: false,
-  //       pointRadius: 0,
-  //     },
-  //   ],
-  // };
+  function getMonthNumber(monthName: string) {
+    const months = [
+      "janvier",
+      "février",
+      "mars",
+      "avril",
+      "mai",
+      "juin",
+      "juillet",
+      "août",
+      "septembre",
+      "octobre",
+      "novembre",
+      "décembre",
+    ];
+    return months.indexOf(monthName.toLowerCase()) + 1;
+  }
 
-  // const options = {
-  //   responsive: true,
-  //   plugins: {
-  //     legend: {
-  //       position: "top" as "top",
-  //     },
-  //     tooltip: {
-  //       callbacks: {
-  //         label: function (context: any) {
-  //           const label = context.dataset.label;
-  //           const value = context.parsed.y;
-  //           return `${label}: ${value} kg / co2`;
-  //         },
-  //       },
-  //     },
-  //   },
-  // };
+  useEffect(() => {
+    let newChartData: ChartState = {
+      labels: [],
+      datasets: [
+        {
+          label: "Consommation CO2",
+          data: [],
+          backgroundColor: "rgb(37, 165, 95)",
+          borderColor: "rgba(37, 165, 95 ,0.5)",
+        },
+      ],
+    };
+    console.log("before : ", selectedValue, dropdownOptions, isMonthChart);
+    if (isMonthChart) {
+      const dailyConsumption: DailyConsumption = {};
+      const dailyNames: { [key: string]: string[] } = {};
+      const [month, year] = selectedValue.split(" ");
 
-  return (
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      {/* <Line options={options} data={chartData} /> */}
-    </div>
-  );
+      const monthData = initialData[year]?.[month.toLowerCase()];
+      if (monthData) {
+        monthData.forEach((item) => {
+          const day = new Date(item.createdAt).getDate().toString();
+          if (!dailyConsumption[day]) {
+            dailyConsumption[day] = 0;
+            dailyNames[day] = [];
+          }
+          dailyConsumption[day] += item.consumption;
+          dailyNames[day].push(item.title);
+        });
+
+        let cumulativeConsumption = 0;
+
+        Object.keys(dailyConsumption)
+          .sort((a, b) => parseInt(a) - parseInt(b))
+          .forEach((day) => {
+            cumulativeConsumption += dailyConsumption[day];
+            newChartData.labels.push(day);
+            newChartData.datasets[0].data.push(cumulativeConsumption);
+            newChartData.datasets[0].pointBackgroundColor =
+              newChartData.datasets[0].data.map((value, index) => {
+                const currentDay = newChartData.labels[index];
+                const names = dailyNames[currentDay];
+                return names.join(" + ");
+              });
+          });
+      }
+    } else {
+      if (!isMonthChart) {
+        let cumulativeConsumption = 0;
+        const yearData = initialData[selectedValue];
+
+        if (yearData) {
+          const sortedMonths = Object.keys(yearData).sort((a, b) => {
+            return getMonthNumber(a) - getMonthNumber(b);
+          });
+
+          sortedMonths.forEach((month) => {
+            const monthlyTotal = yearData[month].reduce(
+              (sum, item) => sum + item.consumption,
+              0
+            );
+            cumulativeConsumption += monthlyTotal;
+            newChartData.labels.push(month);
+            newChartData.datasets[0].data.push(cumulativeConsumption);
+          });
+        }
+      }
+    }
+
+    setChartData(newChartData);
+  }, [initialData, isMonthChart, selectedValue]);
+  const dailyNames: { [key: string]: string[] } = {};
+
+  const options = {
+    responsive: true,
+    plugins: {
+      tooltip: {
+        callbacks: {
+          afterLabel: function (context: any) {
+            const day = context.label;
+            const names = dailyNames[day];
+            return names ? names.join(" + ") : "";
+          },
+        },
+      },
+    },
+  };
+
+  return <Line data={chartData} options={options} />;
 };
 
 export default Chart;

@@ -34,7 +34,7 @@ const NavBar: React.FC<NavBarProps> = ({ activeTitle }) => {
 
   return (
     <div className={styles.container}>
-      <img src={greenLogo} alt="logo" className={styles.img} />
+      <img src={greenLogo} alt="logo" className={styles.img0} />
 
       <div className={styles.midcontainer}>
         <nav className={styles.navcontainer}>

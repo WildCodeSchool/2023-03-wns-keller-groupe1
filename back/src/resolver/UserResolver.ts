@@ -1,7 +1,7 @@
 import * as argon2 from "argon2";
 import * as jwt from "jsonwebtoken";
-import { ILike, Like } from 'typeorm';
-import { Arg, Authorized, Mutation, Query, Resolver, } from "type-graphql";
+import { ILike, Like } from "typeorm";
+import { Arg, Authorized, Mutation, Query, Resolver } from "type-graphql";
 import { GraphQLError } from "graphql";
 import dataSource from "../utils";
 import { User } from "../entity/User";
@@ -55,7 +55,7 @@ class UserResolver {
       const user = await dataSource
         .getRepository(User)
         .findOne({ where: { email } });
-      
+
       if (!user) {
         return new GraphQLError("Cette adresse mail n'est pas utilisé");
       }
@@ -64,11 +64,11 @@ class UserResolver {
         const token = jwt.sign({ email }, JWT_SECRET);
         return token;
       } else {
-        return new GraphQLError('Mauvais identifiants');  
+        return new GraphQLError("Mauvais identifiants");
       }
     } catch (err) {
       console.log(err);
-      
+
       return new GraphQLError("An error occured");
     }
   }
@@ -147,13 +147,11 @@ class UserResolver {
   }
 
   @Query(() => [User])
-  async getUsersByName(
-    @Arg("name") name: string
-  ): Promise<User[]> {
+  async getUsersByName(@Arg("name") name: string): Promise<User[]> {
     const users = await dataSource.getRepository(User).find({
       where: [
         { firstname: ILike(`%${name}%`) },
-        { lastname: ILike(`%${name}%`) }
+        { lastname: ILike(`%${name}%`) },
       ],
       relations: [
         "groups",
@@ -161,7 +159,7 @@ class UserResolver {
         "donation",
         "userReceiver",
         "userSender",
-        "bankDetails"
+        "bankDetails",
       ],
     });
     return users;
@@ -198,38 +196,14 @@ class UserResolver {
     @Arg("userId") userId: number,
     @Arg("email") email: string,
     @Arg("firstname") firstname: string,
-    @Arg("lastname") lastname: string,
-    @Arg("totalCo2") totalCo2: number,
-    @Arg("age") age:  string,
-    @Arg("city") city: string,
-    @Arg("about") about: string,
-    @Arg("gender") gender: string,
-    @Arg("tel") tel: string,
-
+    @Arg("lastname") lastname: string
   ): Promise<String | GraphQLError> {
     try {
-      // const args = new UserInput();
-      // args.email = email;
-      // args.totalCo2 = totalCo2;
-      // args.firstname = firstname;
-      // args.lastname = lastname;
-      // const validationErrors = await validate(args);
-
-      // if (validationErrors.length > 0) {
-      //   return new GraphQLError("Validation error");
-      // }
-
       await dataSource.getRepository(User).update(userId, {
         email,
         firstname,
         lastname,
-        totalCo2,
         modifiedAt: new Date(),
-        age,
-        city,
-        tel,
-        gender,
-        about,
       });
       return `User ${userId} updated`;
     } catch (error) {

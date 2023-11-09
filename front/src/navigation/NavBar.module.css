@@ -62,7 +62,7 @@ ul {
   display: block;
 }
 
-img {
+.img0 {
   width: calc(7.2vw * 1.4);
   height: calc(1.6vw * 1.4);
   margin-top: 15%;
