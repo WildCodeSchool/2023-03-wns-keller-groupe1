@@ -50,11 +50,11 @@ interface ChartDataSet {
   data: number[];
   borderColor: string;
   backgroundColor: string;
-  pointBackgroundColor?: string | string[]; // Ajouté ici
+  pointBackgroundColor?: string | string[];
 }
 
 interface ChartState {
-  labels: string[]; // Assurez-vous que c'est bien un tableau de strings
+  labels: string[];
   datasets: ChartDataSet[];
 }
 
@@ -79,6 +79,24 @@ const Chart: React.FC<ChartProps> = ({
     ],
   });
 
+  function getMonthNumber(monthName: string) {
+    const months = [
+      "janvier",
+      "février",
+      "mars",
+      "avril",
+      "mai",
+      "juin",
+      "juillet",
+      "août",
+      "septembre",
+      "octobre",
+      "novembre",
+      "décembre",
+    ];
+    return months.indexOf(monthName.toLowerCase()) + 1;
+  }
+
   useEffect(() => {
     let newChartData: ChartState = {
       labels: [],
@@ -94,7 +112,7 @@ const Chart: React.FC<ChartProps> = ({
     console.log("before : ", selectedValue, dropdownOptions, isMonthChart);
     if (isMonthChart) {
       const dailyConsumption: DailyConsumption = {};
-      const dailyNames: { [key: string]: string[] } = {}; // Pour stocker les noms des dépenses chaque jour
+      const dailyNames: { [key: string]: string[] } = {};
       const [month, year] = selectedValue.split(" ");
 
       const monthData = initialData[year]?.[month.toLowerCase()];
@@ -106,17 +124,17 @@ const Chart: React.FC<ChartProps> = ({
             dailyNames[day] = [];
           }
           dailyConsumption[day] += item.consumption;
-          dailyNames[day].push(item.title); // Ajouter le nom à la liste pour le jour
+          dailyNames[day].push(item.title);
         });
 
-        let cumulativeConsumption = 0; // Pour stocker la consommation cumulée
+        let cumulativeConsumption = 0;
+
         Object.keys(dailyConsumption)
           .sort((a, b) => parseInt(a) - parseInt(b))
           .forEach((day) => {
             cumulativeConsumption += dailyConsumption[day];
             newChartData.labels.push(day);
             newChartData.datasets[0].data.push(cumulativeConsumption);
-            // Ajouter une étiquette avec les noms cumulés des dépenses pour le jour
             newChartData.datasets[0].pointBackgroundColor =
               newChartData.datasets[0].data.map((value, index) => {
                 const currentDay = newChartData.labels[index];
@@ -126,22 +144,25 @@ const Chart: React.FC<ChartProps> = ({
           });
       }
     } else {
-      let cumulativeConsumption = 0; // Pour stocker la consommation cumulée
-      const yearData = initialData[selectedValue];
+      if (!isMonthChart) {
+        let cumulativeConsumption = 0;
+        const yearData = initialData[selectedValue];
 
-      if (yearData) {
-        Object.entries(yearData)
-          .sort()
-          .forEach(([month, dataItems]) => {
-            // Assurez-vous que les mois sont triés
-            const monthlyTotal = dataItems.reduce(
+        if (yearData) {
+          const sortedMonths = Object.keys(yearData).sort((a, b) => {
+            return getMonthNumber(a) - getMonthNumber(b);
+          });
+
+          sortedMonths.forEach((month) => {
+            const monthlyTotal = yearData[month].reduce(
               (sum, item) => sum + item.consumption,
               0
             );
-            cumulativeConsumption += monthlyTotal; // Ajouter au total cumulatif
+            cumulativeConsumption += monthlyTotal;
             newChartData.labels.push(month);
             newChartData.datasets[0].data.push(cumulativeConsumption);
           });
+        }
       }
     }
 
@@ -154,21 +175,17 @@ const Chart: React.FC<ChartProps> = ({
     plugins: {
       tooltip: {
         callbacks: {
-          // Cette fonction est utilisée pour personnaliser le texte affiché dans le tooltip.
-          // Vous pouvez l'ajuster pour afficher les informations que vous souhaitez.
           afterLabel: function (context: any) {
-            // Vous pouvez remplacer `any` par le type correct si vous le connaissez.
             const day = context.label;
-            const names = dailyNames[day]; // Assurez-vous que dailyNames est accessible dans cette portée
+            const names = dailyNames[day];
             return names ? names.join(" + ") : "";
           },
         },
       },
     },
-    // ... Autres options
   };
 
-  return <Line options={{ responsive: true }} data={chartData} />;
+  return <Line data={chartData} options={options} />;
 };
 
 export default Chart;
