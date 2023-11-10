@@ -34,7 +34,7 @@ interface YearlyData {
 interface CarbonExpenseListProps {
   initialData: { [key: string]: YearlyData };
   selectedValue: string;
-  userId: number;
+  userId?: number;
 }
 
 const CarbonDataContainer: React.FC<CarbonDataContainerProps> = ({
@@ -194,7 +194,7 @@ const CarbonExpenseList: React.FC<CarbonExpenseListProps> = ({
           expenseName,
           carbonWeight,
           category,
-          userId,
+          userId ?? null,
           selectedDateObject
         ).catch(console.error);
       }
@@ -256,7 +256,7 @@ const CarbonExpenseList: React.FC<CarbonExpenseListProps> = ({
       </div>
       {showEditForm && (
         <FormAddCarbonData
-          userId={userId}
+          userId={userId ?? 0}
           expenseName={expenseName}
           setExpenseName={setExpenseName}
           category={category}

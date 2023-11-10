@@ -65,15 +65,23 @@
   align-items: center;
   justify-content: center;
 }
-.arrowbot {
-  width: 20px;
-  height: 10px;
-}
+.arrowbot,
 .arrowbot2 {
   width: 20px;
   height: 10px;
+  cursor: pointer; /* Change le curseur en main au survol */
+  transition: opacity 0.3s ease; /* Transition fluide pour l'opacité */
+}
+
+.arrowbot2 {
   transform: rotate(180deg);
 }
+
+.arrowbot:hover,
+.arrowbot2:hover {
+  opacity: 0.8; /* Réduit l'opacité au survol */
+}
+
 .Midcontainer {
   padding: 0.5vw 1.2vw;
 }

@@ -8,14 +8,17 @@ const SEND_FRIEND_REQUEST = gql`
 `;
 
 export const useSendFriendRequest = () => {
-  const [sendFriendRequest, { data, error, loading }] = useMutation(SEND_FRIEND_REQUEST, {
-    onError: (error) => {
-      toast.error(`Error sending friend request: ${error.message}`);
-    },
-    onCompleted: () => {
-      toast.success("Friend request sent!");
-    },
-  });
+  const [sendFriendRequest, { data, error, loading }] = useMutation(
+    SEND_FRIEND_REQUEST,
+    {
+      onError: (error) => {
+        toast.error(`Error sending friend request: ${error.message}`);
+      },
+      onCompleted: () => {
+        toast.success("Friend request sent!");
+      },
+    }
+  );
 
   return { sendFriendRequest, data, error, loading };
 };

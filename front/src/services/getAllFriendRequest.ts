@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql, useQuery } from "@apollo/client";
 import { toast } from "react-toastify";
 
 const GET_ALL_FRIEND_REQUESTS = gql`
@@ -20,16 +20,20 @@ const GET_ALL_FRIEND_REQUESTS = gql`
   }
 `;
 
-export const useGetAllFriendRequests = (userId : number|undefined) => {
-  const { data, error, loading ,refetch } = useQuery(GET_ALL_FRIEND_REQUESTS, {
+export const useGetAllFriendRequests = (userId: number | undefined) => {
+  const { data, error, loading, refetch } = useQuery(GET_ALL_FRIEND_REQUESTS, {
     variables: { userId },
     onError: (error) => {
       toast.error(`Error getting friend requests: ${error.message}`);
     },
   });
+  const friendRequests =
+    data?.getAllFriendRequest.filter(
+      (req: { accepted: boolean }) => req.accepted === false
+    ) || [];
 
-  return { 
-    friendRequests: data?.getAllFriendRequest || [],
+  return {
+    friendRequests,
     error,
     loading,
     refetch,

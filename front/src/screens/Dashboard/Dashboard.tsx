@@ -9,22 +9,17 @@ import { useGetUserFriendList } from "../../services/getUserFriendList";
 
 const Dashboard = () => {
   const {
-    isLogged,
     user,
     isMonthChart,
     setIsMonthChart,
     isBarChart,
     setIsBarChart,
     dropdownOptions,
-    setDropdownOptions,
     initialData,
-    setInitialData,
     selectedValue,
     setSelectedValue,
     totalCo2,
-    setTotalCo2,
     setUserFriends,
-    userFriends,
     setUserCarbonData,
   } = useGlobalState();
 

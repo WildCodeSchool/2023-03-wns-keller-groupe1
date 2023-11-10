@@ -6,12 +6,19 @@ type ISortedData = {
     [month: string]: ICarbonData[];
   };
 };
+interface User {
+  __typename: string;
+  userId: number;
+  email: string;
+  firstname: string;
+  lastname: string;
+}
 
 interface IGlobalStateContext {
   isLogged: boolean;
   setIsLogged: React.Dispatch<React.SetStateAction<boolean>>;
-  user: any; // Type à spécifier
-  setUser: React.Dispatch<React.SetStateAction<any>>;
+  user: User;
+  setUser: React.Dispatch<React.SetStateAction<User>>;
   isMonthChart: boolean;
   setIsMonthChart: React.Dispatch<React.SetStateAction<boolean>>;
   isBarChart: boolean;
@@ -51,7 +58,7 @@ export const useGlobalState = () => {
 export const GlobalStateProvider = ({ children }: IGlobalStateContextProps) => {
   const [isLogged, setIsLogged] = React.useState(false);
   const [user, setUser] = React.useState<any>(null);
-  const [isMonthChart, setIsMonthChart] = React.useState(false);
+  const [isMonthChart, setIsMonthChart] = React.useState(true);
   const [isBarChart, setIsBarChart] = React.useState(false);
   const [dropdownOptions, setDropdownOptions] = React.useState<string[]>([]);
   const [initialData, setInitialData] = React.useState<any>([]);
@@ -65,7 +72,7 @@ export const GlobalStateProvider = ({ children }: IGlobalStateContextProps) => {
   const logout = () => {
     setIsLogged(false);
     setUser(null);
-    setIsMonthChart(false);
+    setIsMonthChart(true);
     setIsBarChart(false);
     setDropdownOptions([]);
     setInitialData([]);
@@ -158,6 +165,7 @@ export const GlobalStateProvider = ({ children }: IGlobalStateContextProps) => {
     }
   }, [selectedValue, isMonthChart]);
 
+  console.log(user, "user");
   return (
     <GlobalStateContext.Provider
       value={{

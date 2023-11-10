@@ -1,123 +1,124 @@
-.container {
-    /* background-color: #B5C2C9; */
-    width: 100%;
+.Maincontainer {
+  padding: 2vw;
+  display: flex;
+  flex-direction: row;
+}
+.containerLeft {
+  width: 75%;
+}
+.FriendRequestContainer {
+  background-color: #161d2d;
+  padding: 2vw;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
-.all_sections {
-    display: flex;
+.FriendListContainer {
+  background-color: #161d2d;
+  padding: 2vw;
+  border-radius: 20px;
+  margin-top: 2vw;
 }
 
-.content {
-    width: 100%;
-    padding: 5px;
+.FriendList {
+  padding: 2vw;
+  width: 40%;
+}
+.FriendTitle {
+  color: #e6e6e6;
+  font-family: Noto Sans JP;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 }
 
-.section {
-    border-radius: 20px;
-    background-color: #FFFF;
-    padding: 20px;
-    margin: 30px;
+.SearchInputWithIcon {
+  padding: 1vw 1vw 1vw 50px; /* Ajustez le padding gauche pour laisser de l'espace pour l'icône */
+  border: 1px solid #111828;
+  border-radius: 20px;
+  background-color: #161d2d;
+  background-image: url("../../assets/images/Magnifyingglass.png");
+  background-repeat: no-repeat;
+  background-size: 30px 30px; /* Taille de l'icône */
+  background-position: 10px center; /* Position de l'icône */
+  color: #e6e6e6;
+  font-family: Noto Sans JP;
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: 800;
+  height: 100%;
+  width: 100%;
 }
 
-
-.communauty_header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+.SearchButton {
+  background: transparent;
+  border: none;
 }
 
-
-.communauty_section h1 {
-    color: #25A55F;
+.SearchButton img {
+  width: 30px;
+  height: 30px;
+}
+.containerRight {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 2vw;
+}
+.SearchBarContainer {
+  width: 100%;
+  display: flex;
+  height: 5%;
+  justify-content: center;
 }
 
-.input_community {
-    border-radius: 15px;
-    border: 1px solid #AAAAAA;
-    padding: 10px;
+.SearchResultsContainer {
+  background-color: #161d2d;
+  margin-top: -1px;
+  padding: 1vw;
+  border-radius: 10px;
+  width: 90%;
 }
 
-.friends_request {
-    margin-bottom: 30px;
-    margin-top: 15px;
+.SearchResultItem {
+  color: #e6e6e6;
+  padding: 0.5vw;
+  border-bottom: 1px solid #111828;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
 
-/* *************************************** card  ***************************/
-.cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-gap: 10px;
-    margin-top: 15px;
-    margin-left: 10px;
-}
-.card {
-    border: none;
-    border-radius: 15px;
-    width: 100%;
-    height: 120px;
-    background-color: #25A55F;
-    color: #FFFF;
-    text-align: center;
-    padding: 10px;
-    margin-right: 20px;
+.SearchResultItem:last-child {
+  border-bottom: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.answer_friend {
-    display: flex;
-    justify-content: space-between;
-    margin: 2px 15px 20px 20px;
+.SearchResultItem p {
+  font-family: Noto Sans JP;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+.AddIcon {
+  margin-left: 10px; /* Ajustez selon votre design */
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
+  width: 30px;
+  height: 30px;
 }
 
-.icons {
-    cursor: pointer;
-}
-
-/************************************* friends lists *************************************/
-.fiends_list {
-    margin-top: 25px;
-}
-
-.friend_stats {
-    display: flex;
-    justify-content: center;
-    margin: 2px 15px 20px 20px;
-}
-
-/********************************** section 2 ************************************************/
-
-.section_2_head {
-    display: flex;
-    justify-content: space-between;
-    margin: 5px;
-}
-
-.friends_groups {
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    padding: 60px;
-}
-
-.create_group {
-    padding: 15px 30px;
-    border: none;
-    border-radius: 10px;
-    background-color: #25A55F;
-    color: #FFFF;
-}
-
-.groups_infos {
-    text-align: center;
-    color: #25A55F;
-}
-
-
-/* ******************************************** Responsive *****************************/
-
-@media(max-width: 992px) {
-    .cards {
-        grid-template-columns: 1fr 1fr;
-        width: 100%;
-    }
+.AddIcon:hover {
+  opacity: 0.7;
 }

@@ -102,16 +102,6 @@ const Statistics: React.FC<StatisticsProps> = ({
           <div className={Styles.ContainerPickerType2}>
             <button
               className={
-                !isBarChart
-                  ? Styles.ButtonPickerType
-                  : Styles.ButtonPickerTypeActive
-              }
-              onClick={() => setIsBarChart(true)}
-            >
-              Barre
-            </button>
-            <button
-              className={
                 isBarChart
                   ? Styles.ButtonPickerType
                   : Styles.ButtonPickerTypeActive
@@ -119,6 +109,16 @@ const Statistics: React.FC<StatisticsProps> = ({
               onClick={() => setIsBarChart(false)}
             >
               Linéaire
+            </button>
+            <button
+              className={
+                !isBarChart
+                  ? Styles.ButtonPickerType
+                  : Styles.ButtonPickerTypeActive
+              }
+              onClick={() => setIsBarChart(true)}
+            >
+              Barre
             </button>
           </div>
         </div>
