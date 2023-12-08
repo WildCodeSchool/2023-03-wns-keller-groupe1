@@ -25,22 +25,8 @@ import { useUpdateUsers } from "../services/updateProfil";
 const UserDetails: React.FC = () => {
   const navigation = useNavigation();
   const { updateUser } = useUpdateUsers();
-  const {
-    isLogged,
-    user,
-    isMonthChart,
-    setIsMonthChart,
-    isBarChart,
-    setIsBarChart,
-    dropdownOptions,
-    setDropdownOptions,
-    initialData,
-    setInitialData,
-    selectedValue,
-    setSelectedValue,
-    totalCo2,
-    setTotalCo2,
-  } = useGlobalState();
+
+  const [globalState, setGlobalState] = useGlobalState();
 
   const [isEditabled, setIsEditabled] = React.useState(false);
   const [lastname, setLastname] = React.useState(

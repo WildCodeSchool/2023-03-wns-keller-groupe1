@@ -41,23 +41,6 @@ const GET_USER_FROM_TOKEN = gql`
 export const useAuth = () => {
   const navigation = useNavigation();
 
-  const {
-    isLogged,
-    user,
-    isMonthChart,
-    setIsMonthChart,
-    isBarChart,
-    setIsBarChart,
-    dropdownOptions,
-    setDropdownOptions,
-    initialData,
-    setInitialData,
-    selectedValue,
-    setSelectedValue,
-    totalCo2,
-    setTotalCo2,
-  } = useGlobalState();
-
   const [createNewUser] = useMutation(CREATE_USER, {
     onError: (error) => {
       Toast.show({
@@ -78,6 +61,7 @@ export const useAuth = () => {
   const [login] = useLazyQuery(LOGIN, {
     onError: (error) => {
       Toast.show({ type: "error", text1: `${error.message}` });
+      console.log("error", error.message);
     },
     onCompleted: async (data) => {
       await AsyncStorage.setItem("token", data.login);

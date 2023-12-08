@@ -27,7 +27,7 @@ const Statistic: React.FC = () => {
     totalCo2,
     setTotalCo2,
   } = useGlobalState();
-
+  const [globalState, setGlobalState] = useGlobalState();
   const userId = globalState.user.userId;
 
   const { loading, error, data, refetch } = useUserCarbonData(userId);

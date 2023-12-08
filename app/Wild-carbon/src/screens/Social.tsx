@@ -42,11 +42,13 @@ const Social: React.FC = () => {
     setTotalCo2,
   } = useGlobalState();
 
+  const [globalState, setGlobalState] = useGlobalState();
+  const userId = globalState.user ? globalState.user.userId : null;
   const {
     friendRequests,
     refetch: refetchFriendRequests,
     error,
-  } = useGetAllFriendRequests(globalState?.user?.userId);
+  } = useGetAllFriendRequests(userId);
 
   const {
     userFriendsLists,
