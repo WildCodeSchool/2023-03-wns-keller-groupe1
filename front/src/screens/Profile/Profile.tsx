@@ -1,93 +1,105 @@
-import "./Profile.css";
-import Cards from "../../components/CardProfile/Cards";
-import CardUpdate from "../../components/CardProfile/CardUpdate";
 import { useEffect, useState } from "react";
-import { gql, useQuery } from "@apollo/client";
-import { useUpdateUsers } from "../../services/updateProfil";
 import { useGlobalState } from "../../GlobalStateContext";
-
-const DATA_PROFILE = gql`
-  query Query($userId: Float!) {
-    getUser(userId: $userId) {
-      about
-      age
-      city
-      email
-      firstname
-      gender
-      tel
-      userId
-      lastname
-    }
-  }
-`;
+import Styles from "./Profile.module.css";
+import Button from "../../components/shared/Button";
+import { useDataProfile, useUpdateUsers } from "../../services/getAndputProfil";
 
 export default function Profile() {
-  const [globalState, setGlobalState] = useGlobalState();
-  const userId = globalState?.user?.userId;
-  const [name, setName] = useState<String>("");
-  const [age, setAge] = useState<Number>();
-  const [about, setAbout] = useState<String>("");
-  const [email, setEmail] = useState<String>("");
-  const [tel, setTel] = useState<String>("");
-  const [city, setCity] = useState<String>("");
-  const [gender, setGender] = useState<String>("");
+  const { user } = useGlobalState();
+  const { data, loading, error } = useDataProfile();
+  const { updateUser } = useUpdateUsers();
 
-  const { loading, error, data, refetch } = useQuery(DATA_PROFILE, {
-    variables: {
-      userId: userId,
-    },
-  });
+  const userId = user?.userId;
+  console.log(userId, "userId");
+  const [name, setName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    if (data) {
+    if (data && data.getUser) {
       setName(data.getUser.firstname);
-      setName(data.getUser.lastname);
-      setAbout(data.getUser.about);
-      setAge(data.getUser.age);
-      setGender(data.getUser.gender);
-      setTel(data.getUser.tel);
+      setLastName(data.getUser.lastname);
       setEmail(data.getUser.email);
-      setCity(data.getUser.city);
     }
   }, [data]);
-  console.log(data);
+
+  const handleEdit = () => {
+    setIsEditing(!isEditing); // Change le mode édition
+  };
+
+  const handleUpdate = () => {
+    if (isEditing) {
+      // En mode édition, procéder à la mise à jour
+      updateUser({
+        variables: {
+          userId: user?.userId,
+          firstname: name,
+          lastname: lastName,
+          email: email,
+        },
+      });
+    }
+    setIsEditing(!isEditing); // Sortir du mode édition après la mise à jour
+  };
 
   return (
-    <div className="profile-container">
-      <Cards
-        name={name}
-        setName={setName}
-        age={age}
-        setAge={setAge}
-        gender={gender}
-        setGender={setGender}
-        about={about}
-        setAbout={setAbout}
-        email={email}
-        setEmail={setEmail}
-        tel={tel}
-        setTel={setTel}
-        city={city}
-        setCity={setCity}
-      />
-      <div className="profile-update">
-        <CardUpdate
-          setName={setName}
-          name={name}
-          setAge={setAge}
-          age={age}
-          setGender={setGender}
-          gender={gender}
-          setAbout={setAbout}
-          about={about}
-          setEmail={setEmail}
-          email={email}
-          setTel={setTel}
-          tel={tel}
-          setCity={setCity}
-          city={city}
-        />
+    <div className={Styles.profileContainer}>
+      <div className={Styles.MainContainer}>
+        <div className={Styles.TopContainer}>
+          <p className={Styles.pTop}>Retrouvez vos informations personnelles</p>
+        </div>
+        <div className={Styles.MidContainer}>
+          <div className={Styles.InputContainer}>
+            <p className={Styles.pInputContainer}>Nom</p>
+            <input
+              className={Styles.InputProfil}
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              disabled={!isEditing}
+            />
+          </div>
+          <div className={Styles.InputContainer}>
+            <p className={Styles.pInputContainer}>Prénom</p>
+            <input
+              className={Styles.InputProfil}
+              type="text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              disabled={!isEditing}
+            />
+          </div>
+          <div className={Styles.InputContainer}>
+            <p className={Styles.pInputContainer}>Email</p>
+            <input
+              className={Styles.InputProfil}
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={!isEditing}
+            />
+          </div>
+        </div>
+        <div className={Styles.BotContainer}>
+          <p className={Styles.pBotContainer}>
+            <a
+              href="https://stone-sky-e7.notion.site/Conditions-G-n-rales-d-Utilisation-de-l-application-Wild-carbon-b52b0dfa322c4bdb9e7334da9a014d17"
+              className={Styles.AboutLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: "none" }}
+            >
+              a propos
+            </a>
+          </p>
+          <Button
+            text={isEditing ? "Valider" : "Modifier"}
+            width="40%"
+            onClick={isEditing ? handleUpdate : handleEdit}
+          />
+        </div>
       </div>
     </div>
   );

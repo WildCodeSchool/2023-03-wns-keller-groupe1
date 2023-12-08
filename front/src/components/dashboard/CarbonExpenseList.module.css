@@ -1,0 +1,141 @@
+.Maincontainer {
+  width: 100%;
+  height: 100%;
+  background-color: #161d2d;
+  border-radius: 20px;
+  margin-top: 1.5vw;
+  padding: 0.5vw 0;
+}
+.TopContainer {
+  display: flex;
+  flex-direction: row;
+  border-bottom: #232e40 2px solid;
+  padding: 0 2vw 0.5vw 2vw;
+}
+.TopContainer p {
+  color: #d9d9d9;
+  font-size: 20px;
+  font-family: "Noto Sans JP", sans-serif;
+}
+.numberlist {
+  width: 48px;
+  height: 36px;
+  margin-bottom: 10px;
+}
+.firstContainer {
+  width: 10%;
+  display: flex;
+}
+.secondContainer {
+  width: 30%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 1vw;
+}
+.thirdContainer {
+  width: 30%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 1vw;
+}
+.fourContainer {
+  width: 15%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.fiveContainer {
+  width: 15%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.fiveContainer2 {
+  width: 10%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.sixContainer2 {
+  width: 5%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.arrowbot,
+.arrowbot2 {
+  width: 20px;
+  height: 10px;
+  cursor: pointer; /* Change le curseur en main au survol */
+  transition: opacity 0.3s ease; /* Transition fluide pour l'opacité */
+}
+
+.arrowbot2 {
+  transform: rotate(180deg);
+}
+
+.arrowbot:hover,
+.arrowbot2:hover {
+  opacity: 0.8; /* Réduit l'opacité au survol */
+}
+
+.Midcontainer {
+  padding: 0.5vw 1.2vw;
+}
+.MainCarbonDataContainer {
+  background-color: #202737;
+  padding: 1vw;
+  border-radius: 20px;
+  margin-top: 1vw;
+}
+.CarbonDataContainer {
+  display: flex;
+  flex-direction: row;
+}
+.CarbonDataContainer p {
+  color: #d9d9d9;
+  font-size: 16px;
+  font-family: "Noto Sans JP", sans-serif;
+}
+.NameText {
+  font-weight: bold;
+}
+.BottomContainer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin-top: 1vw;
+  margin-right: 1.2vw;
+}
+.pSup {
+  color: #ff1b1c;
+  font-size: 16px;
+  font-family: "Noto Sans JP", sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+.pSup:hover {
+  opacity: 0.7;
+}
+.pMod {
+  color: #1c7b47;
+  font-size: 16px;
+  font-family: "Noto Sans JP", sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  margin-right: 1vw;
+}
+.pMod:hover {
+  opacity: 0.7;
+}
+.CarbonDataContainerbot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 1.2vw 1.2vw 0 1.2vw;
+}

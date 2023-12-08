@@ -14,7 +14,8 @@ class CarbonDataResolver {
     @Arg("title") title: string,
     @Arg("consumption") consumption: number,
     @Arg("category") categoryString: string,
-    @Arg("userId") userId: number
+    @Arg("userId") userId: number,
+    @Arg("createdAt", () => String) createdAt: string
   ): Promise<String | GraphQLError | any> {
     try {
       const args = new CarbonDataInput();
@@ -32,7 +33,7 @@ class CarbonDataResolver {
       carbonData.title = title;
       carbonData.consumption = consumption;
       carbonData.modifiedAt = new Date();
-      carbonData.createdAt = new Date();
+      carbonData.createdAt = new Date(createdAt);
       carbonData.categoryString = categoryString;
       carbonData.user = await dataSource
         .getRepository(User)
@@ -78,7 +79,8 @@ class CarbonDataResolver {
     @Arg("id") id: number,
     @Arg("title") title: string,
     @Arg("category") categoryString: string,
-    @Arg("consumption") consumption: number
+    @Arg("consumption") consumption: number,
+    @Arg("createdAt", () => String, { nullable: true }) createdAt?: string // Ajout d'un argument optionnel pour la date de création
   ): Promise<string | GraphQLError | any> {
     try {
       const args = new CarbonDataInput();
@@ -86,18 +88,25 @@ class CarbonDataResolver {
       args.consumption = consumption;
       args.id = id;
       args.categoryString = categoryString;
+      if (createdAt != null) args.createdAt = createdAt;
+
       const validationErrors = await validate(args);
 
       if (validationErrors.length > 0) {
         throw new GraphQLError("Validation error");
       }
 
-      await dataSource
-        .getRepository(CarbonData)
-        .update(id, { title, consumption, categoryString });
+      const updateData: any = { title, consumption, categoryString };
+
+      if (createdAt != null) {
+        const createdAtDate = new Date(createdAt);
+        updateData.createdAt = createdAtDate;
+      }
+
+      await dataSource.getRepository(CarbonData).update(id, updateData);
       return "Carbon data updated";
     } catch (error) {
-      return new GraphQLError("An error occured");
+      return new GraphQLError("An error occurred");
     }
   }
 

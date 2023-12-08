@@ -25,12 +25,30 @@ import { useGetUserFriendList } from "../services/getUserFriendList";
 
 const Social: React.FC = () => {
   const navigation = useNavigation();
+  const {
+    isLogged,
+    user,
+    isMonthChart,
+    setIsMonthChart,
+    isBarChart,
+    setIsBarChart,
+    dropdownOptions,
+    setDropdownOptions,
+    initialData,
+    setInitialData,
+    selectedValue,
+    setSelectedValue,
+    totalCo2,
+    setTotalCo2,
+  } = useGlobalState();
+
   const [globalState, setGlobalState] = useGlobalState();
+  const userId = globalState.user ? globalState.user.userId : null;
   const {
     friendRequests,
     refetch: refetchFriendRequests,
     error,
-  } = useGetAllFriendRequests(globalState?.user?.userId);
+  } = useGetAllFriendRequests(userId);
 
   const {
     userFriendsLists,

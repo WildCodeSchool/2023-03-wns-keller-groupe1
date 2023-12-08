@@ -5,7 +5,6 @@ import { MockedProvider } from "@apollo/client/testing";
 import Login from "../screens/UserConnexion/Login";
 import { GlobalStateProvider } from "../GlobalStateContext";
 import { BrowserRouter } from "react-router-dom";
-import Sidebar from "../components/SideBar/SideBar";
 
 const client = new ApolloClient({
   uri: "http://192.168.1.12:4000/",

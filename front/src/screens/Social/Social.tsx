@@ -1,59 +1,75 @@
 import styles from "./social.module.css";
-import { ReactComponent as CrossIcon } from "../../assets/icons/cross.svg";
-import { ReactComponent as VectorIcon } from "../../assets/icons/Vector.svg";
-import { useEffect, useState } from "react";
+import {
+  JSXElementConstructor,
+  Key,
+  ReactElement,
+  ReactFragment,
+  ReactPortal,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { GetUsersByName } from "../../services/getUsersByName";
-import { toast } from "react-toastify";
 import { useSendFriendRequest } from "../../services/sendFriendRequest";
 import { useGetAllFriendRequests } from "../../services/getAllFriendRequest";
 import { useAcceptFriendRequest } from "../../services/acceptFriendRequest";
 import { useGetUserFriendList } from "../../services/getUserFriendList";
 import { useDeleteFriendRequests } from "../../services/deleteFriendRequest";
-import { getParsedUserId } from "../../utils/getParsedUserId";
+import { useGlobalState } from "../../GlobalStateContext";
+import FriendsRequestContainer from "../../components/social/FriendsRequestContainer";
+import FriendsContainer from "../../components/shared/FriendsContainer";
+import addIcon from "../../assets/images/addIcon.png";
 
 const Social = () => {
+  const { user } = useGlobalState();
   const { getUsersByName, data } = GetUsersByName();
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const { sendFriendRequest } = useSendFriendRequest();
   const { acceptFriendRequest } = useAcceptFriendRequest();
-  const { friendRequests, refetch: refetchFriendRequests } = useGetAllFriendRequests(getParsedUserId());
-  const { userFriendsLists, refetch: refetchUserFriendsLists } = useGetUserFriendList(getParsedUserId());
-  const { deleteFriendRequest } = useDeleteFriendRequests()
-  
+  const { friendRequests, refetch: refetchFriendRequests } =
+    useGetAllFriendRequests(user?.userId);
+  const { userFriendsLists, refetch: refetchUserFriendsLists } =
+    useGetUserFriendList(user?.userId);
+  const { deleteFriendRequest } = useDeleteFriendRequests();
 
   useEffect(() => {
     if (searchTerm.length > 1) {
-      getUsersByName({ variables: { name: searchTerm } });
+      getUsersByName({ variables: { name: searchTerm } })
+        .then((response) => {
+          setSearchResults(response.data.getUsersByName);
+        })
+        .catch((error) => console.error(error));
     }
   }, [searchTerm, getUsersByName]);
 
-  const handleButtonClick = (user: any) => {
+  useEffect(() => {
+    console.log(searchResults, "searchResults");
+  }, [searchResults]);
+
+  const handleButtonClick = (userFriend: any) => {
+    console.log(user, "user");
+    console.log(userFriend, "userFriend");
+    console.log(
+      user?.userId,
+      "user?.userId",
+      userFriend?.userId,
+      "userFriend?.userId"
+    );
+    console.log(
+      typeof user?.userId,
+      "typeof user?.userId",
+      typeof userFriend?.userId,
+      "typeof userFriend?.userId"
+    );
     setSearchTerm("");
     sendFriendRequest({
-      variables: { userId: getParsedUserId(), friendId: user.userId },
+      variables: { userId: user?.userId, friendId: userFriend?.userId },
     });
   };
-  const handleAcceptRequest = (
-    id: number,
-    user1Id: number,
-    user2Id: number
-  ) => {
+  const handleAcceptRequest = (requestId: any) => {
     acceptFriendRequest({
-      variables: { id: id, user1Id: user1Id, user2Id: user2Id }
-    })
-      .then(() => {
-        refetchFriendRequests();
-        refetchUserFriendsLists();
-        toast.success("Demande d'amis acceptée");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const handleDeleteRequest = (id: number) => {
-    deleteFriendRequest({
-      variables: { deleteFriendRequestId: id }
+      variables: { id: requestId, user1Id: user?.userId, user2Id: requestId },
     })
       .then(() => {
         refetchFriendRequests();
@@ -62,96 +78,86 @@ const Social = () => {
       .catch((error) => {
         console.error(error);
       });
+  };
+
+  const handleDeleteRequest = (requestId: any) => {
+    deleteFriendRequest({
+      variables: { deleteFriendRequestId: requestId },
+    })
+      .then(() => {
+        refetchFriendRequests();
+        refetchUserFriendsLists();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const handleSearchChange = (event: {
+    target: { value: SetStateAction<string> };
+  }) => {
+    setSearchTerm(event.target.value);
+  };
+
+  interface User {
+    userId: Key;
+    firstname: string;
+    lastname: string;
   }
+
+  const renderSearchResult = (userFriend: User) => {
+    return (
+      <div key={userFriend.userId} className={styles.SearchResultItem}>
+        <p>
+          {userFriend.firstname} {userFriend.lastname}
+        </p>
+        <img
+          src={addIcon}
+          alt="Ajouter"
+          className={styles.AddIcon}
+          onClick={() => handleButtonClick(userFriend)}
+        />
+      </div>
+    );
+  };
+
   return (
-    <div className={styles.container}>
-      <section className={styles.all_sections}>
-        <div className={styles.content}>
-          <section className={styles.section}>
-            <div className={styles.communauty_header}>
-              <h2>Communautés</h2>
-              <div className={styles.communauty_header_search}>
-                <input
-                  type="text"
-                  value={searchTerm}
-                  className={styles.input_community}
-                  placeholder="Ajoutez un ami"
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                {data &&
-                  searchTerm.length > 1 &&
-                  data.getUsersByName.slice(0, 5).map((user: any) => (
-                    <div key={user.userId}>
-                      <button onClick={() => handleButtonClick(user)}>
-                        <p>
-                          {user.firstname} {user.lastname}
-                        </p>
-                      </button>
-                    </div>
-                  ))}
-              </div>
-            </div>
-            {friendRequests.filter((request: any) => !request.accepted).length >
-              0 && (
-              <div className={styles.friends_request}>
-                <h3>Demande d'amis :</h3>
-                  <div className={styles.cards}>
-                    {friendRequests
-                      .filter((request: any) => !request.accepted)
-                      .map((request: any, index: any) => (
-                      <div key={index} className={styles.card}>
-                        <h2>
-                        {request.userSender.firstname}{" "}
-                        {request.userSender.userId}
-                      </h2>
-                      <h2>{request.userSender.lastname}</h2>
-                        <div className={styles.answer_friend}>
-                          <span className={styles.icons}>
-                            <CrossIcon onClick={() => handleDeleteRequest(request.id,)} />
-                          </span>
-                          <span className={styles.icons}>
-                            <VectorIcon
-                              onClick={() =>
-                                handleAcceptRequest(
-                                  request.id,
-                                  request.userReceiver.userId,
-                                  request.userSender.userId
-                                )
-                              }
-                            />
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-              </div>
-            )}
-            <div className={styles.friends_list}>
-              <h2>Votre liste d'amis :</h2>
-              <div className={styles.cards}>
-                {userFriendsLists.map((friend: any, index: any) => (
-                  <div key={index} className={styles.card}>
-                    <h2>{friend.firstname}</h2>
-                    <h2>{friend.lastname}</h2>
-                    <div className={styles.friend_stats}>
-                      <p>{friend.totalCo2} KG Co2</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-          <section className={styles.section}>
-            <div className={styles.section_2_head}>
-              <h2>Groupe</h2>
-              <button className={styles.create_group}>Créer un groupe</button>
-            </div>
-            <div className={styles.friends_groups}>
-              <h2 className={styles.groups_infos}>BIENTOT DISPONIBLE</h2>
-            </div>
-          </section>
+    <div className={styles.Maincontainer}>
+      <div className={styles.containerLeft}>
+        {friendRequests.length > 0 && (
+          <div className={styles.FriendRequestContainer}>
+            <p className={styles.FriendTitle}>Demandes d'amis : </p>
+            <FriendsRequestContainer
+              requests={friendRequests}
+              onAccept={handleAcceptRequest}
+              onDelete={handleDeleteRequest}
+            />
+          </div>
+        )}
+
+        <div className={styles.FriendListContainer}>
+          <p className={styles.FriendTitle}>Votre liste d’amis : </p>
+          <div className={styles.FriendList}>
+            <FriendsContainer friendsList={userFriendsLists} />
+          </div>
         </div>
-      </section>
+      </div>
+      <div className={styles.containerRight}>
+        <div className={styles.SearchBarContainer}>
+          <input
+            className={styles.SearchInputWithIcon}
+            type="text"
+            value={searchTerm}
+            onChange={handleSearchChange}
+            placeholder="Ajoutez un ami"
+          />
+        </div>
+        {searchResults.length > 0 && searchTerm.length !== 0 && (
+          <div className={styles.SearchResultsContainer}>
+            {searchResults.map((userFriend) => renderSearchResult(userFriend))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

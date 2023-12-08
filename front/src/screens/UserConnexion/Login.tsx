@@ -11,12 +11,30 @@ const Login = () => {
   const [password, setPassword] = useState<string>("");
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
-  const [globalState, setGlobalState] = useGlobalState();
+  const {
+    isLogged,
+    user,
+    isMonthChart,
+    setIsMonthChart,
+    isBarChart,
+    setIsBarChart,
+    dropdownOptions,
+    setDropdownOptions,
+    initialData,
+    setInitialData,
+    selectedValue,
+    setSelectedValue,
+    totalCo2,
+    setTotalCo2,
+  } = useGlobalState();
+
   const { handleFormSubmit } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setGlobalState({ ...globalState, isLogged: false });
+    if (isLogged) {
+      setIsLoading(false);
+    }
   }, []);
 
   return (
@@ -42,7 +60,7 @@ const Login = () => {
                 password,
                 firstName,
                 lastName,
-                setIsLoading,
+                setIsLoading
               )
             }
             isLoading={isLoading}

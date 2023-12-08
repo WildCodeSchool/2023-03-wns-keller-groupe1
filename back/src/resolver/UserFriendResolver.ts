@@ -25,26 +25,31 @@ class UserFriendResolver {
       }
 
       const userSender = await dataSource
-      .getRepository(User)
-      .findOneByOrFail({ userId });
+        .getRepository(User)
+        .findOneByOrFail({ userId });
 
       const userReceiver = await dataSource
         .getRepository(User)
         .findOneByOrFail({ userId: friendId });
 
-      const existingFriendRequest = await dataSource.getRepository(UserFriends).findOneBy({userSender: userSender, userReceiver: userReceiver});
+      const existingFriendRequest = await dataSource
+        .getRepository(UserFriends)
+        .findOneBy({ userSender: userSender, userReceiver: userReceiver });
 
-      if (existingFriendRequest) {
-        return new GraphQLError('This friend request already exist');
+      if (existingFriendRequest != null) {
+        return new GraphQLError("This friend request already exist");
       }
 
+      // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
       if (!existingFriendRequest) {
-        const existingFriendRequest = await dataSource.getRepository(UserFriends).findOneBy({userSender: userReceiver, userReceiver: userSender});
-        if (existingFriendRequest) {
-          return new GraphQLError('This friend request already exist');
+        const existingFriendRequest = await dataSource
+          .getRepository(UserFriends)
+          .findOneBy({ userSender: userReceiver, userReceiver: userSender });
+        if (existingFriendRequest != null) {
+          return new GraphQLError("This friend request already exist");
         }
       }
-      
+
       const userFriend = new UserFriends();
       userFriend.accepted = false;
       userFriend.createdAt = new Date();

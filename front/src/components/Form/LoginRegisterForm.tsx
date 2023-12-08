@@ -25,8 +25,7 @@ const LoginRegisterForm = ({
   };
 
   const isValidPassword = (password: string): boolean => {
-    const re: RegExp =
-    /^.{3,}$/
+    const re: RegExp = /^.{3,}$/;
     return re.test(password);
   };
 
@@ -159,11 +158,6 @@ const LoginRegisterForm = ({
             <div className={styles.spinner}></div>
           ) : (
             <>
-              {!isRegister && (
-                <div className={styles.formGroupLoginPassword}>
-                  <p>Mot de passe oublié</p>
-                </div>
-              )}
               <div className={styles.formGroupConnection}>
                 <button
                   className={styles.connectionButton}

@@ -25,7 +25,9 @@ import { useUpdateUsers } from "../services/updateProfil";
 const UserDetails: React.FC = () => {
   const navigation = useNavigation();
   const { updateUser } = useUpdateUsers();
+
   const [globalState, setGlobalState] = useGlobalState();
+
   const [isEditabled, setIsEditabled] = React.useState(false);
   const [lastname, setLastname] = React.useState(
     globalState?.user?.lastname || ""

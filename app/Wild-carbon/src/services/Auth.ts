@@ -40,7 +40,6 @@ const GET_USER_FROM_TOKEN = gql`
 
 export const useAuth = () => {
   const navigation = useNavigation();
-  const [globalState, setGlobalState] = useGlobalState();
 
   const [createNewUser] = useMutation(CREATE_USER, {
     onError: (error) => {
@@ -57,10 +56,12 @@ export const useAuth = () => {
       navigation.navigate("Login");
     },
   });
+  const [globalState, setGlobalState] = useGlobalState();
 
   const [login] = useLazyQuery(LOGIN, {
     onError: (error) => {
       Toast.show({ type: "error", text1: `${error.message}` });
+      console.log("error", error.message);
     },
     onCompleted: async (data) => {
       await AsyncStorage.setItem("token", data.login);

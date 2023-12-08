@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Text, View, StyleSheet, ScrollView } from "react-native";
+import { Text, View, StyleSheet, ScrollView, Alert } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { useUserCarbonData } from "../services/getUserCarbonData";
 import { format, compareDesc } from "date-fns";
@@ -111,6 +111,7 @@ const Dashboard: React.FC = () => {
             selectedDate
           );
         }
+        console.log(selectedDate, "selectedDate");
         resetState();
       } catch (error) {
         console.error("Erreur lors de l'opération", error);

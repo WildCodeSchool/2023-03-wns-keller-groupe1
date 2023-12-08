@@ -1,15 +1,15 @@
-import { ApolloServer } from 'apollo-server';
-import { buildSchemaSync } from 'type-graphql';
-import UserResolver from '../src/resolver/UserResolver';
-import { UserInput } from '../src/validator/UserValidator';
-import { validate } from 'class-validator';
-import dataSource from '../src/utilsTest';
-import { User } from '../src/entity/User';
-import jwt from 'jsonwebtoken';
-import CarbonDataResolver from '../src/resolver/CarbonDataResolver';
-import { CarbonDataInput } from '../src/validator/CarbonDataValidator';
+import { ApolloServer } from "apollo-server";
+import { buildSchemaSync } from "type-graphql";
+import UserResolver from "../src/resolver/UserResolver";
+import { UserInput } from "../src/validator/UserValidator";
+import { validate } from "class-validator";
+import dataSource from "../src/utilsTest";
+import { User } from "../src/entity/User";
+import jwt from "jsonwebtoken";
+import CarbonDataResolver from "../src/resolver/CarbonDataResolver";
+import { CarbonDataInput } from "../src/validator/CarbonDataValidator";
 
-describe('UserResolver', () => {
+describe("UserResolver", () => {
   const JWT_SECRET = process.env.JWT_SECRET_KEY as string;
   // Define server type
   let server: ApolloServer;
@@ -37,11 +37,11 @@ describe('UserResolver', () => {
     });
   });
 
-  it('Validate input and creates a user', async () => {
-    const email = 'test@example.com';
-    const password = 'password';
-    const firstname = 'John';
-    const lastname = 'Doe';
+  it("Validate input and creates a user", async () => {
+    const email = "test@example.com";
+    const password = "password";
+    const firstname = "John";
+    const lastname = "Doe";
 
     // Create a resolver instance
     const resolver = new UserResolver();
@@ -55,53 +55,58 @@ describe('UserResolver', () => {
     const validationErrors = await validate(args);
 
     // Execute the mutation using the resolver instance
-    const result = await resolver.createUser(email, password, firstname, lastname);
+    const result = await resolver.createUser(
+      email,
+      password,
+      firstname,
+      lastname
+    );
 
     // Assertions
     expect(validationErrors.length).toEqual(0);
-    expect(result).toEqual('User created');
+    expect(result).toEqual("User created");
   });
 
-  it('Login and verify JWT token', async () => {
-    const email = 'test@example.com';
-    const password = 'password';
+  it("Login and verify JWT token", async () => {
+    const email = "test@example.com";
+    const password = "password";
 
     const resolver = new UserResolver();
     const token: any = await resolver.login(email, password);
 
-    const result: any = jwt.verify(token, JWT_SECRET)
-    
+    const result: any = jwt.verify(token, JWT_SECRET);
+
     expect(result.email).toEqual(email);
   });
 
-  it('Login and refresh JWT token', async () => {
-    const email = 'test@example.com';
-    const password = 'password';
+  it("Login and refresh JWT token", async () => {
+    const email = "test@example.com";
+    const password = "password";
 
     const resolver = new UserResolver();
     const token: any = await resolver.login(email, password);
-console.log("token", token);
+    console.log("token", token);
 
-    const result: any =  await resolver.refreshToken(token);
+    const result: any = await resolver.refreshToken(token);
 
     expect(typeof result).toBe("string");
   });
 
-  it('Login, get user from token', async () => {
-    const email = 'test@example.com';
-    const password = 'password';
+  it("Login, get user from token", async () => {
+    const email = "test@example.com";
+    const password = "password";
 
     const resolver = new UserResolver();
     const token: any = await resolver.login(email, password);
 
-    const result: any =  await resolver.getUserFromToken(token);
+    const result: any = await resolver.getUserFromToken(token);
 
     userId = result.userId;
-    
+
     expect(result).toBeInstanceOf(User);
   });
 
-  it('Get a user', async () => {
+  it("Get a user", async () => {
     const id = userId;
 
     const resolver = new UserResolver();
@@ -110,36 +115,31 @@ console.log("token", token);
     expect(result).toBeInstanceOf(User);
   });
 
-  it('Denied authorization', async () => {
+  it("Denied authorization", async () => {
     const resolver = new UserResolver();
     const result = await resolver.getAllUsers();
 
     expect(result).toThrowError;
   });
 
-  it('Update a user', async () => {
+  it("Update a user", async () => {
     const id = userId;
-    const email = 'test@example.com';
-    const firstname = 'John';
-    const lastname = 'Doe';
-    const totalCo2 = 22;
-    const age = "24";
-    const city = "test";
-    const about = "test";
-    const gender = "male";
-    const tel = "0123456789";
+    const email = "test@example.com";
+    const firstname = "John";
+    const lastname = "Doe";
 
     const resolver = new UserResolver();
-    const result = await resolver.updateUser(id, email, firstname, lastname, totalCo2, age, city, about, gender, tel);
+    const result = await resolver.updateUser(id, email, firstname, lastname);
 
     expect(result).toEqual(`User ${id} updated`);
   });
 
-  it('Validate input and creates a carbon data', async () => {
-    const title = 'test';
+  it("Validate input and creates a carbon data", async () => {
+    const title = "test";
     const consumption = 123;
-    const category = 'test';
+    const category = "test";
     const id = userId;
+    const createdAt = new Date();
 
     // Create a resolver instance
     const resolver = new CarbonDataResolver();
@@ -150,22 +150,30 @@ console.log("token", token);
     args.consumption = consumption;
     args.categoryString = category;
     args.userId = userId;
+    args.createdAt = createdAt.toString();
+
     const validationErrors = await validate(args);
 
     // Execute the mutation using the resolver instance
-    const result = await resolver.createCarbonData(title, consumption, category, id);
-    
+    const result = await resolver.createCarbonData(
+      title,
+      consumption,
+      category,
+      id,
+      createdAt.toString()
+    );
+
     // Assertions
     expect(validationErrors.length).toEqual(0);
-    expect(result).toEqual('Carbon data created');
+    expect(result).toEqual("Carbon data created");
   });
 
-  it('Delete a user', async () => {
+  it("Delete a user", async () => {
     const id = userId;
 
     const resolver = new UserResolver();
     const result = await resolver.deleteUser(id);
 
-    expect(result).toEqual('User deleted');
+    expect(result).toEqual("User deleted");
   });
 });

@@ -1,7 +1,6 @@
-import { ICarbonDataArray } from "./CarbonData";
-
 export interface ChartProps {
-    data: ICarbonDataArray;
-    OptionMonthSelected: boolean;
-  }
-  
+  data: number;
+  OptionMonthSelected: boolean;
+  isMonthChart: boolean;
+  selectedValue: string;
+}

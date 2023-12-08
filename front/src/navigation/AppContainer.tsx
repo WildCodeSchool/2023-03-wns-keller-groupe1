@@ -5,18 +5,18 @@ import {
   useNavigate,
   Navigate,
 } from "react-router-dom";
-import HomePage from "../screens/Dashboard/HomePage";
+import React, { ReactNode } from "react";
 import Login from "../screens/UserConnexion/Login";
 import Statistic from "../screens/Statistic/Statistic";
 import Social from "../screens/Social/Social";
-import SideBar from "../components/SideBar/SideBar";
-import * as React from "react";
 import Success from "../screens/Payment/Success";
 import { gql, useQuery } from "@apollo/client";
 import NotFound from "../screens/Error/404";
 import DonationPage from "../screens/Donation/DonationPage";
 import Profile from "../screens/Profile/Profile";
-import Chat from "../screens/Chat/Chat";
+import MainLayout from "../screens/MainLayout/MainLayout";
+import { MainLayoutProps } from "../interface/shared/MainLayoutProps";
+import Dashboard from "../screens/Dashboard/Dashboard";
 
 export const VERIFY_TOKEN = gql`
   query Query($token: String!) {
@@ -30,34 +30,36 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/social" element={<PrivateRoute element={<Social />} />} />
+        <Route
+          path="/social"
+          element={<PrivateRoute title="Communautés" children={<Social />} />}
+        />
         <Route
           path="/dashboard"
-          element={<PrivateRoute element={<HomePage />} />}
+          element={<PrivateRoute title="Dashboard" children={<Dashboard />} />}
         />
         <Route
           path="/statistic"
-          element={<PrivateRoute element={<Statistic />} />}
+          element={
+            <PrivateRoute title="Statistiques" children={<Statistic />} />
+          }
         />
         <Route
           path="/profile"
-          element={<PrivateRoute element={<Profile />} />}
+          element={<PrivateRoute title="Votre profil" children={<Profile />} />}
         />
         <Route
           path="/payment/success"
-          element={<PrivateRoute element={<Success />} />}
+          element={<PrivateRoute title="TODO" children={<Success />} />}
         />
         <Route
           path="/donations"
-          element={<PrivateRoute element={<DonationPage />} />}
-        />
-        <Route
-          path="/chat"
-          element={<PrivateRoute element={<Chat />} />}
-        />
-        <Route 
-          path="*" 
-          element={<NotFound />} 
+          element={
+            <PrivateRoute
+              title="Soutenez Wild Carbon"
+              children={<DonationPage />}
+            />
+          }
         />
 
         <Route path="*" element={<NotFound />} />
@@ -66,21 +68,18 @@ function App() {
   );
 }
 
-function PrivateRoute({ element }: { element: React.ReactNode }) {
+function PrivateRoute({ children, title }: MainLayoutProps) {
   const navigate = useNavigate();
   const { error } = useQuery(VERIFY_TOKEN, {
     variables: { token: sessionStorage.getItem("token") },
     fetchPolicy: "network-only",
   });
 
-  if (error) navigate("/login");
+  React.useEffect(() => {
+    if (error) navigate("/login");
+  }, [error, navigate]);
 
-  return (
-    <div style={{ display: "flex" }}>
-      <SideBar />
-      {element}
-    </div>
-  );
+  return <MainLayout title={title}>{children}</MainLayout>;
 }
 
 export default App;
